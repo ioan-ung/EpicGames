@@ -1,0 +1,13 @@
+.navbar{
+    background-color: transparent !important;
+}
+
+.Btn-White-Btnfocus{
+    background-color: transparent !important;
+    color:white !important;
+}
+
+.Btn-White-Btnfocus:hover{
+    background-color: white;
+    color:black;
+}

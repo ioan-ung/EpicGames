@@ -1,0 +1,63 @@
+import axios from 'axios';
+import { GET_USER_BYID_REQUEST,GET_USER_BYID_SUCCESS,GET_USER_BYID_FAIL } from '../constants/usersConstants';
+import { UPDATE_USER_BYID_REQUEST,UPDATE_USER_BYID_SUCCESS,UPDATE_USER_BYID_FAIL } from '../constants/usersConstants';
+
+export const getUserAction = (user) => async(dispatch) =>{
+    try{
+
+        dispatch({
+            type:GET_USER_BYID_REQUEST,
+        })
+        const response = await axios.get(`/api/users/${user}`);
+        
+        dispatch({
+            type:GET_USER_BYID_SUCCESS,
+            payload:response.data.data
+        })
+
+    }
+    catch(e)
+    {
+        dispatch({
+            type:GET_USER_BYID_FAIL,
+            payload:e
+        })
+    }
+
+}
+
+export const updateUserAction = ({user,data,navigate}) => async(dispatch) =>{
+    try{
+
+        dispatch({
+            type:UPDATE_USER_BYID_REQUEST,
+        })
+
+        console.log("data ACTION",data)
+        const response = await axios.put(`http://127.0.0.1:8000/api/users/${user}`,data);
+        
+        if(response.status === 200)
+            {
+                navigate('/')
+                window.location.reload()
+                console.log("Profile successfully updated")
+            }
+        
+        else alert("Unexpected error happened! Please come back later")
+
+        dispatch({
+            type:UPDATE_USER_BYID_SUCCESS,
+            payload:response.data.data
+        })
+
+    }
+    catch(e)
+    {
+        console.log("error",e)
+        dispatch({
+            type:UPDATE_USER_BYID_FAIL,
+            payload:e
+        })
+    }
+
+}
