@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 export const AuthContext = createContext();
 
@@ -8,7 +8,7 @@ export const AuthContextProvider = ({ children }) => {
   const [firstLogin, setFirstLogin] = useState(true);
   const [user, setUser] = useState(
     localStorage.getItem("access")
-      ? jwt_decode(localStorage.getItem("access"))
+      ? jwtDecode(localStorage.getItem("access"))
       : null
   );
   const [finalCoins, setFinalCoins] = useState(
@@ -31,7 +31,7 @@ export const AuthContextProvider = ({ children }) => {
       if (response.status === 200) {
         localStorage.setItem("access", response.data.access);
         localStorage.setItem("refresh", response.data.refresh);
-        setUser(jwt_decode(localStorage.getItem("access")));
+        setUser(jwtDecode(localStorage.getItem("access")));
         return user;
       }
     } catch (e) {

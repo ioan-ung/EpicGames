@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { ReactComponent as Cart } from "../svg/cart.svg";
-import { ReactComponent as Garbage } from "../svg/garbage.svg";
+import Cart from "../svg/cart.svg?react";
+import Garbage from "../svg/garbage.svg?react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteFromWishList } from "../actions/productActions";

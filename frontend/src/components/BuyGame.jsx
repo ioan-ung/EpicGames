@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Button } from "react-bootstrap";
-import { ReactComponent as Money } from "../svg/money.svg";
+import Money from "../svg/money.svg?react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { updateUserAction } from "../actions/userActions";

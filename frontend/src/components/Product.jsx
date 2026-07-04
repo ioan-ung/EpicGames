@@ -2,8 +2,8 @@ import React from 'react'
 import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { handleUserGameInteraction } from '../actions/TagsPlacement'
-import {ReactComponent as Coins} from '../svg/coins.svg'
-import {ReactComponent as Star} from '../svg/star.svg'
+import Coins from '../svg/coins.svg?react'
+import Star from '../svg/star.svg?react'
 
 const Product = ({ product }) => {
   return (

@@ -4,21 +4,19 @@ import Navbar from 'react-bootstrap/Navbar';
 import {useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Col, Row } from 'react-bootstrap';
-import {ReactComponent as Search} from '../svg/search.svg'
-import {ReactComponent as WishList } from '../svg/price.svg'
-import SearchBox from './SearchBox.js';
-import {ReactComponent as Money} from '../svg/money.svg'
+import Search from '../svg/search.svg?react'
+import WishList from '../svg/price.svg?react'
+import SearchBox from './SearchBox';
+import Money from '../svg/money.svg?react'
 import { useState } from 'react';
-import "./style/Navbar.css" 
-import CoinsPopup from './CoinsPopup.js';
-import WishListPopup from './WishListPopup.js';
-import {ReactComponent as LogOut} from '../svg/logout.svg'
+import "./style/Navbar.css"
+import CoinsPopup from './CoinsPopup';
+import WishListPopup from './WishListPopup';
+import LogOut from '../svg/logout.svg?react'
 import { useDispatch,useSelector } from 'react-redux';
-import { getUserAction } from '../actions/userActions.js';
-import jwt_decode from 'jwt-decode'
-
+import { getUserAction } from '../actions/userActions';
+import { jwtDecode } from 'jwt-decode'
 function Header() {
-    
     const TextPrimary = "#dcdedc"
     const [navbarSelected,setNavbarSelected] = useState("")
     const dispatch = useDispatch()
@@ -26,7 +24,7 @@ function Header() {
     const [wishList,setWishList] = useState(false);
     const userCredentials = useSelector((state) => state.getUserReducer);
     const {loading,error,userDetails} = userCredentials
-    const [user, setUser] = useState(localStorage.getItem("access") ? jwt_decode(localStorage.getItem("access")) : null)
+    const [user, setUser] = useState(localStorage.getItem("access") ? jwtDecode(localStorage.getItem("access")) : null)
 
     useEffect(() => {
         if (user&&user?.user_id) {
@@ -42,7 +40,7 @@ function Header() {
     }
     
     return (user&&
-        <Navbar style={{position:'absolute',top:'0',zIndex:'10',width:'100vw',height:'5rem',backgroundColor:'rgba(255, 255, 255, 0.52) !important'}} expand="lg" className="bg-body-tertiary navbar">
+        <Navbar style={{position:'absolute',top:'0',zIndex:'10',width:'100vw',height:'5rem',backgroundColor:'rgba(255, 255, 255, 0.52) !important',backdropFilter:'blur(8px)'}} expand="lg" className="navbar">
             
             <Container>
                 <Link style={{ color: 'white',textDecoration:'none',fontWeight:'650',marginRight:'0.5em'}} to="/">Crush Games</Link>
@@ -166,7 +164,7 @@ function Header() {
                         </Nav.Link>
 
                         </Container>
-                       
+
                     </Nav>
                 </Navbar.Collapse>
             </Container>

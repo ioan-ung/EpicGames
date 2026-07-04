@@ -9,7 +9,7 @@ export const getUserAction = (user) => async(dispatch) =>{
             type:GET_USER_BYID_REQUEST,
         })
         const response = await axios.get(`/api/users/${user}`);
-        
+
         dispatch({
             type:GET_USER_BYID_SUCCESS,
             payload:response.data.data
@@ -35,14 +35,14 @@ export const updateUserAction = ({user,data,navigate}) => async(dispatch) =>{
 
         console.log("data ACTION",data)
         const response = await axios.put(`http://127.0.0.1:8000/api/users/${user}`,data);
-        
+
         if(response.status === 200)
             {
                 navigate('/')
                 window.location.reload()
                 console.log("Profile successfully updated")
             }
-        
+
         else alert("Unexpected error happened! Please come back later")
 
         dispatch({

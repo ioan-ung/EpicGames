@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Button, Col, Container, Row } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import { ReactComponent as Pricing } from "../svg/price.svg";
+import Pricing from "../svg/price.svg?react";
 import { Image } from "react-bootstrap";
 import VideoCarousel from "../components/VideoCarousel";
 import { addToWishList } from "../actions/productActions";
@@ -10,11 +10,11 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import Loader from "../components/Loader";
 import { getProductById } from "../actions/productActions";
 import BuyGame from "../components/BuyGame";
-import { ReactComponent as Money } from "../svg/money.svg";
-import { ReactComponent as Company } from "../svg/company.svg";
-import { ReactComponent as Download } from "../svg/downloads.svg";
-import { ReactComponent as Memory } from "../svg/memory.svg";
-import { ReactComponent as Baby } from "../svg/baby.svg";
+import Money from "../svg/money.svg?react";
+import Company from "../svg/company.svg?react";
+import Download from "../svg/downloads.svg?react";
+import Memory from "../svg/memory.svg?react";
+import Baby from "../svg/baby.svg?react";
 
 const GamePopup = () => {
   const { id } = useParams();

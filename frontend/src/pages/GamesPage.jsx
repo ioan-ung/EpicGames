@@ -15,46 +15,33 @@ const GamesPage = () => {
   const getProducts = useSelector((state) => state.getSearchedProductsReducer);
   const getTopRated = useSelector((state) => state.getTopRatedProductsReducer);
   const urlParams = new URLSearchParams(window.location.search);
-  const keyword = urlParams.get("keyword");
-  const page = urlParams.get("page");
+  const keyword = urlParams.get("keyword") ?? "";
+  const page = urlParams.get("page") ?? "1";
 
-  const { error, loading, games: products } = getProducts;
-  const {
-    error: errorTopRated,
-    loading: loadingTopRated,
-    games: topRatedProducts,
-  } = getTopRated;
+  const { error, loading, products, pages } = getProducts;
+  const { error: errorTopRated, games: topRatedProducts } = getTopRated;
 
   useEffect(() => {
-    if (keyword == null || keyword === undefined || page === null)
-      dispatch(getSearchedProduct("", 1));
-    else dispatch(getSearchedProduct(keyword, page));
-
+    dispatch(getSearchedProduct(keyword, page));
     dispatch(getTopRatedProductsAction());
   }, [dispatch, keyword, page]);
 
   return (
-    <div className="MainPage" style={{ overflowY: "scroll" }}>
+    <div className="MainPage" style={{ overflowY: "scroll", paddingTop: "5rem" }}>
       {loading ? (
         <Loader />
-      ) : error ? (
-        <Alert variant={"danger"}>
-          Alert("Unexpected error! Come back later! ")
-        </Alert>
-      ) : errorTopRated ? (
-        <Alert variant={"danger"}>Alert("Data error")</Alert>
+      ) : error || errorTopRated ? (
+        Alert("Unexpected error! Come back later! ")
       ) : (
         <>
           <CarouselComponent topRatedProducts={topRatedProducts} />
-          <div>
-            <Row>
-              {products?.products.map((product) => (
-                <Col key={product?.id}>
-                  <Product product={product} />
-                </Col>
-              ))}
-            </Row>
-          </div>
+          <Row>
+            {products?.products.map((product) => (
+              <Col key={product?.id} sm={12} md={6} lg={4} xl={3}>
+                <Product product={product} />
+              </Col>
+            ))}
+          </Row>
         </>
       )}
     </div>

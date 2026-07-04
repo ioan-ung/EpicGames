@@ -1,7 +1,7 @@
 import React from "react";
-import { ReactComponent as Eroare } from "../svg/error.svg";
+import Eroare from "../svg/error.svg?react";
 import { useState } from "react";
-import { ReactComponent as Close } from "../svg/close.svg";
+import Close from "../svg/close.svg?react";
 const Error = () => {
   const [open, setOpen] = useState(true);
 

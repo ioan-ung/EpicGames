@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import LibraryAccount from "../components/LibraryAccount";
-import { ReactComponent as Bag } from "../svg/bag.svg";
-import { ReactComponent as Library } from "../svg/library.svg";
+import Bag from "../svg/bag.svg?react";
+import Library from "../svg/library.svg?react";
 import Store2 from "../components/Store2";
 
 const Homescreen = () => {

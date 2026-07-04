@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ReactComponent as Up } from "../svg/Up.svg";
-import { ReactComponent as Down } from "../svg/Down.svg";
+import Up from "../svg/Up.svg?react";
+import Down from "../svg/Down.svg?react";
 
 function DropDown({ menu, setMenu,text,setText,direction,setDirection }) {
   const Menus = ["TopRated", "MostDownloaded", "Age"];

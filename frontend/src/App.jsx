@@ -30,12 +30,12 @@ function App() {
             maxi = tags[key]
             nr = key
           }
-    }  
+    }
 
     if(!nr)
       return;
-    
-    localStorage.removeItem(tags)
+
+    localStorage.removeItem("tags")
 
     const data = {
       nr: maxi

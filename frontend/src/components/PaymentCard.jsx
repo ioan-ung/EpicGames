@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { ReactComponent as Garbage } from "../svg/garbage.svg";
+import Garbage from "../svg/garbage.svg?react";
 import { deletePrice } from "../actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import "./style/PaymentCard.css";

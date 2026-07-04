@@ -13,11 +13,11 @@ import Error from "./Error";
 import "./style/Store2.css";
 import { TypeAnimation } from "react-type-animation";
 import DropDown from "./DropDown";
-import { ReactComponent as Download } from "../svg/downloads.svg";
-import { ReactComponent as Star } from "../svg/star.svg";
-import { ReactComponent as Up } from "../svg/Up.svg";
-import { ReactComponent as Down } from "../svg/Down.svg";
-import { ReactComponent as Baby } from "../svg/baby.svg";
+import Download from "../svg/downloads.svg?react";
+import Star from "../svg/star.svg?react";
+import Up from "../svg/Up.svg?react";
+import Down from "../svg/Down.svg?react";
+import Baby from "../svg/baby.svg?react";
 
 const Store2 = () => {
   const [text, setText] = useState("TopRated");
@@ -28,7 +28,7 @@ const Store2 = () => {
     console.log("direction",direction)
     if (direction === "UP")
        data = state.getYoungestProductsReducer;
-    else if (direction === "DOWN") 
+    else if (direction === "DOWN")
       data = state.getOldestProductsReducer;
     else if (text === "TopRated") {
       data = state.getTopRatedProductsReducer;
@@ -176,7 +176,7 @@ const Store2 = () => {
               style={{
                 wrap: "wrap",
                 position: "relative",
-                left: "10vw", //!din 15 s
+                left: "10vw",
                 overflowY: "auto",
               }}
             >
@@ -259,7 +259,7 @@ const Store2 = () => {
                         >
                           {game.name}
                         </p>
-                        {text === "Age" ? <span  style={{ color: "white" }} >{game.age} <Baby/></span> 
+                        {text === "Age" ? <span  style={{ color: "white" }} >{game.age} <Baby/></span>
                         :text === "TopRated" ? (
                           <>
                             <p style={{ marginLeft: "0.5rem", color: "white" }}>
