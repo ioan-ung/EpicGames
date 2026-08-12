@@ -11,9 +11,9 @@ const WishListPopup = ({ wishList, setWishList }) => {
   };
   const user = useContext(AuthContext)
   const getProducts = useSelector((state) => state.getSearchedProductsReducer);
-  const { loading, error, games } = getProducts;
+  const { loading, error, games, products } = getProducts;
   const data = JSON.parse(localStorage.getItem(`userWishList_${user?.user?.user_id}`) || "[]");
-  const productList = games?.products;
+  const productList = products ?? games?.products ?? games ?? [];
 
   return (
     <div style={{ overflowY: "scroll" }}>

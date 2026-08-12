@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Loader from "./Loader";
-import { Alert, Col, Container } from "react-bootstrap";
+import { Alert, Container, Button } from "react-bootstrap";
 import {
   getTopRatedProductsAction,
   getMostDownloadedProductsAction,
@@ -11,276 +12,110 @@ import {
 import "./style/popup.css";
 import Error from "./Error";
 import "./style/Store2.css";
-import { TypeAnimation } from "react-type-animation";
-import DropDown from "./DropDown";
 import Download from "../svg/downloads.svg?react";
 import Star from "../svg/star.svg?react";
-import Up from "../svg/Up.svg?react";
-import Down from "../svg/Down.svg?react";
-import Baby from "../svg/baby.svg?react";
 
 const Store2 = () => {
-  const [text, setText] = useState("TopRated");
-  const [direction, setDirection] = useState("UP");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [activeFilter, setActiveFilter] = useState("TopRated");
 
   const getProducts = useSelector((state) => {
-    let data;
-    console.log("direction",direction)
-    if (direction === "UP")
-       data = state.getYoungestProductsReducer;
-    else if (direction === "DOWN")
-      data = state.getOldestProductsReducer;
-    else if (text === "TopRated") {
-      data = state.getTopRatedProductsReducer;
-    } else if (text === "MostDownloaded") {
-      data = state.getMostDownloadedProductsReducer;
-    }
-
-    return data;
+    if (activeFilter === "Newest") return state.getYoungestProductsReducer;
+    if (activeFilter === "Oldest") return state.getOldestProductsReducer;
+    if (activeFilter === "MostDownloaded") return state.getMostDownloadedProductsReducer;
+    return state.getTopRatedProductsReducer;
   });
 
-  const { loading, error, games } = getProducts;
-  const dispatch = useDispatch();
-  const [typingText, setTypingText] = useState(true);
-  const [menu, setMenu] = useState(false);
+  const { loading, error, games = [] } = getProducts;
+  const [selectedGame, setSelectedGame] = useState(null);
 
   useEffect(() => {
-    if (direction === "UP") dispatch(getYoungestProductsAction());
-    else if (direction === "DOWN") dispatch(getOldestProductsAction());
-    else if (text === "TopRated") dispatch(getTopRatedProductsAction());
-    else if (text === "MostDownloaded")
-      dispatch(getMostDownloadedProductsAction());
-  }, [dispatch, text, direction]);
-
-  const [specificGame, setSpecificGame] = useState(
-    games && games.length > 0 ? games[0] : null
-  );
+    if (activeFilter === "Newest") dispatch(getYoungestProductsAction());
+    else if (activeFilter === "Oldest") dispatch(getOldestProductsAction());
+    else if (activeFilter === "MostDownloaded") dispatch(getMostDownloadedProductsAction());
+    else dispatch(getTopRatedProductsAction());
+  }, [dispatch, activeFilter]);
 
   useEffect(() => {
-    if (games && games.length > 0) {
-      setSpecificGame(games[0]);
-      setTypingText(true);
+    if (games.length > 0) {
+      setSelectedGame((current) => 
+        current && games.some((game) => game.id === current.id) ? current : games[0]
+      );
     }
   }, [games]);
 
-  useEffect(() => {
-    if (specificGame && !typingText) {
-      setTypingText(true);
-    }
-  }, [specificGame, typingText]);
-
   return (
-    <div>
-      {loading || !specificGame ? (
+    <div className="discover-page">
+      {loading || !selectedGame ? (
         <Loader />
       ) : error ? (
         <Alert variant={"danger"}>
           <Error />
         </Alert>
       ) : (
-        <Container
-          fluid
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            paddingTop: "5%",
-            position: "relative",
-            height: "100vh",
-            width: "100vw",
-            justifyContent: "space-around",
-            overflowY: "hidden",
-            overflowX: "hidden",
-          }}
-        >
-          <Col
-            style={{
-              flex: 2,
-              height: "100vh",
-              maxWidth: "80vw",
-              overflowY: "hidden",
-              overflowX: "visible",
-              padding: "0",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                position: "relative",
-                left: "15vw",
-                top: "5vh",
-                height: "100%",
-                width: "80%",
-                overflowX: "visible",
-              }}
-            >
-              <img
-                src={specificGame.image}
-                alt="cannot open"
-                style={{
-                  maxHeight: "80%",
-                  marginTop: "1rem",
-                  left: "10vw",
-                  cursor: "pointer",
-                  borderRadius: "10%",
-                  aspectRatio: "unset",
-                }}
-                onLoad={(e) => {
-                  const imageWidth = e.target.clientWidth;
-                  const imageHeight = e.target.clientHeight;
-
-                  const text = document.querySelector(".responsive-text-2");
-                  if (text) {
-                    text.style.maxWidth = imageWidth * 0.8 + "px";
-                    text.style.maxHeight = imageHeight * 0.8 + "px";
-                  }
-                }}
-              />
-              <h4
-                className="responsive-text"
-                style={{
-                  color: "#8fa38a",
-                  position: "absolute",
-                  top: "10%",
-                  left: "10vw",
-                }}
-              >
-                {specificGame.name}
-              </h4>
-
-              <p
-                className="responsive-text-2"
-                style={{
-                  color: "#c5efcb",
-                  zIndex: "7",
-                  position: "absolute",
-                  top: "20%",
-                  left: "10vw",
-                  width: "80%",
-                  overflow: "auto",
-                  fontSize: "1rem",
-                }}
-              >
-                {typingText && specificGame && (
-                  <TypeAnimation
-                  sequence={[specificGame.description, 2000]}
-                  speed={50}
-                  />
-                )}
-              </p>
+        <Container fluid className="discover-shell">
+          <div className="discover-toolbar">
+            <div>
+              <span className="eyebrow">Discover</span>
+              <h2>Featured titles</h2>
             </div>
-          </Col>
-
-          {games && (
-            <Col
-              style={{
-                wrap: "wrap",
-                position: "relative",
-                left: "10vw",
-                overflowY: "auto",
-              }}
-            >
-              <span
-                style={{
-                  display: "flex",
-                  alignItems: "space-between",
-                  justifyContent: "center",
-                  position: "relative",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  menu ? setMenu(false) : setMenu(true);
-                }}
-              >
-                <h3
-                  style={{
-                    color: "#758173",
-                    marginTop: "2rem",
-                    marginRight: "30%",
-                  }}
+            <div className="discover-filters">
+              {['TopRated', 'Newest', 'Oldest', 'MostDownloaded'].map((filter) => (
+                <button
+                  key={filter}
+                  type="button"
+                  className={`filter-chip ${activeFilter === filter ? 'active' : ''}`}
+                  onClick={() => setActiveFilter(filter)}
                 >
-                  <strong
-                    style={{ marginLeft: "-10%" }}
-                    className="responsive-text"
-                  >
-                    {text}
-                    {text === "Age" && (direction === "UP" ? <Up/> : <Down/>)}
-                  </strong>
-                </h3>
-              </span>
-              <DropDown
-                menu={menu}
-                setMenu={setMenu}
-                text={text}
-                setText={setText}
-                direction={direction}
-                setDirection={setDirection}
-              />
-              (
-              {games &&
-                games.length > 0 &&
-                games.map((game, index) =>
-                  specificGame &&
-                  specificGame.id &&
-                  game.id &&
-                  specificGame.id === game.id ? null : (
-                    <>
-                      <img
-                        key={index++}
-                        src={game.image}
-                        alt={`Mini ${game.name}`}
-                        style={{
-                          width: "10rem",
-                          height: "auto",
-                          marginTop: "1rem",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => {
-                          setSpecificGame(game);
-                          setTypingText(false);
-                        }}
-                      />
-                      <span
-                        onClick={() => {
-                          setSpecificGame(game);
-                          setTypingText(false);
-                        }}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          width: "100%",
-                        }}
-                      >
-                        <p
-                          style={{
-                            color: "#d0e1d4",
-                            cursor: "pointer",
-                          }}
-                        >
-                          {game.name}
-                        </p>
-                        {text === "Age" ? <span  style={{ color: "white" }} >{game.age} <Baby/></span>
-                        :text === "TopRated" ? (
-                          <>
-                            <p style={{ marginLeft: "0.5rem", color: "white" }}>
-                              {game.rating}
-                            </p>
-                            <Star style={{ color: "yellow" }} />
-                          </>
-                        ) : (
-                          <>
-                            <p style={{ marginLeft: "0.5rem", color: "white" }}>
-                              {game.downloads}
-                            </p>
-                            <Download style={{ color: "white" }} />
-                          </>
-                        )}
-                      </span>
-                    </>
-                  )
-                )}
-            </Col>
-          )}
+                  {filter === 'MostDownloaded' ? 'Most downloaded' : filter}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="feature-card">
+            <img src={selectedGame.image} alt={selectedGame.name} className="feature-image" />
+            <div className="feature-overlay" />
+            <div className="feature-content">
+              <span className="eyebrow">Editors' pick</span>
+              <h1>{selectedGame.name}</h1>
+              <div className="feature-meta">
+                <span><Star /> {selectedGame.rating}</span>
+                <span><Download /> {selectedGame.downloads}</span>
+                <span>{selectedGame.age}+ age</span>
+              </div>
+              <p>{selectedGame.description}</p>
+              <div className="feature-actions">
+                <Button
+                  className="feature-primary-btn"
+                  onClick={() => navigate(`/gamePage/${selectedGame.id}/`)}
+                >
+                  Play now
+                </Button>
+                <Button className="feature-secondary-btn">Wishlist</Button>
+              </div>
+            </div>
+          </div>
+
+          <div className="discover-tray">
+            {games.map((game) => (
+              <button
+                key={game.id}
+                type="button"
+                className={`discover-pick ${selectedGame.id === game.id ? 'active' : ''}`}
+                onClick={() => setSelectedGame(game)}
+              >
+                <img src={game.image} alt={game.name} />
+                <div className="discover-pick-copy">
+                  <strong>{game.name}</strong>
+                  <span>
+                    {activeFilter === 'Newest' || activeFilter === 'Oldest' ? `${game.age}+` : activeFilter === 'MostDownloaded' ? `${game.downloads} downloads` : `${game.rating} rating`}
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
         </Container>
       )}
     </div>

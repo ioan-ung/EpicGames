@@ -18,6 +18,7 @@ import { getUserAction } from '../actions/userActions';
 import { jwtDecode } from 'jwt-decode'
 function Header() {
     const TextPrimary = "#dcdedc"
+    const avatarFallback = "https://ui-avatars.com/api/?name=Epic+User&background=0f172a&color=f8fafc"
     const [navbarSelected,setNavbarSelected] = useState("")
     const dispatch = useDispatch()
     const [open,setOpen] = useState(false);
@@ -43,7 +44,7 @@ function Header() {
         <Navbar style={{position:'absolute',top:'0',zIndex:'10',width:'100vw',height:'5rem',backgroundColor:'rgba(255, 255, 255, 0.52) !important',backdropFilter:'blur(8px)'}} expand="lg" className="navbar">
             
             <Container>
-                <Link style={{ color: 'white',textDecoration:'none',fontWeight:'650',marginRight:'0.5em'}} to="/">Crush Games</Link>
+                <Link style={{ color: 'white',textDecoration:'none',fontWeight:'650',marginRight:'0.5em'}} to="/">Epic Games</Link>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" >
                     <Nav  className="me-auto" >
@@ -150,14 +151,20 @@ function Header() {
                             <Row style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Col>
                                     <Link style={{ textDecoration: 'none', color: 'white'}} to = "/updateUser"> 
-                                         
-                                         <img src={`/static/images/${userDetails?.image}`}   
-                                        alt = "Couldn't open"
-                                        style={{
-                                            height:"2.5rem",
-                                            width:"2.5rem",
-                                            borderRadius:"50%"
-                                        }} ></img>
+                                         <img
+                                            src={userDetails?.image ? `/static/images/${userDetails.image}` : avatarFallback}
+                                            alt="Profile"
+                                            onError={(e) => {
+                                                e.currentTarget.src = avatarFallback;
+                                            }}
+                                            style={{
+                                                height:"2.5rem",
+                                                width:"2.5rem",
+                                                borderRadius:"50%",
+                                                objectFit:"cover",
+                                                border:"1px solid rgba(255,255,255,0.25)"
+                                            }}
+                                        />
                                     </Link>
                                 </Col>
                             </Row>

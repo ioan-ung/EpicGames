@@ -45,8 +45,6 @@ export default function CoinsPopup({ open, setOpen }) {
 
   return loading ? (
     <Loader />
-  ) : error ? (
-    <Error />
   ) : (
     <div>
       <Modal
@@ -61,6 +59,14 @@ export default function CoinsPopup({ open, setOpen }) {
         aria-describedby="parent-modal-description"
       >
         <Container fluid className="popup">
+          {error && (
+            <Row className="d-flex justify-content-center text-center my-3">
+              <div style={{ color: "#fff", fontWeight: 600 }}>
+                Coins packs are temporarily unavailable.
+              </div>
+            </Row>
+          )}
+
           {userDetails?.is_superuser && (
             <Row className="d-flex justify-content-center">
               <button

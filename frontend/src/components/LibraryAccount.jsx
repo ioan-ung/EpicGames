@@ -18,8 +18,8 @@ const LibraryAccount = () => {
   }, [dispatch]);
 
   const getProducts = useSelector((state) => state.getSearchedProductsReducer);
-  const { games: products } = getProducts;
-  const newProduct = products?.products;
+  const { games: products, products: directProducts } = getProducts;
+  const newProduct = directProducts ?? products?.products ?? products ?? [];
 
   return loading ? (
     <Loader />

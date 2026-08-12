@@ -111,7 +111,8 @@ export const getSearchedProductsReducer = (state = {}, action) => {
         loading: false,
         error: false,
         games: action.payload,
-        pages: action.pages,
+        products: action.payload?.products ?? action.payload ?? [],
+        pages: action.payload?.pages ?? 1,
       };
 
     case GET_PRODUCTS_SEARCHED_FAIL:

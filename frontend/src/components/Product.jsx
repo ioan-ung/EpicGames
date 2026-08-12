@@ -7,28 +7,34 @@ import Star from '../svg/star.svg?react'
 
 const Product = ({ product }) => {
   return (
-      <Card style={{ background:'transparent'}} className='my-3 p-3 rounded' onClick={() => handleUserGameInteraction(product.tags)}>
-          <Link to={`/gamePage/${product?.id}/`}>
-            <img style={{width:'30rem',height:'15rem',position:"relative"}} src={product?.image} alt = {"cannot be loaded"}/>
-            <span style={{position:"absolute",top:"17rem",right:"20%"}}><strong style={{color:"white"}}>{product?.rating}</strong>
-            <Star style={{color:"yellow"}}/></span>
-          </Link>
-          <Card.Body>
-              <Link style={{ color: 'white' }} to={'/gamePage'}>
-                <Card.Title as="div">
-                    <strong>{product?.name}</strong>
-                </Card.Title>
-                </Link>
-            <Card.Text as='div'>
-                <div style={{color:'white'}} className='my-3'>
-                    {product?.description?.slice(0,70) + "..."}
-                </div>
-            </Card.Text>
-            <Card.Text style={{color:'white'}} as='h3'>
-                {product?.price}<Coins/>
-            </Card.Text>
-          </Card.Body>
-      </Card>
+    <Card className='store-product-card' onClick={() => handleUserGameInteraction(product.tags)}>
+      <Link to={`/gamePage/${product?.id}/`} className="store-product-image-wrap">
+        <img src={product?.image} alt={product?.name || 'Game cover'} className="store-product-image" />
+        <span className="store-product-rating">
+          <strong>{product?.rating}</strong>
+          <Star />
+        </span>
+      </Link>
+
+      <Card.Body className="store-product-body">
+        <Link to={`/gamePage/${product?.id}/`} className="store-product-title-link">
+          <Card.Title as="div" className="store-product-title">{product?.name}</Card.Title>
+        </Link>
+
+        <div className="store-product-meta">
+          <span>{product?.company}</span>
+          <span>{product?.downloads} downloads</span>
+        </div>
+
+        <Card.Text as='div' className='store-product-description'>
+          {product?.description?.slice(0, 90) + (product?.description?.length > 90 ? '...' : '')}
+        </Card.Text>
+
+        <div className="store-product-footer">
+          <span className="store-product-price">{product?.price}<Coins /></span>
+        </div>
+      </Card.Body>
+    </Card>
   )
 }
 

@@ -123,9 +123,10 @@ export const getSearchedProduct =
       const response = await axios.get(
         `/api/games/search/?keyword=${keyword}&page=${page}`
       );
+
       const reducerData = {
-        products: response.data.data,
-        pages: response.data.pages,
+        products: Array.isArray(response?.data?.data) ? response.data.data : [],
+        pages: response?.data?.pages ?? 1,
       };
 
       dispatch({
@@ -165,27 +166,29 @@ export const getPrices = () => async (dispatch) => {
       type: GET_PRICES_REQUEST,
     });
 
-    const response = await axios.get("api/payments/");
+    const response = await axios.get("/api/payments/");
+    const priceData = Array.isArray(response?.data?.data) ? response.data.data : [];
 
     let array = [];
 
-    for (let i = 2; i < response.data.data.length; i += 3) {
+    for (let i = 2; i < priceData.length; i += 3) {
       let miniarray = [];
-      miniarray.push(response.data.data[i - 2]);
-      miniarray.push(response.data.data[i - 1]);
-      miniarray.push(response.data.data[i]);
+      miniarray.push(priceData[i - 2]);
+      miniarray.push(priceData[i - 1]);
+      miniarray.push(priceData[i]);
 
       array.push(miniarray);
     }
-    let length = response.data.data.length;
+
+    let length = priceData.length;
     if (length % 3 === 1) {
       let miniarray = [];
-      miniarray.push(response.data.data[length - 1]);
+      miniarray.push(priceData[length - 1]);
       array.push(miniarray);
     } else if (length % 3 === 2) {
       let miniarray = [];
-      miniarray.push(response.data.data[length - 2]);
-      miniarray.push(response.data.data[length - 1]);
+      miniarray.push(priceData[length - 2]);
+      miniarray.push(priceData[length - 1]);
 
       array.push(miniarray);
     }
