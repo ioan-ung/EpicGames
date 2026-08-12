@@ -1,3 +1,4 @@
+<img width="1709" height="817" alt="Screenshot 2026-08-12 at 09 06 53" src="https://github.com/user-attachments/assets/63a632a8-a533-43b1-8fd9-a693cca6e3ea" />
 # EpicGames — Game Shop App
 
 A small game shop web application with a React frontend (Create React App) and a separate backend (provided as a git submodule). It supports browsing games, viewing details, user sign-in/up, user preference/tag tracking, and Stripe-based payments.
@@ -113,6 +114,8 @@ npm test
 - Frontend:
   - REACT_APP_API_URL (optional if you want to override the proxy)
   - REACT_APP_STRIPE_PUBLISHABLE_KEY (optional)
+
+<img width="530" height="904" alt="Screenshot 2026-08-12 at 09 08 19" src="https://github.com/user-attachments/assets/104f2bc5-d9cd-4f15-8116-840490c35939" />
 
 Notes:
 - The frontend package.json contains a "proxy": "http://127.0.0.1:8000" setting — in development, requests from the React app to unknown paths are forwarded to the backend. For production, configure the frontend to call your deployed backend directly and set CORS accordingly.
