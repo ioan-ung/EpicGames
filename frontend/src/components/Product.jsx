@@ -9,7 +9,7 @@ const Product = ({ product }) => {
   return (
     <Card className='store-product-card' onClick={() => handleUserGameInteraction(product.tags)}>
       <Link to={`/gamePage/${product?.id}/`} className="store-product-image-wrap">
-        <img src={product?.image} alt={product?.name || 'Game cover'} className="store-product-image" />
+        <img src={product?.images?.[0]?.image} alt={product?.name || 'Game cover'} className="store-product-image" />
         <span className="store-product-rating">
           <strong>{product?.rating}</strong>
           <Star />

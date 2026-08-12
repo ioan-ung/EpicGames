@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Button, Col, Container, Row } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Alert, Button } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import Pricing from "../svg/price.svg?react";
-import { Image } from "react-bootstrap";
 import VideoCarousel from "../components/VideoCarousel";
 import { addToWishList } from "../actions/productActions";
 import { useDispatch } from "react-redux";
@@ -15,6 +14,7 @@ import Company from "../svg/company.svg?react";
 import Download from "../svg/downloads.svg?react";
 import Memory from "../svg/memory.svg?react";
 import Baby from "../svg/baby.svg?react";
+import Star from "../svg/star.svg?react";
 
 const GamePopup = () => {
   const { id } = useParams();
@@ -23,166 +23,169 @@ const GamePopup = () => {
 
   useEffect(() => {
     dispatch(getProductById(id));
-  }, [dispatch,id]);
+  }, [dispatch, id]);
 
   const getGameById = useSelector((state) => state.getProductByIdReducer);
   const { loading, error, game } = getGameById;
   const userCredentials = useSelector((state) => state.getUserReducer);
-  const {userDetails} = userCredentials
+  const { userDetails } = userCredentials;
+  const [activeImage, setActiveImage] = useState(0);
+
+  useEffect(() => {
+    setActiveImage(0);
+  }, [game?.id]);
 
   return (
-    <div className="MainPage" style={{ overflowY: "scroll" }}>
+    <div className="MainPage game-page">
       {loading ? (
         <Loader />
       ) : error ? (
-        <Alert />
+        <Alert variant="danger" className="game-error">
+          Couldn't load this game. Please try again later.
+        </Alert>
       ) : (
-        <Container
-          fluid
-          className="d-flex flex-column align-items-center"
-          style={{
-            top: "5rem",
-            position: "relative",
-            width: "100vw",
-            height: "100vh",
-          }}
-        >
-          <Row style={{ width: "100vw" }}>
-            <Col style={{ position: "relative" }} md={10}>
-              <Row
-                className="d-flex align-items-center justify-content-center"
-                style={{ position: "relative", width: "100%" }}
-              >
-                <Image
-                  style={{ width: "80%", borderRadius: "10%" }}
-                  src={game?.image}
-                  alt="image not found"
-                />
-              </Row>
-              <Row
-                className="d-flex align-items center justify-content-center mt-5"
-                style={{ position: "relative", overflowX: "visible" }}
-              ></Row>
-              {game && <VideoCarousel video={game.introductionVideo} />}
+        <div className="game-page-inner">
+          <div className="game-hero">
+            <img
+              className="game-hero-image"
+              src={game?.images?.[activeImage]?.image}
+              alt={game?.name || "Game cover"}
+            />
+            <div className="game-hero-overlay" />
+            <div className="game-hero-content">
+              <h1>{game?.name}</h1>
+              <div className="game-hero-meta">
+                {game?.rating && (
+                  <span>
+                    <Star />
+                    {game.rating}
+                  </span>
+                )}
+                {game?.company && (
+                  <span>
+                    <Company />
+                    {game.company}
+                  </span>
+                )}
+                {game?.downloads !== undefined && (
+                  <span>
+                    <Download />
+                    {game.downloads}M downloads
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
 
-              <Container className="mt-5" style={{ position: "relative" }}>
-                <Row style={{ color: "white" }}>{game?.description}</Row>
-                <Row style={{ color: "white" }}>
-                  <Col
-                    style={{ borderLeft: "1px solid rgb(245, 245, 245,0.5)" }}
-                  >
-                    <small style={{ opacity: 0.6 }}>Genred</small>
-                    {game?.gameTags.map((tag) => (
-                      <Row key={tag?.id}>
-                        <Link style={{ color: "white" }}>{tag?.name}</Link>
-                      </Row>
+          {game?.images?.length > 1 && (
+            <div className="game-gallery-thumbs">
+              {game.images.map((image, index) => (
+                <button
+                  key={image.id}
+                  type="button"
+                  className={`game-gallery-thumb ${activeImage === index ? "active" : ""}`}
+                  onClick={() => setActiveImage(index)}
+                >
+                  <img src={image.image} alt={`${game.name} screenshot ${index + 1}`} />
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div className="game-page-body">
+            <div className="game-page-main">
+              <section className="game-section">
+                <h2>About</h2>
+                <p>{game?.description}</p>
+              </section>
+
+              {game?.videos?.length > 0 && (
+                <section className="game-section">
+                  <h2>Trailers &amp; Gameplay</h2>
+                  <VideoCarousel videos={game.videos} />
+                </section>
+              )}
+
+              <section className="game-section game-tags-section">
+                <div className="game-tags-col">
+                  <h3>Genres</h3>
+                  <div className="game-tag-pills">
+                    {game?.gameTags?.map((tag) => (
+                      <span className="game-pill" key={tag?.id}>
+                        {tag?.name}
+                      </span>
                     ))}
-                  </Col>
-                  <Col
-                    style={{ borderLeft: "1px solid rgb(245, 245, 245,0.5)" }}
-                  >
-                    <Row>
-                      <small style={{ opacity: "0.6" }}>Features</small>
-                    </Row>
-                    <Row>
-                      <small>
-                        {game?.multiplayer === true
-                          ? "Multiplayer"
-                          : "SinglePlayer"}
-                      </small>
-                    </Row>
-                  </Col>
-                </Row>
-              </Container>
-            </Col>
-            <Col>
-              <Col>
-                <Button
-                  className="mt-2"
-                  style={{
-                    height: "3rem",
-                    width: "10rem",
-                    border: "none",
-                    background: "red",
-                    color: "black",
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setBuyNow(true);
-                  }}
-                >
-                  <strong>BUY NOW</strong>
-                </Button>
-              </Col>
-              <Col className="mt-2"></Col>
-              <Col className="mt-2">
-                <Button
-                  className="mt-2 btn-black-btn d-flex align-items-center justify-content-center"
-                  style={{
-                    position: "relative",
-                    height: "2.9rem",
-                    width: "10rem",
-                    background: "transparent",
-                    color: "rgb(245, 245, 245,0.5)",
-                    border: "1px solid rgb(245, 245, 245,0.5)",
-                  }}
-                  onClick={() => {
-                    dispatch(addToWishList(id,userDetails.id));
-                  }}
-                >
-                  <div
-                    style={{
-                      margin: "0",
-                      width: "1.5rem",
-                      position: "absolute",
-                      left: "0.2rem",
-                    }}
-                    className="PricingSvg"
-                  >
-                    <Pricing
-                      style={{ width: "1.5rem", marginLeft: "0.3rem" }}
-                    />
                   </div>
-                  <p style={{ margin: "0", marginLeft: "1.5rem" }}>
-                    Add to wishlist
-                    <BuyGame
-                      price={game?.price}
-                      id={game?.id}
-                      buyNow={buyNow}
-                      setBuyNow={setBuyNow}
-                    />
-                  </p>
-                </Button>
-
-                <div style={{ color: "white", marginTop: "0.5rem" }}>
-                <Money style={{height:"1.5rem"}}/><strong> Price: </strong>
-                  {game?.price} 
                 </div>
-
-                <div style={{ color: "white", marginTop: "0.5rem"}}>
-                  <Company style={{height:"1.5rem",width:"auto"}}/><strong> Company: </strong>
-                  {game?.company} 
+                <div className="game-tags-col">
+                  <h3>Features</h3>
+                  <div className="game-tag-pills">
+                    <span className="game-pill">
+                      {game?.multiplayer === true ? "Multiplayer" : "Single-player"}
+                    </span>
+                  </div>
                 </div>
+              </section>
+            </div>
 
-                <div style={{ color: "white", marginTop: "0.5rem"}}>
-                  <Download style={{height:"1.5rem",width:"auto"}}/><strong> Downloads: </strong>
-                  {game?.downloads} M
-                </div>
+            <aside className="game-buy-box">
+              <div className="game-buy-price">
+                <Money />
+                {game?.price}
+              </div>
 
-                <div style={{ color: "white", marginTop: "0.5rem"}}>
-                  <Memory style={{height:"1.5rem",width:"auto"}}/><strong> Memory: </strong>
-                  {game?.memory} GB
-                </div>
+              <Button
+                className="feature-primary-btn game-buy-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setBuyNow(true);
+                }}
+              >
+                <strong>BUY NOW</strong>
+              </Button>
 
-                <div style={{ color: "white", marginTop: "0.5rem"}}>
-                  <Baby style={{height:"1.5rem",width:"auto"}}/><strong> Age: </strong>
-                  {game?.age} 
-                </div>
+              <Button
+                className="feature-secondary-btn game-wishlist-btn"
+                onClick={() => {
+                  dispatch(addToWishList(id, userDetails.id));
+                }}
+              >
+                <Pricing style={{ width: "1.1rem", height: "1.1rem" }} />
+                Add to wishlist
+              </Button>
 
-              </Col>
-            </Col>
-          </Row>
-        </Container>
+              <BuyGame
+                price={game?.price}
+                id={game?.id}
+                buyNow={buyNow}
+                setBuyNow={setBuyNow}
+              />
+
+              <ul className="game-specs">
+                <li>
+                  <Company />
+                  <span>Company</span>
+                  <strong>{game?.company}</strong>
+                </li>
+                <li>
+                  <Download />
+                  <span>Downloads</span>
+                  <strong>{game?.downloads} M</strong>
+                </li>
+                <li>
+                  <Memory />
+                  <span>Memory</span>
+                  <strong>{game?.memory} GB</strong>
+                </li>
+                <li>
+                  <Baby />
+                  <span>Age rating</span>
+                  <strong>{game?.age}</strong>
+                </li>
+              </ul>
+            </aside>
+          </div>
+        </div>
       )}
     </div>
   );

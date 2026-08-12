@@ -1,10 +1,28 @@
 import React from "react";
 import { Carousel, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
 
-const VideoCarousel = ({ video }) => {
-  const baseUrl = "http://localhost:8000";
-  const videoUrl = `${baseUrl}${video}`;
+const baseUrl = "http://localhost:8000";
+
+const resolveVideoUrl = (video) =>
+  video.startsWith("http://") || video.startsWith("https://")
+    ? video
+    : `${baseUrl}${video}`;
+
+const VIDEOS_PER_SLIDE = 2;
+
+const chunk = (array, size) =>
+  array.reduce((chunks, item, index) => {
+    if (index % size === 0) chunks.push([]);
+    chunks[chunks.length - 1].push(item);
+    return chunks;
+  }, []);
+
+const VideoCarousel = ({ videos }) => {
+  const videoList = videos?.length ? videos : [];
+
+  if (videoList.length === 0) return null;
+
+  const slides = chunk(videoList, VIDEOS_PER_SLIDE);
 
   return (
     <Carousel
@@ -12,51 +30,30 @@ const VideoCarousel = ({ video }) => {
       pause="hover"
       className=""
     >
-      <Carousel.Item>
-        <Container
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-around",
-          }}
-          fluid
-        >
-          <Link to={"#"}>
-            <video style={{ width: "20rem", height: "10rem" }} controls>
-              <source src={videoUrl} type="video/mp4" />
-            </video>
-          </Link>
-          <Link to={"#"}>
-            <video style={{ width: "20rem", height: "10rem" }} controls>
-              <source src={videoUrl} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </Link>
-        </Container>
-      </Carousel.Item>
-      <Carousel.Item>
-        <Container
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-around",
-          }}
-          fluid
-        >
-          <Link to={"#"}>
-            <video style={{ width: "20rem", height: "10rem" }} controls>
-              <source src={videoUrl} type="video/mp4" />
-            </video>
-          </Link>
-          <Link to={"#"}>
-            <video style={{ width: "20rem", height: "10rem" }} controls>
-              <source src={videoUrl} type="video/mp4" />
-            </video>
-          </Link>
-        </Container>
-      </Carousel.Item>
+      {slides.map((slide, slideIndex) => (
+        <Carousel.Item key={slideIndex}>
+          <Container
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-around",
+            }}
+            fluid
+          >
+            {slide.map((video) => (
+              <video
+                key={video.id}
+                style={{ width: "20rem", height: "10rem" }}
+                controls
+              >
+                <source src={resolveVideoUrl(video.video)} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ))}
+          </Container>
+        </Carousel.Item>
+      ))}
     </Carousel>
   );
 };

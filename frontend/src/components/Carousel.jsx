@@ -11,7 +11,7 @@ const CarouselComponent = ({ topRatedProducts }) => {
            {topRatedProducts?.map(product =>
                <Carousel.Item key={product.id}>
                    <Container style={{ width: '80rem', display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
-                       <img style={{ width: '50rem', height: '30rem' }} alt="not found" src={product?.image} />
+                       <img style={{ width: '50rem', height: '30rem' }} alt="not found" src={product?.images?.[0]?.image} />
                        <Carousel.Caption className='carousel.caption'>
                         <Button
                             type="button"

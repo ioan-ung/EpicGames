@@ -43,7 +43,7 @@ function WishRow({ game, setWishList }) {
                 cursor: "pointer",
                 borderRadius: "10%",
               }}
-              src={game?.image}
+              src={game?.images?.[0]?.image}
               alt="Couldn't open"
             />
             <strong

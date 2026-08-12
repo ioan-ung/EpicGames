@@ -75,7 +75,7 @@ const Store2 = () => {
           </div>
 
           <div className="feature-card">
-            <img src={selectedGame.image} alt={selectedGame.name} className="feature-image" />
+            <img src={selectedGame.images?.[0]?.image} alt={selectedGame.name} className="feature-image" />
             <div className="feature-overlay" />
             <div className="feature-content">
               <span className="eyebrow">Editors' pick</span>
@@ -106,7 +106,7 @@ const Store2 = () => {
                 className={`discover-pick ${selectedGame.id === game.id ? 'active' : ''}`}
                 onClick={() => setSelectedGame(game)}
               >
-                <img src={game.image} alt={game.name} />
+                <img src={game.images?.[0]?.image} alt={game.name} />
                 <div className="discover-pick-copy">
                   <strong>{game.name}</strong>
                   <span>
