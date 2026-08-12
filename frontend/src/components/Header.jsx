@@ -7,6 +7,7 @@ import Search from '../svg/search.svg?react'
 import WishList from '../svg/price.svg?react'
 import SearchBox from './SearchBox';
 import Money from '../svg/money.svg?react'
+import UserDefaultImage from '../svg/user.svg'
 import { useState } from 'react';
 import "./style/Navbar.css"
 import CoinsPopup from './CoinsPopup';
@@ -16,7 +17,6 @@ import { useDispatch,useSelector } from 'react-redux';
 import { getUserAction } from '../actions/userActions';
 import { jwtDecode } from 'jwt-decode'
 function Header() {
-    const avatarFallback = "https://ui-avatars.com/api/?name=Epic+User&background=0f172a&color=f8fafc"
     const [navbarSelected,setNavbarSelected] = useState("")
     const dispatch = useDispatch()
     const [open,setOpen] = useState(false);
@@ -106,10 +106,10 @@ function Header() {
                         <Nav.Link className="p-0">
                             <Link to = "/updateUser">
                                  <img
-                                    src={userDetails?.image ? `/static/images/${userDetails.image}` : avatarFallback}
+                                    src={userDetails?.image ? `/static/images/${userDetails.image}` : UserDefaultImage}
                                     alt="Profile"
                                     onError={(e) => {
-                                        e.currentTarget.src = avatarFallback;
+                                        e.currentTarget.src = UserDefaultImage;
                                     }}
                                     className="navbar-avatar"
                                 />
