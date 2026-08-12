@@ -1,42 +1,78 @@
 
-.button{
+.payment-card-wrap {
+  display: flex;
+  width: min(22rem, 100%);
+  justify-content: center;
+  align-items: center;
+}
+
+.payment-card-col {
+  margin: 1.2rem;
+  position: relative;
+}
+
+.button {
     position: relative;
-    background-color: black;
-    border-radius: 4em;
+    background: linear-gradient(135deg, #0c1016, #171b22);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.5rem;
+    min-width: 12rem;
+    max-width: 15rem;
+    width: 100%;
     font-size: 16px;
     color: white;
-    padding: 0.8em 1.8em;
-    cursor:pointer;
+    padding: 1.1em 1.4em;
+    cursor: pointer;
     text-align: center;
     text-decoration: none;
-    cursor: pointer;
-    transition-duration: 0.4s;
-    -webkit-transition-duration: 0.4s; /* Safari */
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
   }
   
   .button:hover {
-    transition-duration: 0.1s;
-    background-color: #3A3A3A;
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #1d2630, #2a303b);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  .button .payment-card-content {
+    margin: 0;
+    width: 100%;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .button .payment-card-price {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.8rem;
+    background: rgba(31, 208, 117, 0.18);
+    color: #d8ffd8;
+    border: 1px solid rgba(31, 208, 117, 0.5);
+    border-radius: 999px;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.82rem;
+    font-weight: 700;
   }
   
   .button:after {
     content: "";
     display: block;
     position: absolute;
-    border-radius: 4em;
+    border-radius: 1.5rem;
     left: 0;
     top:0;
     width: 100%;
     height: 100%;
     opacity: 0;
     transition: all 0.5s;
-    box-shadow: 0 0 10px 40px white;
+    box-shadow: 0 0 10px 40px rgba(255,255,255,0.18);
   }
   
   .button:active:after {
-    box-shadow: 0 0 0 0 white;
+    box-shadow: 0 0 0 0 rgba(255,255,255,0.18);
     position: absolute;
-    border-radius: 4em;
+    border-radius: 1.5rem;
     left: 0;
     top:0;
     opacity: 1;
