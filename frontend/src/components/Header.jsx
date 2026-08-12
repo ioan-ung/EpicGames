@@ -3,7 +3,6 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import {useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Col, Row } from 'react-bootstrap';
 import Search from '../svg/search.svg?react'
 import WishList from '../svg/price.svg?react'
 import SearchBox from './SearchBox';
@@ -17,7 +16,6 @@ import { useDispatch,useSelector } from 'react-redux';
 import { getUserAction } from '../actions/userActions';
 import { jwtDecode } from 'jwt-decode'
 function Header() {
-    const TextPrimary = "#dcdedc"
     const avatarFallback = "https://ui-avatars.com/api/?name=Epic+User&background=0f172a&color=f8fafc"
     const [navbarSelected,setNavbarSelected] = useState("")
     const dispatch = useDispatch()
@@ -39,135 +37,83 @@ function Header() {
         <Search />
     </div>
     }
-    
+
     return (user&&
-        <Navbar style={{position:'absolute',top:'0',zIndex:'10',width:'100vw',height:'5rem',backgroundColor:'rgba(255, 255, 255, 0.52) !important',backdropFilter:'blur(8px)'}} expand="lg" className="navbar">
-            
+        <Navbar style={{position:'absolute',top:'0',zIndex:'10',width:'100vw',height:'5rem'}} expand="lg" className="navbar">
+
             <Container>
-                <Link style={{ color: 'white',textDecoration:'none',fontWeight:'650',marginRight:'0.5em'}} to="/">Epic Games</Link>
+                <Link className="navbar-brand-link" to="/">Epic Games</Link>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" >
-                    <Nav  className="me-auto" >
+                    <Nav  className="me-auto align-items-lg-center" >
                         <Nav.Item style={{position:'relative',marginRight:'1em'}} className='d-flex align-items-center justify-content-center'>
                             <SearchBox onClick = {(e) => (handleSearch)}/>
-                    
+
                         </Nav.Item>
                         <Link
                            to={'/store'}
-                            style={{
-                                fontWeight: navbarSelected === "NAV_DISCOVER" ? 'bolder' : '400',
-                                color: navbarSelected !== "NAV_DISCOVER" ? TextPrimary : 'white', margin: '1rem'
-
-                            }}
+                            className={`nav-link-item${navbarSelected === "NAV_DISCOVER" ? ' active' : ''}`}
                             onClick={() => setNavbarSelected("NAV_DISCOVER")}
                         >
                             Discover
                         </Link>
                         <Link
                         to={'/listGame'}
-                            style={{
-                                fontWeight: navbarSelected === "NAV_BROWSE" ? 'bolder' : '400',
-                                color: navbarSelected !== "NAV_BROWSE" ? TextPrimary : 'white',
-                                margin:'1rem'
-                            }}
+                            className={`nav-link-item${navbarSelected === "NAV_BROWSE" ? ' active' : ''}`}
                             onClick={() => setNavbarSelected("NAV_BROWSE")}
                         >
                             Browse
                         </Link>
-                        <Link
-                            href="#home"
-                            style={{
-                                fontWeight: navbarSelected === "NAV_NEWS" ? 'bolder' : '400',
-                                color: navbarSelected !== "NAV_NEWS" ? TextPrimary : 'white', margin: '1rem'
-
-                            }}
-                            onClick={() => setNavbarSelected("NAV_NEWS")}
-                        >
-                            
-                        </Link>
-                       
-                       
                     </Nav>
-                    <Nav>
+                    <Nav className="align-items-lg-center">
                         <Container style ={{
                            display:"flex",
                            justifyContent:"space-between",
                            alignItems:"center",
                             }}>
-                        <Nav.Link>
+                        <Nav.Link className="p-0">
                             {user ?
-                            <>      
-                                    
-                                    <Link  style={{textDecoration: 'none', color: 'white' ,display:"flex"}} onClick = {(e) =>{e.stopPropagation();setOpen(true)}}>
-                                        
-                                        <Money style = {{marginRight:"0.3rem",color:"#f5d547"}}/>
-                                        {userDetails?.coins} Coins
-                  
-                                    </Link>  
-                                    <Link style={{color:'white',textDecoration:'none'}}>
-                                        <small style={{fontWeight:'bolder'}}>
-                                            {user?.totalPoints}
-                                        </small>
-                                    </Link>
-                            </>
-                               
+                                <Link className="navbar-action-pill" onClick = {(e) =>{e.stopPropagation();setOpen(true)}}>
+                                    <Money style = {{color:"#f5d547"}}/>
+                                    {userDetails?.coins} Coins
+                                </Link>
                                 :
-                                <Link to={'/signin'} style={{ textDecoration: 'none', color: 'white' }}>
+                                <Link to={'/signin'} className="navbar-action-pill">
                                     Sign in
-                                </Link>  
+                                </Link>
                             }
                         </Nav.Link>
-                        
-                        <Nav.Link href="#link" style={{ fontWeight: 'bold', color: "white" }}>
-                            <Row style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                
-                                <Col>
-                                
-                                    <Link to = "#" onClick = {(e) =>{e.stopPropagation();setWishList(true)}} style={{textDecoration:'none',color:'white',display:"flex"}}>
-                                        <WishList style = {{width:"2rem",color:"#6D435A"}}/>
-                                        WishList
-                                    </Link>
-                                </Col>
-                            </Row>
+
+                        <Nav.Link className="p-0">
+                            <Link to = "#" onClick = {(e) =>{e.stopPropagation();setWishList(true)}} className="navbar-action-pill">
+                                <WishList style = {{color:"#a78bfa"}}/>
+                                WishList
+                            </Link>
                         </Nav.Link>
 
 
-                        <Nav.Link href="#link" style={{ fontWeight: 'bold', color: "white" }}>
-                            <Row style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Col>
-                                    <Link onClick={()=>{
-                                        setUser(null)
-                                        localStorage.removeItem('access');
-                                        localStorage.removeItem('refresh');
-                                        }} to={'/signin'} style={{ textDecoration: 'none', color: 'white'}}>
-                                        <LogOut style = {{color:"#FF0000",height:"2rem",width:"auto"}}/>
-                                        LogOut
-                                    </Link>
-                                </Col>
-                            </Row>
+                        <Nav.Link className="p-0">
+                            <Link onClick={()=>{
+                                setUser(null)
+                                localStorage.removeItem('access');
+                                localStorage.removeItem('refresh');
+                                }} to={'/signin'} className="navbar-action-pill">
+                                <LogOut style = {{color:"#ff6b6b"}}/>
+                                LogOut
+                            </Link>
                         </Nav.Link>
-                        
-                        <Nav.Link href="#link" style={{ fontWeight: 'bold', color: "white"}}>
-                            <Row style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Col>
-                                    <Link style={{ textDecoration: 'none', color: 'white'}} to = "/updateUser"> 
-                                         <img
-                                            src={userDetails?.image ? `/static/images/${userDetails.image}` : avatarFallback}
-                                            alt="Profile"
-                                            onError={(e) => {
-                                                e.currentTarget.src = avatarFallback;
-                                            }}
-                                            style={{
-                                                height:"2.5rem",
-                                                width:"2.5rem",
-                                                borderRadius:"50%",
-                                                objectFit:"cover",
-                                                border:"1px solid rgba(255,255,255,0.25)"
-                                            }}
-                                        />
-                                    </Link>
-                                </Col>
-                            </Row>
+
+                        <Nav.Link className="p-0">
+                            <Link to = "/updateUser">
+                                 <img
+                                    src={userDetails?.image ? `/static/images/${userDetails.image}` : avatarFallback}
+                                    alt="Profile"
+                                    onError={(e) => {
+                                        e.currentTarget.src = avatarFallback;
+                                    }}
+                                    className="navbar-avatar"
+                                />
+                            </Link>
                         </Nav.Link>
 
                         </Container>

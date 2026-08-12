@@ -1,7 +1,8 @@
 import React from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import Search from '../svg/search.svg?react'
 
 
 const SearchBox = () => {
@@ -14,23 +15,17 @@ const SearchBox = () => {
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-        <Row>
-            <Col>
-                <Form.Control type='text' onChange = {(e)=>setKeyword(e.target.value)} style = {
-                    {   
-                        backgroundColor:"transparent",
-                        borderRadius:"100px",
-                        color:"white",
-                        paddingLeft:"1em"
-                    }} placeholder='Search..'/>
-                
-            </Col>
-
-            <Col>
-                <Button type = "submit" className='p-2 Btn-White-Btnfocus'>Submit</Button>
-            </Col>
-        </Row>
+    <Form onSubmit={handleSubmit} className="navbar-search">
+        <Search className="navbar-search-icon" />
+        <Form.Control
+            type='text'
+            onChange={(e) => setKeyword(e.target.value)}
+            className="navbar-search-input"
+            placeholder='Search..'
+        />
+        <button type="submit" className="navbar-search-submit" aria-label="Search">
+            <Search />
+        </button>
     </Form>
   )
 }
