@@ -8,8 +8,8 @@ export const getUserAction = (user) => async(dispatch) =>{
         dispatch({
             type:GET_USER_BYID_REQUEST,
         })
+        console.log("aici");
         const response = await axios.get(`/api/users/${user}`);
-
         dispatch({
             type:GET_USER_BYID_SUCCESS,
             payload:response.data.data

@@ -16,6 +16,7 @@ import LogOut from '../svg/logout.svg?react'
 import { useDispatch,useSelector } from 'react-redux';
 import { getUserAction } from '../actions/userActions';
 import { jwtDecode } from 'jwt-decode'
+import { API_URL } from '../index'
 function Header() {
     const [navbarSelected,setNavbarSelected] = useState("")
     const dispatch = useDispatch()
@@ -106,7 +107,7 @@ function Header() {
                         <Nav.Link className="p-0">
                             <Link to = "/updateUser">
                                  <img
-                                    src={userDetails?.image ? `/static/images/${userDetails.image}` : UserDefaultImage}
+                                    src={userDetails?.image ? `${API_URL}/static/images/${userDetails.image}` : UserDefaultImage}
                                     alt="Profile"
                                     onError={(e) => {
                                         e.currentTarget.src = UserDefaultImage;
