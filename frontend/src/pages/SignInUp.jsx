@@ -49,6 +49,9 @@ const SignIn = () => {
           <Row style={{ color: "white", fontSize: "3rem" }}>
             <strong>Login</strong>
           </Row>
+
+
+          {/*login */}
           <Form
             onSubmit={handleOnSubmitLogin}
             className="d-flex align-items-center justify-content-center flex-column"
@@ -115,6 +118,9 @@ const SignIn = () => {
           <Row className="" style={{ color: "white", fontSize: "3rem" }}>
             <strong>Sign up</strong>
           </Row>
+
+
+          {/*register */}
           <Form
             className="d-flex align-items-center justify-content-center flex-column"
             onSubmit={handleOnSubmitRegister}
@@ -175,6 +181,9 @@ const SignIn = () => {
               Login now!
             </Button>
           </Form>
+
+
+
         </Container>
       </div>
     </section>

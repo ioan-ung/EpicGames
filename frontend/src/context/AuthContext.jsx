@@ -24,7 +24,7 @@ export const AuthContextProvider = ({ children }) => {
       };
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/users/token/",
+        "/api/users/token/",
         data
       );
       console.log("resp", response);
@@ -47,7 +47,7 @@ export const AuthContextProvider = ({ children }) => {
         password: password1,
         password2: password2,
       });
-      const response = await axios.post("api/users/", data, {
+      const response = await axios.post("/api/users/", data, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -67,7 +67,7 @@ export const AuthContextProvider = ({ children }) => {
         refresh: refresh,
       };
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/users/token/refresh/",
+        "/api/users/token/refresh/",
         data
       );
       if (response.status === 200) {
