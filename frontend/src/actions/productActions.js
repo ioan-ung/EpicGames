@@ -144,7 +144,7 @@ export const getSearchedProduct =
 export const getProductById = (id) => async (dispatch) => {
   try {
     dispatch({ type: GET_PRODUCT_BYID_REQUEST });
-    const response = await axios.get(`http://127.0.0.1:8000/api/games/${id}`);
+    const response = await axios.get(`/api/games/${id}`);
 
     console.log(response.data.data);
     dispatch({
@@ -220,7 +220,7 @@ export const addPrice =
         priceId,
       };
 
-      const response = await axios.post("api/payments/", dataToPost);
+      const response = await axios.post("/api/payments/", dataToPost);
 
       dispatch({
         type: POST_PRICE_SUCCESS,
@@ -241,7 +241,7 @@ export const deletePrice = (id) => async (dispatch) => {
       type: DELETE_PRICE_REQUEST,
     });
 
-    const response = await axios.delete(`api/payments/${id}`);
+    const response = await axios.delete(`/api/payments/${id}`);
 
     if (response.status === 200) window.location.reload();
 
@@ -264,7 +264,7 @@ export const deletePriceWithoutId = () => async (dispatch) => {
       type: DELETE_ALL_PRICE_REQUEST,
     });
 
-    const response = await axios.delete(`api/payments/`);
+    const response = await axios.delete(`/api/payments/`);
 
     dispatch({
       type: DELETE_ALL_PRICE_SUCCESS,
