@@ -138,6 +138,72 @@
   transform: scale(1.05);
 }
 
+.profile-menu {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  min-width: 11rem;
+  background: rgba(10, 13, 19, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  padding: 0.4rem;
+  gap: 0.15rem;
+  z-index: 1200;
+}
+
+.profile-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #edf2ff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: left;
+  padding: 0.55rem 0.7rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.profile-menu-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.profile-menu-item-danger {
+  color: #ff6b6b;
+}
+
+.profile-picture-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  z-index: 1900;
+  transition: background 0.35s ease;
+  pointer-events: auto;
+}
+
+.profile-picture-backdrop.visible {
+  background: rgba(5, 6, 10, 0.72);
+}
+
+.profile-picture-expanded {
+  position: fixed;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  z-index: 1950;
+  transition: top 0.4s ease, left 0.4s ease, width 0.4s ease, height 0.4s ease, transform 0.4s ease;
+}
+
 .Btn-White-Btnfocus{
     background-color: transparent !important;
     color:white !important;
