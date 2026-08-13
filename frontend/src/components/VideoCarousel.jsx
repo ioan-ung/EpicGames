@@ -32,21 +32,9 @@ const VideoCarousel = ({ videos }) => {
     >
       {slides.map((slide, slideIndex) => (
         <Carousel.Item key={slideIndex}>
-          <Container
-            style={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-around",
-            }}
-            fluid
-          >
+          <Container fluid className="game-video-row">
             {slide.map((video) => (
-              <video
-                key={video.id}
-                style={{ width: "20rem", height: "10rem" }}
-                controls
-              >
+              <video key={video.id} className="game-video" controls>
                 <source src={resolveVideoUrl(video.video)} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>

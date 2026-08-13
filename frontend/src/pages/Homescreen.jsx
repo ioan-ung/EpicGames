@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import LibraryAccount from "../components/LibraryAccount";
+import LibraryAccount from "../components/Library";
 import Bag from "../svg/bag.svg?react";
-import Library from "../svg/library.svg?react";
-import Store2 from "../components/Store2";
+import LibraryIcon from "../svg/library.svg?react";
+import Store from "../components/Store";
 
 const Homescreen = () => {
   const [type, setType] = useState("store");
@@ -19,76 +19,35 @@ const Homescreen = () => {
 
   return (
     <Container
-      className="MainPage"
+      className="MainPage home-page"
       fluid
       style={{
         padding: 0,
         backgroundImage: "linear-gradient(#13120F, #252525)",
-        height: "100vh",
         width: "100vw",
       }}
     >
-      <Row>
-        <Col
-          style={{ height: "100vh", width: "15%" }}
-          className="d-flex align-items-center justify-content-center"
-          md={2}
+      <div className="home-nav">
+        <div
+          id="store-nav-btn"
+          className={`home-nav-item ${type === "store" ? "active" : ""}`}
+          onClick={() => setType("store")}
         >
-          <Container style={{ marginBottom: "8em" }}>
-            <Row style={{ height: "5rem" }} md={4}>
-              <Col
-                style={{ height: "1.5em", color: "white", left: "1em" }}
-                className="HeaderSvg"
-              >
-                <Bag
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setType("store");
-                  }}
-                  style={{ cursor: "pointer" }}
-                />
-              </Col>
-              <Col>
-                <div
-                  onClick={() => setType("store")}
-                  style={{ color: "white", cursor: "pointer" }}
-                >
-                  <h5>Store</h5>
-                </div>
-              </Col>
-            </Row>
+          <Bag />
+          <span>Store</span>
+        </div>
+        <div
+          className={`home-nav-item ${type === "library" ? "active" : ""}`}
+          onClick={() => setType("library")}
+        >
+          <LibraryIcon />
+          <span>Library</span>
+        </div>
+      </div>
 
-            <Row style={{ height: "5rem" }} md={4}>
-              <Col
-                style={{ height: "1.5em", color: "white", left: "1em" }}
-                className="HeaderSvg"
-              >
-                <Library
-                  onClick={() => setType("library")}
-                  style={{ cursor: "pointer" }}
-                />
-              </Col>
-              <Col>
-                <div
-                  onClick={() => setType("library")}
-                  style={{ color: "white", cursor: "pointer" }}
-                >
-                  <h5>Library</h5>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </Col>
-        <Col
-          md={10}
-          style={{
-            height: "100vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {type === "store" ? <Store2 /> : <LibraryAccount />}
+      <Row>
+        <Col md={12} style={{ minHeight: "100vh" }}>
+          {type === "store" ? <Store /> : <LibraryAccount />}
         </Col>
       </Row>
     </Container>

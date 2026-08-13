@@ -12,14 +12,14 @@ const CarouselComponent = ({ topRatedProducts }) => {
                <Carousel.Item key={product.id}>
                    <Container style={{ width: '80rem', display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
                        <img style={{ width: '50rem', height: '30rem' }} alt="not found" src={product?.images?.[0]?.image} />
-                       <Carousel.Caption className='carousel.caption'>
+                       <Carousel.Caption className='carousel-caption' style={{ zIndex: 5 }}>
                         <Button
                             type="button"
                             className='Btn-White-Btnfocus'
                             onClick={() => navigate(`/gamePage/${product?.id}`)}
-                            style={{ width: '10rem', background: 'transparent', color: 'white', border: '1px solid rgba(255,255,255,0.5)', fontWeight: 'bold' }}
+                            style={{ position: 'relative', zIndex: 5, width: '10rem', background: 'transparent', color: 'white', border: '1px solid rgba(255,255,255,0.5)', fontWeight: 'bold' }}
                         >
-                            Play now
+                            Shop now
                         </Button>
                        </Carousel.Caption>
                    </Container>

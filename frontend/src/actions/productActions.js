@@ -297,17 +297,15 @@ if (!userWishList) {
 }
 };
 
-export const deleteFromWishList = (id) => async (dispatch) => {
+export const deleteFromWishList = (id, userId) => async (dispatch) => {
   dispatch({
     type: REMOVE_FROM_WISHLIST_REQUEST,
   });
 
-  let userWishList = localStorage.getItem("userWishList");
-
-  userWishList = JSON.parse(userWishList);
-  console.log("userWishList", userWishList, id);
-  userWishList = userWishList.filter((game) => parseInt(game) !== id);
-  localStorage.setItem("userWishList", JSON.stringify(userWishList));
+  const userWishListKey = `userWishList_${userId}`;
+  let userWishList = JSON.parse(localStorage.getItem(userWishListKey) || "[]");
+  userWishList = userWishList.filter((game) => parseInt(game, 10) !== id);
+  localStorage.setItem(userWishListKey, JSON.stringify(userWishList));
 
   dispatch({
     type: REMOVE_FROM_WISHLIST_SUCCESS,

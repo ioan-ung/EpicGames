@@ -1,57 +1,104 @@
-import React from "react";
-import { Modal, Button, Row } from "react-bootstrap";
+import React, { useContext, useMemo, useState } from "react";
+import { Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import WishRow from "./WishRow";
-import { useContext } from "react";
+import WishListIcon from "../svg/price.svg?react";
+import CloseIcon from "../svg/close.svg?react";
 import { AuthContext } from "../context/AuthContext";
 
 const WishListPopup = ({ wishList, setWishList }) => {
-  const handleClose = () => {
-    setWishList(false);
-  };
-  const user = useContext(AuthContext)
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const userId = user?.user_id;
+  const storageKey = `userWishList_${userId}`;
+
+  const [wishIds, setWishIds] = useState(
+    () => JSON.parse(localStorage.getItem(storageKey) || "[]")
+  );
+
+  const handleClose = () => setWishList(false);
+
   const getProducts = useSelector((state) => state.getSearchedProductsReducer);
-  const { loading, error, games, products } = getProducts;
-  const data = JSON.parse(localStorage.getItem(`userWishList_${user?.user?.user_id}`) || "[]");
+  const { games, products } = getProducts;
   const productList = products ?? games?.products ?? games ?? [];
 
-  return (
-    <div style={{ overflowY: "scroll" }}>
-      <Modal
-        show={wishList}
-        onHide={handleClose}
-        style={{
-          width: "100vw",
-          height: "100vh",
-          backgroundImage: "linear-gradient(#13120F, #252525)",
-        }}
-        >
-        
-        <Modal.Body>
-          {data&&
-            productList &&
-            data.map((id, index) => {
-              const gameId = parseInt(id, 10);
-              const game = Object.values(productList).find(
-                (g) => g?.id === gameId
-              );
-              if (game) {
-                return (
-                  <WishRow key={index} game={game} setWishList={setWishList} />
-                );
-              } else {
-                return null;
-              }
-            })}
-        </Modal.Body>
+  const wishListGames = useMemo(
+    () =>
+      wishIds
+        .map((id) =>
+          Object.values(productList).find((g) => g?.id === parseInt(id, 10))
+        )
+        .filter(Boolean),
+    [wishIds, productList]
+  );
 
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </div>
+  const handleRemove = (gameId) => {
+    setWishIds((prev) => prev.filter((id) => parseInt(id, 10) !== gameId));
+  };
+
+  return (
+    <Modal
+      show={wishList}
+      onHide={handleClose}
+      centered
+      scrollable
+      dialogClassName="wishlist-modal-dialog"
+      contentClassName="wishlist-modal-content"
+      onShow={() =>
+        setWishIds(JSON.parse(localStorage.getItem(storageKey) || "[]"))
+      }
+    >
+      <div className="wishlist-header">
+        <div className="wishlist-title">
+          <WishListIcon className="wishlist-title-icon" />
+          <span>My Wishlist</span>
+          {wishListGames.length > 0 && (
+            <span className="wishlist-count">{wishListGames.length}</span>
+          )}
+        </div>
+        <button
+          type="button"
+          className="wishlist-close-btn"
+          onClick={handleClose}
+          aria-label="Close wishlist"
+        >
+          <CloseIcon />
+        </button>
+      </div>
+
+      <Modal.Body className="wishlist-body">
+        {wishListGames.length > 0 ? (
+          wishListGames.map((game) => (
+            <WishRow
+              key={game.id}
+              game={game}
+              userId={userId}
+              setWishList={setWishList}
+              onRemove={handleRemove}
+            />
+          ))
+        ) : (
+          <div className="wishlist-empty">
+            <WishListIcon className="wishlist-empty-icon" />
+            <p className="wishlist-empty-title">Your wishlist is empty</p>
+            <span className="wishlist-empty-subtitle">
+              Save the games you love and find them here later.
+            </span>
+            <button
+              type="button"
+              className="wishlist-browse-btn"
+              onClick={() => {
+                handleClose();
+                navigate("/listGame/");
+              }}
+            >
+              Browse Store
+            </button>
+          </div>
+        )}
+      </Modal.Body>
+    </Modal>
   );
 };
 

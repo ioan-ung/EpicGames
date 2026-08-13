@@ -3,7 +3,7 @@ import {BrowserRouter as Router,Route,Routes} from 'react-router-dom'
 import Homescreen from './pages/Homescreen';
 import GamesPage from './pages/GamesPage';
 import Header from './components/Header';
-import GamePopup from './pages/GamePopup';
+import GamePopup from './pages/GamePage';
 import { AuthContextProvider } from './context/AuthContext';
 import SignIn from './pages/SignInUp';
 import { useEffect } from 'react';

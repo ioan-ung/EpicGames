@@ -20,6 +20,7 @@ const GamePopup = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [buyNow, setBuyNow] = useState(false);
+  const [wishlist,setWishList] = useState(false);
 
   useEffect(() => {
     dispatch(getProductById(id));
@@ -46,6 +47,12 @@ const GamePopup = () => {
       ) : (
         <div className="game-page-inner">
           <div className="game-hero">
+            <img
+              className="game-hero-bg"
+              src={game?.images?.[activeImage]?.image}
+              alt=""
+              aria-hidden="true"
+            />
             <img
               className="game-hero-image"
               src={game?.images?.[activeImage]?.image}
@@ -141,18 +148,34 @@ const GamePopup = () => {
                   setBuyNow(true);
                 }}
               >
-                <strong>BUY NOW</strong>
+                <strong>Buy now</strong>
               </Button>
-
-              <Button
-                className="feature-secondary-btn game-wishlist-btn"
-                onClick={() => {
-                  dispatch(addToWishList(id, userDetails.id));
-                }}
-              >
-                <Pricing style={{ width: "1.1rem", height: "1.1rem" }} />
-                Add to wishlist
-              </Button>
+              
+              {
+                  wishlist?
+                  <Button
+                    className="feature-secondary-btn game-wishlist-btn"
+                    onClick={() => {
+                      dispatch(addToWishList(id, userDetails.id));
+                      setWishList(!wishlist);
+                    }}
+                  >
+                    <Pricing style={{ width: "1.1rem", height: "1.1rem" }} />
+                      Add to wishlist
+                  </Button>
+                    :
+                  <Button
+                    id="wishlist-added-btn"
+                    className="feature-secondary-btn game-wishlist-btn"
+                    onClick={() => {
+                      dispatch(addToWishList(id, userDetails.id));
+                      setWishList(!wishlist);
+                    }}
+                  >
+                    <Pricing style={{ width: "1.1rem", height: "1.1rem" }} />
+                      Added to wishlist
+                  </Button>
+                }
 
               <BuyGame
                 price={game?.price}
