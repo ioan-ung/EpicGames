@@ -1,0 +1,240 @@
+.update-user-page {
+  width: 100vw;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(110, 150, 255, 0.18), transparent 42%),
+    radial-gradient(circle at 84% 78%, rgba(142, 125, 255, 0.16), transparent 45%),
+    linear-gradient(180deg, #0b0d12 0%, #121722 45%, #0b1018 100%);
+  padding: 2rem 1rem;
+}
+
+.update-user-shell {
+  width: 100%;
+  max-width: 460px;
+  position: relative;
+  z-index: 2;
+}
+
+.update-user-card {
+  background: rgba(15, 20, 27, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(18px);
+  padding: 2.5rem 2.25rem 2.25rem;
+}
+
+.update-user-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1.75rem;
+  gap: 0.25rem;
+}
+
+.update-user-brand h1 {
+  font-size: 1.55rem;
+  margin: 0;
+  color: #f6f8ff;
+  font-weight: 700;
+}
+
+.update-user-brand p {
+  margin: 0.25rem 0 0;
+  color: #a9b8d3;
+  font-size: 0.9rem;
+}
+
+.update-user-avatar-wrap {
+  position: relative;
+  width: 6.5rem;
+  height: 6.5rem;
+  margin-bottom: 1rem;
+}
+
+.update-user-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 14px 32px rgba(111, 146, 255, 0.25);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.update-user-avatar-edit {
+  position: absolute;
+  right: -0.1rem;
+  bottom: -0.1rem;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #6ca4ff, #8e7dff);
+  border: 3px solid #0f141b;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease;
+}
+
+.update-user-avatar-edit:hover {
+  transform: scale(1.08);
+}
+
+.update-user-avatar-edit svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.update-user-avatar-input {
+  display: none;
+}
+
+.update-user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  animation: update-user-fade-in 0.25s ease;
+}
+
+@keyframes update-user-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.update-user-field label {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #a9b8d3;
+  margin-bottom: 0.5rem;
+}
+
+.update-user-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.update-user-input-icon {
+  position: absolute;
+  left: 0.95rem;
+  top: 0.9rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  color: #7b8bab;
+  pointer-events: none;
+}
+
+.update-user-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  padding: 0.75rem 1rem 0.75rem 2.65rem;
+  color: #edf2ff;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.update-user-input::placeholder {
+  color: rgba(180, 192, 222, 0.45);
+}
+
+.update-user-input:focus {
+  outline: none;
+  border-color: rgba(138, 173, 255, 0.7);
+  background: rgba(110, 150, 255, 0.06);
+  box-shadow: 0 0 0 4px rgba(110, 150, 255, 0.12);
+}
+
+textarea.update-user-input {
+  padding-left: 1rem;
+  min-height: 5.5rem;
+  resize: vertical;
+}
+
+.update-user-submit-btn {
+  margin-top: 0.35rem;
+  border: none;
+  border-radius: 999px;
+  padding: 0.85rem 1.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+  background: linear-gradient(135deg, #6ca4ff, #8e7dff);
+  box-shadow: 0 18px 35px rgba(111, 146, 255, 0.35);
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.update-user-submit-btn:hover {
+  transform: translateY(-1px);
+}
+
+.update-user-submit-btn:active {
+  transform: translateY(0);
+}
+
+.update-user-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.update-user-cancel-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #a9b8d3;
+  font-size: 0.88rem;
+}
+
+.update-user-cancel-link button {
+  background: none;
+  border: none;
+  color: #9cbcff;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 0.35rem;
+  font-size: inherit;
+}
+
+.update-user-cancel-link button:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.update-user-error {
+  color: #ff8a8a;
+  background: rgba(255, 90, 90, 0.08);
+  border: 1px solid rgba(255, 90, 90, 0.25);
+  border-radius: 12px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+@media (max-width: 575.98px) {
+  .update-user-card {
+    padding: 2rem 1.5rem 1.75rem;
+    border-radius: 22px;
+  }
+}

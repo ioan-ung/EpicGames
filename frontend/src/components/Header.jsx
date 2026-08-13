@@ -14,8 +14,9 @@ import "./style/Navbar.css"
 import CoinsPopup from './CoinsPopup';
 import WishListPopup from './WishListPopup';
 import LogOut from '../svg/logout.svg?react'
+import Edit from '../svg/edit.svg?react'
 import { useDispatch,useSelector } from 'react-redux';
-import { getUserAction } from '../actions/userActions';
+import { getUserAction, updateUserAction } from '../actions/userActions';
 import { jwtDecode } from 'jwt-decode'
 import { API_URL } from '../index'
 function Header() {
@@ -29,6 +30,7 @@ function Header() {
     const [avatarRect, setAvatarRect] = useState(null);
     const avatarRef = useRef(null);
     const profileMenuRef = useRef(null);
+    const editImageInputRef = useRef(null);
     const userCredentials = useSelector((state) => state.getUserReducer);
     const {loading,error,userDetails} = userCredentials
     const [user, setUser] = useState(localStorage.getItem("access") ? jwtDecode(localStorage.getItem("access")) : null)
@@ -75,6 +77,20 @@ function Header() {
             setPictureView('closed');
             setAvatarRect(null);
         }
+    };
+
+    const handleEditPictureClick = (e) => {
+        e.stopPropagation();
+        editImageInputRef.current?.click();
+    };
+
+    const handleEditPictureFileChange = (e) => {
+        const file = e.target.files?.[0];
+        e.target.value = '';
+        if (!file) return;
+        const formData = new FormData();
+        formData.append('image', file);
+        dispatch(updateUserAction({ user: userDetails?.id, data: formData, navigate }));
     };
 
     const handleOpenProfile = () => {
@@ -211,6 +227,26 @@ function Header() {
                             height: isPictureCentered ? 'min(80vmin, 560px)' : `${avatarRect.height}px`,
                             transform: isPictureCentered ? 'translate(-50%, -50%)' : 'translate(0, 0)',
                         }}
+                    />
+
+                    <button
+                        type="button"
+                        className="profile-picture-edit-btn"
+                        onClick={handleEditPictureClick}
+                        style={{ opacity: isPictureCentered ? 1 : 0, pointerEvents: isPictureCentered ? 'auto' : 'none' }}
+                        aria-label="Change profile picture"
+                        title="Change profile picture"
+                    >
+                        <Edit />
+                    </button>
+
+                    <input
+                        ref={editImageInputRef}
+                        type="file"
+                        accept="image/*"
+                        onClick={(e) => e.stopPropagation()}
+                        onChange={handleEditPictureFileChange}
+                        style={{ display: 'none' }}
                     />
                 </div>,
                 document.body
