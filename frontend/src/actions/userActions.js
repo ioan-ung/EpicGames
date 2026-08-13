@@ -8,8 +8,8 @@ export const getUserAction = (user) => async(dispatch) =>{
         dispatch({
             type:GET_USER_BYID_REQUEST,
         })
-        console.log("aici");
         const response = await axios.get(`/api/users/${user}`);
+        console.log(response);
         dispatch({
             type:GET_USER_BYID_SUCCESS,
             payload:response.data.data
@@ -33,7 +33,6 @@ export const updateUserAction = ({user,data,navigate}) => async(dispatch) =>{
             type:UPDATE_USER_BYID_REQUEST,
         })
 
-        console.log("data ACTION",data)
         const response = await axios.put(`/api/users/${user}`,data);
 
         if(response.status === 200)

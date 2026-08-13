@@ -14,7 +14,7 @@ class Profile(models.Model):
     games = models.ManyToManyField(Game,blank=True,null=True,related_name="games_of_the_user")
     genre = models.JSONField(default=dict,null=True,blank=True)
     description = models.TextField(null=True,blank=True,max_length=1000)
-    image = models.CharField(null=True,blank=True,default="default_user.png",max_length=100)
+    image = models.ImageField(upload_to="avatars/",null=True,blank=True)
     
     def set_bought_games(self, games):
         self.bought_games = ','.join(map(str, games))

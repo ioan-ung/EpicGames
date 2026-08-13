@@ -11,22 +11,22 @@ const UpdateUser = () => {
   const { loading, error, userDetails } = userCredentials;
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   const [description, setDescription] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleOnSubmit = () => {
-    const filteredData = {};
-    if (username) filteredData.username = username;
-    if (email) filteredData.email = email;
-    if (description) filteredData.description = description;
-    if (image) filteredData.image = image;
+    const formData = new FormData();
+    if (username) formData.append("username", username);
+    if (email) formData.append("email", email);
+    if (description) formData.append("description", description);
+    if (image) formData.append("image", image);
 
     dispatch(
       updateUserAction({
         user: userDetails?.id,
-        data: filteredData,
+        data: formData,
         navigate: navigate,
       })
     );
@@ -121,7 +121,7 @@ const UpdateUser = () => {
                     <Form.Label>Profile Picture</Form.Label>
                     <Form.Control
                       type="file"
-                      onChange={(e) => setImage(e.target.files[0].name)}
+                      onChange={(e) => setImage(e.target.files[0])}
                     />
                   </Form.Group>
                 </>

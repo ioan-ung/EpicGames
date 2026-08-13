@@ -107,7 +107,7 @@ function Header() {
                         <Nav.Link className="p-0">
                             <Link to = "/updateUser">
                                  <img
-                                    src={userDetails?.image ? `${API_URL}/static/images/${userDetails.image}` : UserDefaultImage}
+                                    src={userDetails?.image || UserDefaultImage}
                                     alt="Profile"
                                     onError={(e) => {
                                         e.currentTarget.src = UserDefaultImage;

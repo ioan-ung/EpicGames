@@ -38,7 +38,10 @@ class UserGetSerializer(serializers.ModelSerializer):
         try:
             profile = obj.profile
             if profile and profile.image:
-                return profile.image
+                image_value = str(profile.image)
+                if image_value.startswith('http://') or image_value.startswith('https://'):
+                    return image_value
+                return profile.image.url
             else:
                 return None
         except Profile.DoesNotExist as e:
@@ -93,8 +96,7 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
     username = serializers.CharField(max_length=255, required=False)
     description = serializers.CharField(max_length=255, required=False)
     genre = serializers.JSONField(required=False)
-    image = serializers.CharField(required=False)
-    bought_games = serializers.CharField(required=False)  
+    bought_games = serializers.CharField(required=False)
 
     class Meta:
         model = Profile
