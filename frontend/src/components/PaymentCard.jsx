@@ -7,12 +7,20 @@ import "./style/PaymentCard.css";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 
-const PaymentCard = ({ data, setMoney, setCoins, setBonus, setPriceId }) => {
+const PaymentCard = ({
+  data,
+  setMoney,
+  setCoins,
+  setBonus,
+  setPriceId,
+  selectedPriceId,
+}) => {
   const dispatch = useDispatch();
   const { finalCoins, setFinalCoins } = useContext(AuthContext);
   const { user, logout } = useContext(AuthContext);
   const userCredentials = useSelector((state) => state.getUserReducer);
   const {loading,error,userDetails} = userCredentials
+  const isSelected = selectedPriceId === data.priceId;
 
   useEffect(() => {
     localStorage.setItem("finalCoins", finalCoins);
@@ -31,7 +39,7 @@ const PaymentCard = ({ data, setMoney, setCoins, setBonus, setPriceId }) => {
     >
       <Col className="PaymentCardHover payment-card-col d-flex align-items-center justify-content-center">
         <>
-          <Button className="button">
+          <Button className={`button${isSelected ? " button-selected" : ""}`}>
             <Row
               md={2}
               xl={4}

@@ -111,6 +111,7 @@ export default function CoinsPopup({ open, setOpen }) {
                       setCoins={setCoins}
                       setBonus={setBonus}
                       setPriceId={setPriceId}
+                      selectedPriceId={priceId}
                     />
                     {number++}
                     <PaymentCard
@@ -119,6 +120,7 @@ export default function CoinsPopup({ open, setOpen }) {
                       setCoins={setCoins}
                       setBonus={setBonus}
                       setPriceId={setPriceId}
+                      selectedPriceId={priceId}
                     />
                     {number++}
                     <PaymentCard
@@ -127,6 +129,7 @@ export default function CoinsPopup({ open, setOpen }) {
                       setCoins={setCoins}
                       setBonus={setBonus}
                       setPriceId={setPriceId}
+                      selectedPriceId={priceId}
                     />
                     {number++}
                   </Row>
@@ -140,6 +143,7 @@ export default function CoinsPopup({ open, setOpen }) {
                       setCoins={setCoins}
                       setBonus={setBonus}
                       setPriceId={setPriceId}
+                      selectedPriceId={priceId}
                     />
                     {number++}
                     <PaymentCard
@@ -148,6 +152,7 @@ export default function CoinsPopup({ open, setOpen }) {
                       setCoins={setCoins}
                       setBonus={setBonus}
                       setPriceId={setPriceId}
+                      selectedPriceId={priceId}
                     />
                     {number++}
                   </Row>
@@ -161,6 +166,7 @@ export default function CoinsPopup({ open, setOpen }) {
                       setCoins={setCoins}
                       setBonus={setBonus}
                       setPriceId={setPriceId}
+                      selectedPriceId={priceId}
                     />
                     {number++}
                   </Row>

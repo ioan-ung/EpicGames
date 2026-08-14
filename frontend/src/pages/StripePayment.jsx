@@ -2,8 +2,11 @@ import React from "react";
 import { useEffect } from "react";
 import { API_URL } from "../index";
 import QueryString from "query-string";
+import "./style/StripePayment.css";
 
 function StripePayment({ money, coins, bonus, priceId }) {
+  const isPriceSelected = !!priceId && priceId !== "default_value";
+
   useEffect(() => {
     try {
       const currentUrl = new URL(this.parent.location.href);
@@ -36,8 +39,8 @@ function StripePayment({ money, coins, bonus, priceId }) {
         <input type="hidden" name="priceId" value={priceId} />
         <button
           type="submit"
-          class="btn btn-primary"
-          style={{ position: "absolute" }}
+          className="checkout-button"
+          disabled={!isPriceSelected}
         >
           Checkout
         </button>

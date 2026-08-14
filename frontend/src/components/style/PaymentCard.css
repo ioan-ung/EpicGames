@@ -35,6 +35,16 @@
     box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
   }
 
+  .button-selected {
+    border: 2px solid #1fd075;
+    background: linear-gradient(135deg, #16281f, #1d3527);
+    box-shadow: 0 0 0 4px rgba(31, 208, 117, 0.25), 0 14px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .button-selected:hover {
+    background: linear-gradient(135deg, #1a3024, #223d2c);
+  }
+
   .button .payment-card-content {
     margin: 0;
     width: 100%;
