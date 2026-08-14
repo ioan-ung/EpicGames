@@ -148,9 +148,9 @@ function Header() {
                            justifyContent:"space-between",
                            alignItems:"center",
                             }}>
-                        <Nav.Link className="p-0">
+                        <Nav.Link className="p-0 me-2">
                             {user ?
-                                <Link className="navbar-action-pill" onClick = {(e) =>{e.stopPropagation();setOpen(true)}}>
+                                <Link className="navbar-action-pill navbar-action-pill-coins" onClick = {(e) =>{e.stopPropagation();setOpen(true)}}>
                                     <Money style = {{color:"#f5d547"}}/>
                                     {userDetails?.coins} Coins
                                 </Link>
@@ -161,8 +161,8 @@ function Header() {
                             }
                         </Nav.Link>
 
-                        <Nav.Link className="p-0">
-                            <Link to = "#" onClick = {(e) =>{e.stopPropagation();setWishList(true)}} className="navbar-action-pill">
+                        <Nav.Link className="p-0 me-2">
+                            <Link to = "#" onClick = {(e) =>{e.stopPropagation();setWishList(true)}} className="navbar-action-pill navbar-action-pill-wishlist">
                                 <WishList style = {{color:"#a78bfa"}}/>
                                 WishList
                             </Link>

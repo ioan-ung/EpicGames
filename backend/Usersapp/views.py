@@ -13,6 +13,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import Profile
 from Gamesapp.models import Game
+from Gamesapp.serializers import GameSerializer
 from decimal import Decimal
 from django.shortcuts import get_object_or_404
 
@@ -163,6 +164,14 @@ class UserViewWithoutId(APIView):
 
 
 class WishListView(APIView):
+    def get(self, request, pk):
+        try:
+            profile = get_object_or_404(Profile, user_id=pk)
+            serializer = GameSerializer(profile.wished_games.all(), many=True)
+            return ReturnResponse.GetSuccess(serializer.data)
+        except Exception as e:
+            return ExceptionHandler.handle_internal_server_error(e, "WishListView GET")
+
     def post(self, request, pk):
         try:
             profile = get_object_or_404(Profile, user_id=pk)
@@ -171,9 +180,8 @@ class WishListView(APIView):
             game = Game.objects.get(id=serializer.validated_data['game_id'])
 
             profile.wished_games.add(game)
-            return ReturnResponse.GetSuccess(
-                list(profile.wished_games.values_list('id', flat=True))
-            )
+            serializer = GameSerializer(profile.wished_games.all(), many=True)
+            return ReturnResponse.GetSuccess(serializer.data)
         except Game.DoesNotExist:
             return ExceptionHandler.handle_gameNotFound()
         except ValidationError as e:
@@ -187,9 +195,8 @@ class WishListView(APIView):
             game = Game.objects.get(id=game_id)
 
             profile.wished_games.remove(game)
-            return ReturnResponse.GetSuccess(
-                list(profile.wished_games.values_list('id', flat=True))
-            )
+            serializer = GameSerializer(profile.wished_games.all(), many=True)
+            return ReturnResponse.GetSuccess(serializer.data)
         except Game.DoesNotExist:
             return ExceptionHandler.handle_gameNotFound()
         except Exception as e:

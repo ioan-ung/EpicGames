@@ -3,7 +3,7 @@ import { Alert, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import Pricing from "../svg/price.svg?react";
 import VideoCarousel from "../components/VideoCarousel";
-import { addToWishList } from "../actions/productActions";
+import { addToWishList, deleteFromWishList } from "../actions/productActions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import Loader from "../components/Loader";
@@ -35,6 +35,12 @@ const GamePopup = () => {
   useEffect(() => {
     setActiveImage(0);
   }, [game?.id]);
+
+  useEffect(() => {
+    setWishList(
+      userDetails?.wished_games?.includes(parseInt(id, 10)) ?? false
+    );
+  }, [userDetails, id]);
 
   return (
     <div className="MainPage game-page">
@@ -152,12 +158,12 @@ const GamePopup = () => {
               </Button>
               
               {
-                  wishlist?
+                  !wishlist?
                   <Button
                     className="feature-secondary-btn game-wishlist-btn"
                     onClick={() => {
                       dispatch(addToWishList(id, userDetails.id));
-                      setWishList(!wishlist);
+                      setWishList(true);
                     }}
                   >
                     <Pricing style={{ width: "1.1rem", height: "1.1rem" }} />
@@ -168,8 +174,8 @@ const GamePopup = () => {
                     id="wishlist-added-btn"
                     className="feature-secondary-btn game-wishlist-btn"
                     onClick={() => {
-                      dispatch(addToWishList(id, userDetails.id));
-                      setWishList(!wishlist);
+                      dispatch(deleteFromWishList(id, userDetails.id));
+                      setWishList(false);
                     }}
                   >
                     <Pricing style={{ width: "1.1rem", height: "1.1rem" }} />

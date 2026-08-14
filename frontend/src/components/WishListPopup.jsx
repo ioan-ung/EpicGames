@@ -1,40 +1,34 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import WishRow from "./WishRow";
 import WishListIcon from "../svg/price.svg?react";
 import CloseIcon from "../svg/close.svg?react";
 import { AuthContext } from "../context/AuthContext";
+import { getWishList } from "../actions/productActions";
 
 const WishListPopup = ({ wishList, setWishList }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { user } = useContext(AuthContext);
   const userId = user?.user_id;
 
-  const userCredentials = useSelector((state) => state.getUserReducer);
-  const { userDetails } = userCredentials;
+  const wishListState = useSelector((state) => state.wishListReducer);
+  const { data } = wishListState;
 
-  const [wishIds, setWishIds] = useState(userDetails?.wished_games ?? []);
+  const [wishListGames, setWishListGames] = useState([]);
+
+  useEffect(() => {
+    if (Array.isArray(data)) {
+      setWishListGames(data);
+    }
+  }, [data]);
 
   const handleClose = () => setWishList(false);
 
-  const getProducts = useSelector((state) => state.getSearchedProductsReducer);
-  const { games, products } = getProducts;
-  const productList = products ?? games?.products ?? games ?? [];
-
-  const wishListGames = useMemo(
-    () =>
-      wishIds
-        .map((id) =>
-          Object.values(productList).find((g) => g?.id === parseInt(id, 10))
-        )
-        .filter(Boolean),
-    [wishIds, productList]
-  );
-
   const handleRemove = (gameId) => {
-    setWishIds((prev) => prev.filter((id) => parseInt(id, 10) !== gameId));
+    setWishListGames((prev) => prev.filter((game) => game.id !== gameId));
   };
 
   return (
@@ -45,7 +39,7 @@ const WishListPopup = ({ wishList, setWishList }) => {
       scrollable
       dialogClassName="wishlist-modal-dialog"
       contentClassName="wishlist-modal-content"
-      onShow={() => setWishIds(userDetails?.wished_games ?? [])}
+      onShow={() => dispatch(getWishList(userId))}
     >
       <div className="wishlist-header">
         <div className="wishlist-title">

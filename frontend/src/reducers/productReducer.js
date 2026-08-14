@@ -1,6 +1,13 @@
 import {
   ADD_TO_WISH_LIST_REQUEST,
   ADD_TO_WISH_LIST_SUCCESS,
+  ADD_TO_WISH_LIST_FAIL,
+  REMOVE_FROM_WISHLIST_REQUEST,
+  REMOVE_FROM_WISHLIST_SUCCESS,
+  REMOVE_FROM_WISHLIST_FAIL,
+  GET_WISHLIST_REQUEST,
+  GET_WISHLIST_SUCCESS,
+  GET_WISHLIST_FAIL,
   DELETE_ALL_PRICE_FAIL,
   DELETE_ALL_PRICE_REQUEST,
   DELETE_ALL_PRICE_SUCCESS,
@@ -186,13 +193,22 @@ export const deletePriceWithoutReducer = (state = {}, action) => {
   }
 };
 
-export const addToWishListReducer = (state = {}, action) => {
+export const wishListReducer = (state = {}, action) => {
   switch (action.type) {
+    case GET_WISHLIST_REQUEST:
     case ADD_TO_WISH_LIST_REQUEST:
-      return { loading: true, error: false };
+    case REMOVE_FROM_WISHLIST_REQUEST:
+      return { ...state, loading: true, error: false };
 
+    case GET_WISHLIST_SUCCESS:
     case ADD_TO_WISH_LIST_SUCCESS:
-      return { loading: false, error: false, data: "success" };
+    case REMOVE_FROM_WISHLIST_SUCCESS:
+      return { loading: false, error: false, data: action.payload };
+
+    case GET_WISHLIST_FAIL:
+    case ADD_TO_WISH_LIST_FAIL:
+    case REMOVE_FROM_WISHLIST_FAIL:
+      return { ...state, loading: false, error: action.payload };
 
     default:
       return state;

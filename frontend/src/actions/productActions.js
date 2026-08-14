@@ -27,6 +27,9 @@ import {
   REMOVE_FROM_WISHLIST_REQUEST,
   REMOVE_FROM_WISHLIST_SUCCESS,
   REMOVE_FROM_WISHLIST_FAIL,
+  GET_WISHLIST_REQUEST,
+  GET_WISHLIST_SUCCESS,
+  GET_WISHLIST_FAIL,
   GET_MOST_DOWNLOADED_PRODUCTS_REQUEST,
   GET_MOST_DOWNLOADED_PRODUCTS_SUCCESS,
   GET_MOST_DOWNLOADED_PRODUCTS_FAIL,
@@ -325,6 +328,27 @@ export const deleteFromWishList = (id, userId) => async (dispatch) => {
     console.log(e);
     dispatch({
       type: REMOVE_FROM_WISHLIST_FAIL,
+      payload: e,
+    });
+  }
+};
+
+export const getWishList = (userId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_WISHLIST_REQUEST,
+    });
+
+    const response = await axios.get(`/api/users/${userId}/wishlist/`);
+
+    dispatch({
+      type: GET_WISHLIST_SUCCESS,
+      payload: response.data.data,
+    });
+  } catch (e) {
+    console.log(e);
+    dispatch({
+      type: GET_WISHLIST_FAIL,
       payload: e,
     });
   }
