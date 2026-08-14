@@ -5,6 +5,13 @@ from datetime import datetime
 from decimal import Decimal
 from django.contrib.postgres.fields import ArrayField
 
+class UserRole(models.TextChoices):
+    CUSTOMER  = 'customer'    # cumpără și joacă
+    DEVELOPER = 'developer'   # creează și publică jocuri
+    MODERATOR = 'moderator'   # moderează recenzii și comunitatea
+    SUPPORT   = 'support'     # ajută clienții (tichete, refund-uri)
+    ADMIN     = 'admin'       # administrează întreaga platformă
+
 class Profile(models.Model):
     user = models.OneToOneField(User,blank=False,null=False,on_delete=models.CASCADE,primary_key=True)
     email = models.EmailField(blank=False,null=False,unique=True)
@@ -15,7 +22,12 @@ class Profile(models.Model):
     genre = models.JSONField(default=dict,null=True,blank=True)
     description = models.TextField(null=True,blank=True,max_length=1000)
     image = models.ImageField(upload_to="avatars/",null=True,blank=True)
-    
+    type = models.CharField(
+        max_length=20,
+        choices=UserRole.choices,
+        default=UserRole.CUSTOMER
+    )
+
     def set_bought_games(self, games):
         self.bought_games = ','.join(map(str, games))
 

@@ -9,7 +9,8 @@ class UserGetSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
     bought_games = serializers.SerializerMethodField()
-    
+    type = serializers.SerializerMethodField()
+
     class Meta:
         model = User
         fields = '__all__'
@@ -60,6 +61,16 @@ class UserGetSerializer(serializers.ModelSerializer):
         except Profile.DoesNotExist:
             print("Profile does not exist")  # Debugging print statement
             return []
+
+    def get_type(self, obj):
+        try:
+            profile = obj.profile
+            if profile:
+                return profile.type
+            else:
+                return None
+        except Profile.DoesNotExist:
+            return None
 
 class UserPostSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
