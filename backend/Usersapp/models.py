@@ -16,9 +16,9 @@ class Profile(models.Model):
     user = models.OneToOneField(User,blank=False,null=False,on_delete=models.CASCADE,primary_key=True)
     email = models.EmailField(blank=False,null=False,unique=True)
     username = models.CharField(blank=True,null=True,max_length=30)
-    bought_games = models.CharField(max_length=255, blank=True, null=True)  # Change to CharField
+    bought_games = models.ManyToManyField(Game,blank=True,related_name="owned_by_users")
+    wished_games = models.ManyToManyField(Game,blank=True,related_name="wished_by_users")
     coins = models.DecimalField(max_digits=10, decimal_places=2, blank=True, default=Decimal('0.00'))
-    games = models.ManyToManyField(Game,blank=True,null=True,related_name="games_of_the_user")
     genre = models.JSONField(default=dict,null=True,blank=True)
     description = models.TextField(null=True,blank=True,max_length=1000)
     image = models.ImageField(upload_to="avatars/",null=True,blank=True)
@@ -29,13 +29,10 @@ class Profile(models.Model):
     )
 
     def set_bought_games(self, games):
-        self.bought_games = ','.join(map(str, games))
+        self.bought_games.set(games)
 
     def get_bought_games(self):
-        if self.bought_games:
-            return list(map(int, self.bought_games.split(',')))
-        else:
-            return []
+        return list(self.bought_games.values_list('id', flat=True))
 
     def updateGenreCount(self,pk):
         MAXGENRES = 10

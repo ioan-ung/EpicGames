@@ -27,11 +27,10 @@ function BuyGame({ price, id, buyNow, setBuyNow }) {
       const coinsToSend = (userDetails?.coins - price).toFixed(2);
       const { bought_games, ...rest } = userDetails;
       const newBoughtGames = [...bought_games, id];
-      const boughtGamesString = newBoughtGames.join(",");
 
       const data = {
         coins: parseFloat(coinsToSend),
-        bought_games: boughtGamesString,
+        bought_games: newBoughtGames,
       };
 
       dispatch(

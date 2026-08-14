@@ -50,16 +50,9 @@ class UserGetSerializer(serializers.ModelSerializer):
         
     def get_bought_games(self, obj):
         try:
-            print("get_bought_games method called")  # Debugging print statement
             profile = obj.profile
-            if profile and isinstance(profile.bought_games, str):
-                print("Profile and bought_games are string")  # Debugging print statement
-                return [int(game_id) for game_id in profile.bought_games.split(",")]
-            else:
-                print("Profile or bought_games is not string")  # Debugging print statement
-                return []
+            return list(profile.bought_games.values_list('id', flat=True))
         except Profile.DoesNotExist:
-            print("Profile does not exist")  # Debugging print statement
             return []
 
     def get_type(self, obj):
@@ -107,7 +100,9 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
     username = serializers.CharField(max_length=255, required=False)
     description = serializers.CharField(max_length=255, required=False)
     genre = serializers.JSONField(required=False)
-    bought_games = serializers.CharField(required=False)
+    bought_games = serializers.PrimaryKeyRelatedField(
+        queryset=Game.objects.all(), many=True, required=False
+    )
 
     class Meta:
         model = Profile
