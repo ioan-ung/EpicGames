@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { updateUserAction } from "../actions/userActions";
 import { useNavigate } from "react-router-dom";
+import "./style/BuyGame.css";
 
 function BuyGame({ price, id, buyNow, setBuyNow }) {
   const userCredentials = useSelector((state) => state.getUserReducer);
@@ -46,25 +47,37 @@ function BuyGame({ price, id, buyNow, setBuyNow }) {
   return (
     <Dialog
       open={buyNow}
+      onClose={() => setBuyNow(false)}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
+      PaperProps={{ className: "buy-game-paper" }}
     >
-      <DialogTitle id="alert-dialog-title">
-        {"Continue transaction?"}
+      <DialogTitle id="alert-dialog-title" className="buy-game-title">
+        Continue transaction?
       </DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
+        <DialogContentText
+          id="alert-dialog-description"
+          className="buy-game-text"
+        >
           Are you sure you want to continue with this transaction? You'll pay{" "}
-          <strong>
+          <span className="buy-game-price">
             {price} <Money />
-          </strong>
+          </span>
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
-        <Button color="primary" onClick={() => setBuyNow(false)}>
+      <DialogActions className="buy-game-actions">
+        <Button
+          className="buy-game-btn buy-game-btn-cancel"
+          onClick={() => setBuyNow(false)}
+        >
           No
         </Button>
-        <Button color="primary" autoFocus onClick={() => handlePayment()}>
+        <Button
+          className="buy-game-btn buy-game-btn-confirm"
+          autoFocus
+          onClick={() => handlePayment()}
+        >
           Yes
         </Button>
       </DialogActions>

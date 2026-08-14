@@ -11,5 +11,7 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('', views.UserViewWithoutId.as_view(), name="user-view"),
     path('updatePreferences/<str:pk>', views.UpdateUserPreferences.as_view(), name="updateUserPreferences"),
+    path('<str:pk>/wishlist/', views.WishListView.as_view(), name="wishlist-add"),
+    path('<str:pk>/wishlist/<int:game_id>/', views.WishListView.as_view(), name="wishlist-remove"),
     path('<str:pk>', views.UserViewWithId.as_view(), name="user-view"),
 ]

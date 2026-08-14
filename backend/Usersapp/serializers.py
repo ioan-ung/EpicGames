@@ -9,6 +9,7 @@ class UserGetSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
     bought_games = serializers.SerializerMethodField()
+    wished_games = serializers.SerializerMethodField()
     type = serializers.SerializerMethodField()
 
     class Meta:
@@ -54,6 +55,13 @@ class UserGetSerializer(serializers.ModelSerializer):
             return list(profile.bought_games.values_list('id', flat=True))
         except Profile.DoesNotExist:
             return []
+        
+    def get_wished_games(self, obj):
+            try:
+                profile = obj.profile
+                return list(profile.wished_games.values_list('id', flat=True))
+            except Profile.DoesNotExist:
+                return []
 
     def get_type(self, obj):
         try:
@@ -93,8 +101,6 @@ class UserPostSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-    
-    
 class ProfileUpdateSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=False)
     username = serializers.CharField(max_length=255, required=False)

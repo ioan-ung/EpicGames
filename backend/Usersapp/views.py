@@ -1,7 +1,7 @@
 from rest_framework.decorators import APIView
 from rest_framework import status
 from django.contrib.auth.models import User
-from .serializers import UserPostSerializer, UserGetSerializer, ProfileUpdateSerializer, UserPreferencesSerializer
+from .serializers import UserPostSerializer, UserGetSerializer, ProfileUpdateSerializer, UserPreferencesSerializer, GameIDSerializer
 import logging
 from drf_yasg.utils import swagger_auto_schema
 from django.db.utils import IntegrityError
@@ -12,6 +12,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import Profile
+from Gamesapp.models import Game
 from decimal import Decimal
 from django.shortcuts import get_object_or_404
 
@@ -159,3 +160,37 @@ class UserViewWithoutId(APIView):
             return ReturnResponse.DeleteSuccess()
         except IntegrityError as e:
             return ExceptionHandler.handle_internal_server_error(e, "UserView DELETE")
+
+
+class WishListView(APIView):
+    def post(self, request, pk):
+        try:
+            profile = get_object_or_404(Profile, user_id=pk)
+            serializer = GameIDSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            game = Game.objects.get(id=serializer.validated_data['game_id'])
+
+            profile.wished_games.add(game)
+            return ReturnResponse.GetSuccess(
+                list(profile.wished_games.values_list('id', flat=True))
+            )
+        except Game.DoesNotExist:
+            return ExceptionHandler.handle_gameNotFound()
+        except ValidationError as e:
+            return ReturnResponse.CreateFail(e.get_full_details())
+        except Exception as e:
+            return ExceptionHandler.handle_internal_server_error(e, "WishListView POST")
+
+    def delete(self, request, pk, game_id):
+        try:
+            profile = get_object_or_404(Profile, user_id=pk)
+            game = Game.objects.get(id=game_id)
+
+            profile.wished_games.remove(game)
+            return ReturnResponse.GetSuccess(
+                list(profile.wished_games.values_list('id', flat=True))
+            )
+        except Game.DoesNotExist:
+            return ExceptionHandler.handle_gameNotFound()
+        except Exception as e:
+            return ExceptionHandler.handle_internal_server_error(e, "WishListView DELETE")

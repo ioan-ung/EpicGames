@@ -1,0 +1,69 @@
+.buy-game-paper {
+  background: linear-gradient(160deg, rgba(12, 16, 22, 0.97), rgba(23, 27, 34, 0.97)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  min-width: 320px;
+}
+
+.buy-game-title {
+  color: #fff !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
+}
+
+.buy-game-text {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.buy-game-price {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #f5d547;
+  font-weight: 700;
+}
+
+.buy-game-price svg {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.buy-game-actions {
+  padding: 0.75rem 1.5rem 1.4rem !important;
+  gap: 0.6rem;
+}
+
+.buy-game-btn {
+  border: none !important;
+  border-radius: 999px !important;
+  padding: 0.5rem 1.6rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
+  text-transform: none !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+}
+
+.buy-game-btn-cancel {
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.buy-game-btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #fff !important;
+}
+
+.buy-game-btn-confirm {
+  background: linear-gradient(135deg, #1fd075, #17a862) !important;
+  color: #071a10 !important;
+  box-shadow: 0 10px 24px rgba(31, 208, 117, 0.35);
+}
+
+.buy-game-btn-confirm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(31, 208, 117, 0.45);
+}

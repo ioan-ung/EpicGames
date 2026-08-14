@@ -11,11 +11,11 @@ const WishListPopup = ({ wishList, setWishList }) => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const userId = user?.user_id;
-  const storageKey = `userWishList_${userId}`;
 
-  const [wishIds, setWishIds] = useState(
-    () => JSON.parse(localStorage.getItem(storageKey) || "[]")
-  );
+  const userCredentials = useSelector((state) => state.getUserReducer);
+  const { userDetails } = userCredentials;
+
+  const [wishIds, setWishIds] = useState(userDetails?.wished_games ?? []);
 
   const handleClose = () => setWishList(false);
 
@@ -45,9 +45,7 @@ const WishListPopup = ({ wishList, setWishList }) => {
       scrollable
       dialogClassName="wishlist-modal-dialog"
       contentClassName="wishlist-modal-content"
-      onShow={() =>
-        setWishIds(JSON.parse(localStorage.getItem(storageKey) || "[]"))
-      }
+      onShow={() => setWishIds(userDetails?.wished_games ?? [])}
     >
       <div className="wishlist-header">
         <div className="wishlist-title">

@@ -21,8 +21,12 @@ import {
   GET_PRODUCT_BYID_REQUEST,
   GET_PRODUCT_BYID_SUCCESS,
   GET_PRODUCT_BYID_FAIL,
+  ADD_TO_WISH_LIST_REQUEST,
+  ADD_TO_WISH_LIST_SUCCESS,
+  ADD_TO_WISH_LIST_FAIL,
   REMOVE_FROM_WISHLIST_REQUEST,
   REMOVE_FROM_WISHLIST_SUCCESS,
+  REMOVE_FROM_WISHLIST_FAIL,
   GET_MOST_DOWNLOADED_PRODUCTS_REQUEST,
   GET_MOST_DOWNLOADED_PRODUCTS_SUCCESS,
   GET_MOST_DOWNLOADED_PRODUCTS_FAIL,
@@ -279,36 +283,49 @@ export const deletePriceWithoutId = () => async (dispatch) => {
   }
 };
 
-export const addToWishList = (id,userId) => async (dispatch) => {
 
-const userWishListKey = `userWishList_${userId}`;
 
-let userWishList = localStorage.getItem(userWishListKey);
 
-if (!userWishList) {
-  localStorage.setItem(userWishListKey, JSON.stringify([id]));
-} else {
-  userWishList = JSON.parse(userWishList);
+export const addToWishList = (id, userId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: ADD_TO_WISH_LIST_REQUEST,
+    });
 
-  if (!userWishList.some((game) => game === id)) {
-    userWishList.push(id);
-    localStorage.setItem(userWishListKey, JSON.stringify(userWishList));
+    const response = await axios.post(`/api/users/${userId}/wishlist/`, {
+      game_id: id,
+    });
+
+    dispatch({
+      type: ADD_TO_WISH_LIST_SUCCESS,
+      payload: response.data.data,
+    });
+  } catch (e) {
+    console.log(e);
+    dispatch({
+      type: ADD_TO_WISH_LIST_FAIL,
+      payload: e,
+    });
   }
-}
 };
 
 export const deleteFromWishList = (id, userId) => async (dispatch) => {
-  dispatch({
-    type: REMOVE_FROM_WISHLIST_REQUEST,
-  });
+  try {
+    dispatch({
+      type: REMOVE_FROM_WISHLIST_REQUEST,
+    });
 
-  const userWishListKey = `userWishList_${userId}`;
-  let userWishList = JSON.parse(localStorage.getItem(userWishListKey) || "[]");
-  userWishList = userWishList.filter((game) => parseInt(game, 10) !== id);
-  localStorage.setItem(userWishListKey, JSON.stringify(userWishList));
+    const response = await axios.delete(`/api/users/${userId}/wishlist/${id}/`);
 
-  dispatch({
-    type: REMOVE_FROM_WISHLIST_SUCCESS,
-    payload: id,
-  });
+    dispatch({
+      type: REMOVE_FROM_WISHLIST_SUCCESS,
+      payload: response.data.data,
+    });
+  } catch (e) {
+    console.log(e);
+    dispatch({
+      type: REMOVE_FROM_WISHLIST_FAIL,
+      payload: e,
+    });
+  }
 };
