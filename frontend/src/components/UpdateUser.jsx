@@ -112,6 +112,11 @@ const UpdateUser = () => {
             </div>
             <h1>Update your profile</h1>
             <p>Keep your account details up to date</p>
+            {userDetails?.type && (
+              <span className="update-user-role-badge">
+                {userDetails.type}
+              </span>
+            )}
           </div>
 
           {error && <div className="update-user-error">{error}</div>}

@@ -51,6 +51,19 @@
   font-size: 0.9rem;
 }
 
+.update-user-role-badge {
+  margin-top: 0.6rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(110, 150, 255, 0.16);
+  border: 1px solid rgba(128, 165, 255, 0.4);
+  color: #cfe0ff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .update-user-avatar-wrap {
   position: relative;
   width: 6.5rem;
