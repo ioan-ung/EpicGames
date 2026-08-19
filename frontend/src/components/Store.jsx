@@ -93,7 +93,7 @@ const Store = () => {
                   className="feature-primary-btn"
                   onClick={() => navigate(`/gamePage/${selectedGame.id}/`)}
                 >
-                  Shop now
+                  Learn More
                 </Button>
                 <Button
                   className="feature-secondary-btn"
