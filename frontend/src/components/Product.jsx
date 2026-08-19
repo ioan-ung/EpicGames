@@ -4,8 +4,12 @@ import { Link } from 'react-router-dom'
 import { handleUserGameInteraction } from '../actions/TagsPlacement'
 import Coins from '../svg/coins.svg?react'
 import Star from '../svg/star.svg?react'
+import { useSelector } from 'react-redux'
 
 const Product = ({ product }) => {
+  const userDetails = useSelector(store=>store.currentUser.userDetails);
+  const isOwned = userDetails?.bought_games?.includes(product?.id);
+
   return (
     <Card className='store-product-card' onClick={() => handleUserGameInteraction(product.tags)}>
       <Link to={`/gamePage/${product?.id}/`} className="store-product-image-wrap">
@@ -30,9 +34,12 @@ const Product = ({ product }) => {
           {product?.description?.slice(0, 90) + (product?.description?.length > 90 ? '...' : '')}
         </Card.Text>
 
-        <div className="store-product-footer">
-          <span className="store-product-price">{product?.price}<Coins /></span>
-        </div>
+        {
+          !isOwned &&
+          <div className="store-product-footer">
+            <span className="store-product-price">{product?.price}<Coins /></span>
+          </div>
+        }
       </Card.Body>
     </Card>
   )
