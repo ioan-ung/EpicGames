@@ -14,11 +14,13 @@ import Error from "./Error";
 import "./style/Store2.css";
 import Download from "../svg/downloads.svg?react";
 import Star from "../svg/star.svg?react";
+import BuyGame from "./BuyGame";
 
-const Store2 = () => {
+const Store = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState("TopRated");
+  const [buyNow, setBuyNow] = useState(false);
 
   const getProducts = useSelector((state) => {
     if (activeFilter === "Newest") return state.getYoungestProductsReducer;
@@ -93,10 +95,22 @@ const Store2 = () => {
                 >
                   Shop now
                 </Button>
-                <Button className="feature-secondary-btn">Wishlist</Button>
+                <Button
+                  className="feature-secondary-btn"
+                  onClick={() => setBuyNow(true)}
+                >
+                  Buy now
+                </Button>
               </div>
             </div>
           </div>
+
+          <BuyGame
+            price={selectedGame.price}
+            id={selectedGame.id}
+            buyNow={buyNow}
+            setBuyNow={setBuyNow}
+          />
 
           <div className="discover-tray">
             {games.map((game) => (
@@ -122,4 +136,4 @@ const Store2 = () => {
   );
 };
 
-export default Store2;
+export default Store;
