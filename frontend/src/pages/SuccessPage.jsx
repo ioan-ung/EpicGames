@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function SuccessPage() {
   const navigate = useNavigate();
-  const userCredentials = useSelector((state) => state.getUserReducer);
+  const userCredentials = useSelector((state) => state.currentUser);
   const { loading, error, userDetails } = userCredentials;
   const finalCoins = JSON.parse(localStorage?.getItem("finalCoins"));
   const dispatch = useDispatch();

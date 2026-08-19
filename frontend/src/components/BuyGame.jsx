@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import "./style/BuyGame.css";
 
 function BuyGame({ price, id, buyNow, setBuyNow }) {
-  const userCredentials = useSelector((state) => state.getUserReducer);
+  const userCredentials = useSelector((state) => state.currentUser);
   const { loading, error, userDetails } = userCredentials;
   const navigate = useNavigate();
   const dispatch = useDispatch();

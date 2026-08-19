@@ -31,7 +31,7 @@ function Header() {
     const avatarRef = useRef(null);
     const profileMenuRef = useRef(null);
     const editImageInputRef = useRef(null);
-    const userCredentials = useSelector((state) => state.getUserReducer);
+    const userCredentials = useSelector((state) => state.currentUser);
     const {loading,error,userDetails} = userCredentials
     const [user, setUser] = useState(localStorage.getItem("access") ? jwtDecode(localStorage.getItem("access")) : null)
 

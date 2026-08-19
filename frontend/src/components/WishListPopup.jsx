@@ -14,7 +14,7 @@ const WishListPopup = ({ wishList, setWishList }) => {
   const { user } = useContext(AuthContext);
   const userId = user?.user_id;
 
-  const wishListState = useSelector((state) => state.wishListReducer);
+  const wishListState = useSelector((state) => state.wishlist);
   const { data } = wishListState;
 
   const [wishListGames, setWishListGames] = useState([]);

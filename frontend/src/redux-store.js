@@ -3,19 +3,19 @@ import { updateUserPreferencesReducer,getProductByIdReducer,wishListReducer,dele
 import { getUserReducer } from './reducers/userReducers';
 
 const reducer = combineReducers({
-    getProductByIdReducer,
-    getTopRatedProductsReducer,
-    getMostDownloadedProductsReducer,
-    getSearchedProductsReducer,
-    getPricesReducer,
-    addPriceReducer,
-    deletePriceReducer,
-    deletePriceWithoutReducer,
-    wishListReducer,
-    updateUserPreferencesReducer,
-    getUserReducer,
-    getYoungestProductsReducer,
-    getOldestProductsReducer,
+    gameDetails: getProductByIdReducer,
+    topRatedGames: getTopRatedProductsReducer,
+    mostDownloadedGames: getMostDownloadedProductsReducer,
+    searchResults: getSearchedProductsReducer,
+    prices: getPricesReducer,
+    addedPrice: addPriceReducer,
+    deletedPrice: deletePriceReducer,
+    deletedPrices: deletePriceWithoutReducer,
+    wishlist: wishListReducer,
+    userPreferences: updateUserPreferencesReducer,
+    currentUser: getUserReducer,
+    newestGames: getYoungestProductsReducer,
+    oldestGames: getOldestProductsReducer,
 })
 
 const store = configureStore({ reducer })

@@ -19,8 +19,8 @@ export default function CoinsPopup({ open, setOpen }) {
     setOpen(false);
   };
 
-  const input = useSelector((state) => state.getPricesReducer);
-  const addPrice = useSelector((state) => state.addPriceReducer);
+  const input = useSelector((state) => state.prices);
+  const addPrice = useSelector((state) => state.addedPrice);
   const [refresh, setRefresh] = useState(false);
   let number = 1;
   const { data, loading, error } = input;
@@ -32,7 +32,7 @@ export default function CoinsPopup({ open, setOpen }) {
   const [bonus, setBonus] = useState(0);
   const [coins, setCoins] = useState(0);
   const [priceId, setPriceId] = useState("default_value");
-  const userCredentials = useSelector((state) => state.getUserReducer);
+  const userCredentials = useSelector((state) => state.currentUser);
   const {userDetails} = userCredentials
 
   useEffect(() => {

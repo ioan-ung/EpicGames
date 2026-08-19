@@ -16,11 +16,11 @@ const GamesPage = () => {
   const dispatch = useDispatch();
   const [carouselFilter, setCarouselFilter] = useState("TopRated");
 
-  const getProducts = useSelector((state) => state.getSearchedProductsReducer);
-  const getTopRated = useSelector((state) => state.getTopRatedProductsReducer);
-  const getMostDownloaded = useSelector((state) => state.getMostDownloadedProductsReducer);
-  const getYoungest = useSelector((state) => state.getYoungestProductsReducer);
-  const getOldest = useSelector((state) => state.getOldestProductsReducer);
+  const getProducts = useSelector((state) => state.searchResults);
+  const getTopRated = useSelector((state) => state.topRatedGames);
+  const getMostDownloaded = useSelector((state) => state.mostDownloadedGames);
+  const getYoungest = useSelector((state) => state.newestGames);
+  const getOldest = useSelector((state) => state.oldestGames);
 
   const urlParams = new URLSearchParams(window.location.search);
   const keyword = urlParams.get("keyword") ?? "";

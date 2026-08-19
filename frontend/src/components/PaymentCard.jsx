@@ -18,7 +18,7 @@ const PaymentCard = ({
   const dispatch = useDispatch();
   const { finalCoins, setFinalCoins } = useContext(AuthContext);
   const { user, logout } = useContext(AuthContext);
-  const userCredentials = useSelector((state) => state.getUserReducer);
+  const userCredentials = useSelector((state) => state.currentUser);
   const {loading,error,userDetails} = userCredentials
   const isSelected = selectedPriceId === data.priceId;
 

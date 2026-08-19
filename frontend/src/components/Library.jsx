@@ -12,7 +12,7 @@ const Library = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const userCredentials = useSelector((state) => state.getUserReducer);
+  const userCredentials = useSelector((state) => state.currentUser);
   const { loading, error, userDetails } = userCredentials;
   const gameIds = userDetails?.bought_games ?? [];
 
@@ -20,7 +20,7 @@ const Library = () => {
     dispatch(getSearchedProduct("", 1));
   }, [dispatch]);
 
-  const getProducts = useSelector((state) => state.getSearchedProductsReducer);
+  const getProducts = useSelector((state) => state.searchResults);
   const { games: products, products: directProducts } = getProducts;
   const catalog = directProducts ?? products?.products ?? products ?? [];
 

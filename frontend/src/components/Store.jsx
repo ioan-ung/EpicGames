@@ -23,10 +23,10 @@ const Store = () => {
   const [buyNow, setBuyNow] = useState(false);
 
   const getProducts = useSelector((state) => {
-    if (activeFilter === "Newest") return state.getYoungestProductsReducer;
-    if (activeFilter === "Oldest") return state.getOldestProductsReducer;
-    if (activeFilter === "MostDownloaded") return state.getMostDownloadedProductsReducer;
-    return state.getTopRatedProductsReducer;
+    if (activeFilter === "Newest") return state.newestGames;
+    if (activeFilter === "Oldest") return state.oldestGames;
+    if (activeFilter === "MostDownloaded") return state.mostDownloadedGames;
+    return state.topRatedGames;
   });
 
   const { loading, error, games = [] } = getProducts;

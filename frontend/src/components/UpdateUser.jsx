@@ -37,7 +37,7 @@ const MailIcon = () => (
 );
 
 const UpdateUser = () => {
-  const userCredentials = useSelector((state) => state.getUserReducer);
+  const userCredentials = useSelector((state) => state.currentUser);
   const { loading, error, userDetails } = userCredentials;
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");

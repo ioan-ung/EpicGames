@@ -26,9 +26,9 @@ const GamePopup = () => {
     dispatch(getProductById(id));
   }, [dispatch, id]);
 
-  const getGameById = useSelector((state) => state.getProductByIdReducer);
+  const getGameById = useSelector((state) => state.gameDetails);
   const { loading, error, game } = getGameById;
-  const userCredentials = useSelector((state) => state.getUserReducer);
+  const userCredentials = useSelector((state) => state.currentUser);
   const { userDetails } = userCredentials;
   const [activeImage, setActiveImage] = useState(0);
 
