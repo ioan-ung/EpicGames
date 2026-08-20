@@ -4,7 +4,7 @@ import {
   GET_USER_BYID_FAIL,
 } from "../constants/usersConstants";
 
-export const getUserReducer = (state = {}, action) => {
+export const getUserReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case GET_USER_BYID_REQUEST:
       return { loading: true, error: false };

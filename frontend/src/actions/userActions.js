@@ -20,7 +20,7 @@ export const getUserAction = (user) => async(dispatch) =>{
     {
         dispatch({
             type:GET_USER_BYID_FAIL,
-            payload:e
+            payload: e.response?.data ?? e.message
         })
     }
 
@@ -55,7 +55,7 @@ export const updateUserAction = ({user,data,navigate}) => async(dispatch) =>{
         console.log("error",e)
         dispatch({
             type:UPDATE_USER_BYID_FAIL,
-            payload:e
+            payload: e.response?.data ?? e.message
         })
     }
 

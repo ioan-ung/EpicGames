@@ -43,7 +43,7 @@ import {
   GET_CHEAPEST_PRODUCTS_FAIL
 } from "../constants/gamesConstants";
 
-export const getTopRatedProductsReducer = (state = {}, action) => {
+export const getTopRatedProductsReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case GET_TOP_RATED_PRODUCTS_REQUEST:
       return { loading: true, error: false };
@@ -56,7 +56,7 @@ export const getTopRatedProductsReducer = (state = {}, action) => {
   }
 };
 
-export const getMostDownloadedProductsReducer = (state = {}, action) => {
+export const getMostDownloadedProductsReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case GET_MOST_DOWNLOADED_PRODUCTS_REQUEST:
       return { loading: true, error: false };
@@ -69,7 +69,7 @@ export const getMostDownloadedProductsReducer = (state = {}, action) => {
   }
 };
 
-export const getYoungestProductsReducer = (state = {}, action) => {
+export const getYoungestProductsReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case GET_YOUNGEST_PRODUCTS_REQUEST:
       return { loading: true, error: false };
@@ -82,7 +82,7 @@ export const getYoungestProductsReducer = (state = {}, action) => {
   }
 };
 
-export const getCheapestProductsReducer = (state = {}, action) => {
+export const getCheapestProductsReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case GET_CHEAPEST_PRODUCTS_REQUEST:
       return { loading: true, error: false };
@@ -95,7 +95,7 @@ export const getCheapestProductsReducer = (state = {}, action) => {
   }
 };
 
-export const getProductByIdReducer = (state = {}, action) => {
+export const getProductByIdReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case GET_PRODUCT_BYID_REQUEST:
       return { loading: true, error: false };
@@ -108,7 +108,7 @@ export const getProductByIdReducer = (state = {}, action) => {
   }
 };
 
-export const getSearchedProductsReducer = (state = {}, action) => {
+export const getSearchedProductsReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case GET_PRODUCTS_SEARCHED_REQUEST:
       return { loading: true, error: false };
@@ -129,7 +129,7 @@ export const getSearchedProductsReducer = (state = {}, action) => {
   }
 };
 
-export const getPricesReducer = (state = {}, action) => {
+export const getPricesReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case GET_PRICES_REQUEST:
       return { loading: true, error: false };
@@ -145,7 +145,7 @@ export const getPricesReducer = (state = {}, action) => {
   }
 };
 
-export const addPriceReducer = (state = {}, action) => {
+export const addPriceReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case POST_PRICE_REQUEST:
       return { loading: true, error: false };
@@ -161,7 +161,7 @@ export const addPriceReducer = (state = {}, action) => {
   }
 };
 
-export const deletePriceReducer = (state = {}, action) => {
+export const deletePriceReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case DELETE_PRICE_REQUEST:
       return { loading: true, error: false };
@@ -177,7 +177,7 @@ export const deletePriceReducer = (state = {}, action) => {
   }
 };
 
-export const deletePriceWithoutReducer = (state = {}, action) => {
+export const deletePriceWithoutReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case DELETE_ALL_PRICE_REQUEST:
       return { loading: true, error: false };
@@ -193,7 +193,7 @@ export const deletePriceWithoutReducer = (state = {}, action) => {
   }
 };
 
-export const wishListReducer = (state = {}, action) => {
+export const wishListReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case GET_WISHLIST_REQUEST:
     case ADD_TO_WISH_LIST_REQUEST:
@@ -215,7 +215,7 @@ export const wishListReducer = (state = {}, action) => {
   }
 };
 
-export const updateUserPreferencesReducer = (state = {}, action) => {
+export const updateUserPreferencesReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case UPDATE_USER_PREFERENCES_REQUEST:
       return { loading: true, error: false };

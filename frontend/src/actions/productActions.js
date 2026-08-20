@@ -57,7 +57,7 @@ export const getTopRatedProductsAction = () => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: GET_TOP_RATED_PRODUCTS_FAIL,
-      payload: e,
+      payload: e.response?.data ?? e.message,
     });
   }
 };
@@ -76,7 +76,7 @@ export const getMostDownloadedProductsAction = () => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: GET_MOST_DOWNLOADED_PRODUCTS_FAIL,
-      payload: e,
+      payload: e.response?.data ?? e.message,
     });
   }
 };
@@ -95,7 +95,7 @@ export const getYoungestProductsAction = () => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: GET_YOUNGEST_PRODUCTS_FAIL,
-      payload: e,
+      payload: e.response?.data ?? e.message,
     });
   }
 };
@@ -114,7 +114,7 @@ export const getCheapestProductsAction = () => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: GET_CHEAPEST_PRODUCTS_FAIL,
-      payload: e,
+      payload: e.response?.data ?? e.message,
     });
   }
 };
@@ -143,7 +143,7 @@ export const getSearchedProduct =
     } catch (e) {
       dispatch({
         type: GET_PRODUCTS_SEARCHED_FAIL,
-        payload: e,
+        payload: e.response?.data ?? e.message,
       });
     }
   };
@@ -162,7 +162,7 @@ export const getProductById = (id) => async (dispatch) => {
     console.log(e);
     dispatch({
       type: GET_PRODUCT_BYID_FAIL,
-      payload: e,
+      payload: e.response?.data ?? e.message,
     });
   }
 };
@@ -208,7 +208,7 @@ export const getPrices = () => async (dispatch) => {
     console.log(e);
     dispatch({
       type: GET_PRICES_FAIL,
-      payload: e,
+      payload: e.response?.data ?? e.message,
     });
   }
 };
@@ -237,7 +237,7 @@ export const addPrice =
       console.log(e);
       dispatch({
         type: POST_PRICE_FAIL,
-        payload: e,
+        payload: e.response?.data ?? e.message,
       });
     }
   };
@@ -260,7 +260,7 @@ export const deletePrice = (id) => async (dispatch) => {
     console.log(e);
     dispatch({
       type: DELETE_PRICE_FAIL,
-      payload: e,
+      payload: e.response?.data ?? e.message,
     });
   }
 };
@@ -281,7 +281,7 @@ export const deletePriceWithoutId = () => async (dispatch) => {
     console.log(e);
     dispatch({
       type: DELETE_ALL_PRICE_FAIL,
-      payload: e,
+      payload: e.response?.data ?? e.message,
     });
   }
 };
@@ -307,7 +307,7 @@ export const addToWishList = (id, userId) => async (dispatch) => {
     console.log(e);
     dispatch({
       type: ADD_TO_WISH_LIST_FAIL,
-      payload: e,
+      payload: e.response?.data ?? e.message,
     });
   }
 };
@@ -328,7 +328,7 @@ export const deleteFromWishList = (id, userId) => async (dispatch) => {
     console.log(e);
     dispatch({
       type: REMOVE_FROM_WISHLIST_FAIL,
-      payload: e,
+      payload: e.response?.data ?? e.message,
     });
   }
 };
@@ -349,7 +349,7 @@ export const getWishList = (userId) => async (dispatch) => {
     console.log(e);
     dispatch({
       type: GET_WISHLIST_FAIL,
-      payload: e,
+      payload: e.response?.data ?? e.message,
     });
   }
 };
