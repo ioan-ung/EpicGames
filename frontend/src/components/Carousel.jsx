@@ -7,11 +7,11 @@ const CarouselComponent = ({ topRatedProducts }) => {
     const navigate = useNavigate();
 
     return (
-        <Carousel style={{ justifyContent: 'space-around' }} pause='hover'>
+        <Carousel className='home-carousel' pause='hover'>
            {topRatedProducts?.map(product =>
                <Carousel.Item key={product.id}>
-                   <Container style={{ width: '80rem', display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
-                       <img style={{ width: '50rem', height: '30rem' }} alt="not found" src={product?.images?.[0]?.image} />
+                   <Container fluid className='carousel-item-inner'>
+                       <img className='carousel-item-img' alt="not found" src={product?.images?.[0]?.image} />
                        <Carousel.Caption className='carousel-caption' style={{ zIndex: 5 }}>
                         <Button
                             type="button"

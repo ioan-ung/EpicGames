@@ -116,7 +116,7 @@ function Header() {
     }
 
     return (user&&
-        <Navbar style={{position:'absolute',top:'0',zIndex:'10',width:'100vw',height:'5rem'}} expand="lg" className="navbar">
+        <Navbar style={{position:'absolute',top:'0',zIndex:'30',width:'100vw',height:'5rem'}} expand="lg" className="navbar">
 
             <Container>
                 <Link className="navbar-brand-link" to="/">Epic Games</Link>

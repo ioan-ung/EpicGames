@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import Garbage from "../svg/garbage.svg?react";
 import { deletePrice } from "../actions/productActions";
@@ -21,15 +21,29 @@ const PaymentCard = ({
   const userCredentials = useSelector((state) => state.currentUser);
   const {loading,error,userDetails} = userCredentials
   const isSelected = selectedPriceId === data.priceId;
+  const [isRemoving, setIsRemoving] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("finalCoins", finalCoins);
   }, [finalCoins]);
 
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    setIsRemoving(true);
+  };
+
+  const handleTransitionEnd = (e) => {
+    if (isRemoving && e.propertyName === "opacity") {
+      dispatch(deletePrice(data.id));
+    }
+  };
+
   return (
     <div
-      className="payment-card-wrap"
+      className={`payment-card-wrap${isRemoving ? " payment-card-wrap--removing" : ""}`}
+      onTransitionEnd={handleTransitionEnd}
       onClick={() => {
+        if (isRemoving) return;
         setMoney(data.money);
         setCoins(data.coins);
         setBonus(data.bonus);
@@ -75,7 +89,7 @@ const PaymentCard = ({
                   color: "red",
                   border: "none",
                 }}
-                onClick={() => dispatch(deletePrice(data.id))}
+                onClick={handleDelete}
               >
                 <Garbage />
               </button>

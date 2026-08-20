@@ -140,6 +140,14 @@ export const getPricesReducer = (state = { loading: true }, action) => {
     case GET_PRICES_FAIL:
       return { loading: false, error: action.payload };
 
+    case DELETE_PRICE_SUCCESS: {
+      const deletedId = action.payload?.id;
+      const data = (state.data ?? [])
+        .map((group) => group.filter((price) => price.id !== deletedId))
+        .filter((group) => group.length > 0);
+      return { ...state, data };
+    }
+
     default:
       return state;
   }

@@ -286,7 +286,7 @@ input::placeholder {
     radial-gradient(circle at top left, rgba(84, 120, 255, 0.28), transparent 25%),
     linear-gradient(180deg, #0b0d12 0%, #121722 42%, #0b1018 100%);
   color: #edf2ff;
-  padding: 5rem 1.5rem 3rem;
+  padding: 9.5rem 1.5rem 3rem;
 }
 
 .discover-shell,
@@ -640,10 +640,19 @@ input::placeholder {
   border-radius: 24px;
 }
 
-.carousel-item img {
+.carousel-item-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.carousel-item-img {
+  width: 100%;
   border-radius: 26px;
   object-fit: cover;
   height: 360px;
+  display: block;
 }
 
 .carousel-caption {
@@ -651,6 +660,18 @@ input::placeholder {
   right: 2rem !important;
   bottom: 1.5rem !important;
   text-align: right;
+}
+
+@media (max-width: 575.98px) {
+  .carousel-item-img {
+    height: 220px;
+    border-radius: 16px;
+  }
+
+  .carousel-caption {
+    right: 1rem !important;
+    bottom: 1rem !important;
+  }
 }
 
 .store-product-card {

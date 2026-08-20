@@ -6,6 +6,19 @@
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 }
 
+@media (max-width: 991.98px) {
+  .navbar-collapse.show,
+  .navbar-collapse.collapsing {
+    background: rgba(10, 13, 19, 0.97);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 16px;
+    margin-top: 0.75rem;
+    padding: 1rem;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+  }
+}
+
 .navbar-brand-link {
   font-size: 1.2rem;
   font-weight: 800;

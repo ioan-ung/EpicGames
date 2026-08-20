@@ -248,13 +248,11 @@ export const deletePrice = (id) => async (dispatch) => {
       type: DELETE_PRICE_REQUEST,
     });
 
-    const response = await axios.delete(`/api/payments/${id}`);
-
-    if (response.status === 200) window.location.reload();
+    await axios.delete(`/api/payments/${id}`);
 
     dispatch({
       type: DELETE_PRICE_SUCCESS,
-      payload: response.data,
+      payload: { id },
     });
   } catch (e) {
     console.log(e);
