@@ -36,9 +36,9 @@ import {
   GET_YOUNGEST_PRODUCTS_REQUEST,
   GET_YOUNGEST_PRODUCTS_SUCCESS,
   GET_YOUNGEST_PRODUCTS_FAIL,
-  GET_OLDEST_PRODUCTS_REQUEST,
-  GET_OLDEST_PRODUCTS_SUCCESS,
-  GET_OLDEST_PRODUCTS_FAIL
+  GET_CHEAPEST_PRODUCTS_REQUEST,
+  GET_CHEAPEST_PRODUCTS_SUCCESS,
+  GET_CHEAPEST_PRODUCTS_FAIL
 } from "../constants/gamesConstants";
 
 import { AccessConfig } from "../components/AccessConfig";
@@ -100,20 +100,20 @@ export const getYoungestProductsAction = () => async (dispatch) => {
   }
 };
 
-export const getOldestProductsAction = () => async (dispatch) => {
+export const getCheapestProductsAction = () => async (dispatch) => {
   try {
     dispatch({
-      type: GET_OLDEST_PRODUCTS_REQUEST,
+      type: GET_CHEAPEST_PRODUCTS_REQUEST,
     });
-    const response = await axios.get("/api/games/getOldestGames/");
+    const response = await axios.get("/api/games/getCheapestGames/");
 
     dispatch({
-      type: GET_OLDEST_PRODUCTS_SUCCESS,
+      type: GET_CHEAPEST_PRODUCTS_SUCCESS,
       payload: response.data.data,
     });
   } catch (e) {
     dispatch({
-      type: GET_OLDEST_PRODUCTS_FAIL,
+      type: GET_CHEAPEST_PRODUCTS_FAIL,
       payload: e,
     });
   }

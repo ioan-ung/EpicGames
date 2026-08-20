@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
-import { updateUserPreferencesReducer,getProductByIdReducer,wishListReducer,deletePriceWithoutReducer, getSearchedProductsReducer, getTopRatedProductsReducer,getPricesReducer, addPriceReducer, deletePriceReducer,getMostDownloadedProductsReducer,getYoungestProductsReducer,getOldestProductsReducer } from './reducers/productReducer';
+import { updateUserPreferencesReducer,getProductByIdReducer,wishListReducer,deletePriceWithoutReducer, getSearchedProductsReducer, getTopRatedProductsReducer,getPricesReducer, addPriceReducer, deletePriceReducer,getMostDownloadedProductsReducer,getYoungestProductsReducer,getCheapestProductsReducer } from './reducers/productReducer';
 import { getUserReducer } from './reducers/userReducers';
 
 const reducer = combineReducers({
@@ -15,7 +15,7 @@ const reducer = combineReducers({
     userPreferences: updateUserPreferencesReducer,
     currentUser: getUserReducer,
     newestGames: getYoungestProductsReducer,
-    oldestGames: getOldestProductsReducer,
+    cheapestGames: getCheapestProductsReducer,
 })
 
 const store = configureStore({ reducer })

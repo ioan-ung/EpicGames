@@ -42,14 +42,14 @@ def getYoungestGames(request):
         return ExceptionHandler.handle_internal_server_error(e,"getYoungestGames GET")
 
 @api_view(['GET'])
-def getOldestGames(request): 
+def getCheapestGames(request):
     try:
-        games = Game.objects.all().order_by('-age')[:20]
+        games = Game.objects.all().order_by('price')[:20]
         games = GameSerializer(games,many=True)
         return ReturnResponse.GetSuccess(games.data)
-    
+
     except Exception as e:
-        return ExceptionHandler.handle_internal_server_error(e,"getOldestGames GET")
+        return ExceptionHandler.handle_internal_server_error(e,"getCheapestGames GET")
 
 
 class GameViewWithId(APIView):

@@ -6,10 +6,11 @@ const Loader = () => {
       animation="border"
       role="status"
       style={{
+        position: "fixed",
+        top: "50%",
+        left: "50%",
         height: "100px",
         width: "100px",
-        margin: "auto",
-        display: "block",
       }}
     ></Spinner>
   );

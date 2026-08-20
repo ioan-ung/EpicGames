@@ -8,7 +8,7 @@ import {
   getTopRatedProductsAction,
   getMostDownloadedProductsAction,
   getYoungestProductsAction,
-  getOldestProductsAction,
+  getCheapestProductsAction,
 } from "../actions/productActions";
 import Loader from "../components/Loader";
 
@@ -20,7 +20,7 @@ const GamesPage = () => {
   const getTopRated = useSelector((state) => state.topRatedGames);
   const getMostDownloaded = useSelector((state) => state.mostDownloadedGames);
   const getYoungest = useSelector((state) => state.newestGames);
-  const getOldest = useSelector((state) => state.oldestGames);
+  const getCheapest = useSelector((state) => state.cheapestGames);
   const userDetails = useSelector((state) => state.currentUser.userDetails);
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -31,7 +31,7 @@ const GamesPage = () => {
   const { error: errorTopRated, games: topRatedProducts = [] } = getTopRated;
   const { error: errorMostDownloaded, games: mostDownloadedProducts = [] } = getMostDownloaded;
   const { error: errorYoungest, games: youngestProducts = [] } = getYoungest;
-  const { error: errorOldest, games: oldestProducts = [] } = getOldest;
+  const { error: errorCheapest, games: cheapestProducts = [] } = getCheapest;
 
   const excludeOwned = (list) =>
     list.filter((game) => !userDetails?.bought_games?.includes(game?.id));
@@ -42,7 +42,7 @@ const GamesPage = () => {
     TopRated: topRatedProducts,
     MostDownloaded: mostDownloadedProducts,
     Newest: youngestProducts,
-    Oldest: oldestProducts,
+    Cheap: cheapestProducts,
   };
 
   const carouselProducts = excludeOwned(carouselMap[carouselFilter] ?? topRatedProducts);
@@ -54,8 +54,8 @@ const GamesPage = () => {
       dispatch(getMostDownloadedProductsAction());
     } else if (carouselFilter === "Newest") {
       dispatch(getYoungestProductsAction());
-    } else if (carouselFilter === "Oldest") {
-      dispatch(getOldestProductsAction());
+    } else if (carouselFilter === "Cheap") {
+      dispatch(getCheapestProductsAction());
     } else {
       dispatch(getTopRatedProductsAction());
     }
@@ -65,7 +65,7 @@ const GamesPage = () => {
     <div className="browse-page">
       {loading ? (
         <Loader />
-      ) : error || errorTopRated || errorMostDownloaded || errorYoungest || errorOldest ? (
+      ) : error || errorTopRated || errorMostDownloaded || errorYoungest || errorCheapest ? (
         <Alert variant="danger" className="browse-error">
           Unexpected error! Come back later!
         </Alert>
@@ -82,7 +82,7 @@ const GamesPage = () => {
                 { label: "Top rated", value: "TopRated" },
                 { label: "Most downloaded", value: "MostDownloaded" },
                 { label: "Newest", value: "Newest" },
-                { label: "Oldest", value: "Oldest" },
+                { label: "Cheap", value: "Cheap" },
               ].map((filter) => (
                 <Button
                   key={filter.value}
@@ -97,7 +97,7 @@ const GamesPage = () => {
 
           <div className="carousel-section">
             <div className="section-heading">
-              <h2>{carouselFilter === "TopRated" ? "Top rated" : carouselFilter === "MostDownloaded" ? "Most downloaded" : carouselFilter === "Newest" ? "Newest" : "Oldest"}</h2>
+              <h2>{carouselFilter === "TopRated" ? "Top rated" : carouselFilter === "MostDownloaded" ? "Most downloaded" : carouselFilter === "Newest" ? "Newest" : "Cheap"}</h2>
               <span>Trending now</span>
             </div>
             <CarouselComponent topRatedProducts={carouselProducts.slice(0, 5)} />

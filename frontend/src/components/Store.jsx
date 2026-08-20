@@ -2,18 +2,25 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loader from "./Loader";
-import { Alert, Container, Button } from "react-bootstrap";
+import { Alert, Container, Button, Dropdown } from "react-bootstrap";
 import {
   getTopRatedProductsAction,
   getMostDownloadedProductsAction,
   getYoungestProductsAction,
-  getOldestProductsAction,
+  getCheapestProductsAction,
 } from "../actions/productActions";
 import "./style/popup.css";
 import "./style/Store2.css";
 import Download from "../svg/downloads.svg?react";
 import Star from "../svg/star.svg?react";
 import BuyGame from "./BuyGame";
+
+const filterLabels = {
+  TopRated: 'Top',
+  Newest: 'New',
+  Cheap: 'Cheap',
+  MostDownloaded: 'Popular',
+};
 
 const Store = () => {
   const dispatch = useDispatch();
@@ -23,7 +30,7 @@ const Store = () => {
 
   const getProducts = useSelector((state) => {
     if (activeFilter === "Newest") return state.newestGames;
-    if (activeFilter === "Oldest") return state.oldestGames;
+    if (activeFilter === "Cheap") return state.cheapestGames;
     if (activeFilter === "MostDownloaded") return state.mostDownloadedGames;
     return state.topRatedGames;
   });
@@ -35,7 +42,7 @@ const Store = () => {
 
   useEffect(() => {
     if (activeFilter === "Newest") dispatch(getYoungestProductsAction());
-    else if (activeFilter === "Oldest") dispatch(getOldestProductsAction());
+    else if (activeFilter === "Cheap") dispatch(getCheapestProductsAction());
     else if (activeFilter === "MostDownloaded") dispatch(getMostDownloadedProductsAction());
     else dispatch(getTopRatedProductsAction());
   }, [dispatch, activeFilter]);
@@ -63,18 +70,22 @@ const Store = () => {
               <span className="eyebrow">Discover</span>
               <h2>Featured titles</h2>
             </div>
-            <div className="discover-filters">
-              {['TopRated', 'Newest', 'Oldest', 'MostDownloaded'].map((filter) => (
-                <button
-                  key={filter}
-                  type="button"
-                  className={`filter-chip ${activeFilter === filter ? 'active' : ''}`}
-                  onClick={() => setActiveFilter(filter)}
-                >
-                  {filter === 'MostDownloaded' ? 'Most downloaded' : filter}
-                </button>
-              ))}
-            </div>
+            <Dropdown className="discover-filters">
+              <Dropdown.Toggle className="filter-chip active" id="discover-filter-dropdown">
+                {filterLabels[activeFilter]}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {['TopRated', 'Newest', 'Cheap', 'MostDownloaded'].map((filter) => (
+                  <Dropdown.Item
+                    key={filter}
+                    active={activeFilter === filter}
+                    onClick={() => setActiveFilter(filter)}
+                  >
+                    {filterLabels[filter]}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
 
           <div className="feature-card">
@@ -125,7 +136,7 @@ const Store = () => {
                 <div className="discover-pick-copy">
                   <strong>{game.name}</strong>
                   <span>
-                    {activeFilter === 'Newest' || activeFilter === 'Oldest' ? `${game.age}+` : activeFilter === 'MostDownloaded' ? `${game.downloads} downloads` : `${game.rating} rating`}
+                    {activeFilter === 'Newest' ? `${game.age}+` : activeFilter === 'Cheap' ? `${game.price} coins` : activeFilter === 'MostDownloaded' ? `${game.downloads} downloads` : `${game.rating} rating`}
                   </span>
                 </div>
               </button>

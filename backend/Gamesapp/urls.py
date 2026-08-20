@@ -21,7 +21,7 @@ urlpatterns = [
     path("getTopRatedGames/",views.getMostRatedGames,name="bestRatedGames"),
     path("getMostDownloadedGames/",views.getMostDownloadedGames,name="mostDownloadedGames"),
     path("getYoungestGames/",views.getYoungestGames,name="youngestGames"),
-    path("getOldestGames/",views.getOldestGames,name="oldestGames"),
+    path("getCheapestGames/",views.getCheapestGames,name="cheapestGames"),
     path('<str:pk>',views.GameViewWithId.as_view(),name="games-crud"),
     path('',views.GameViewWithoutId.as_view(),name="games-crud"),
 ]

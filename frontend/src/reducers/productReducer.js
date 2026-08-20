@@ -38,9 +38,9 @@ import {
   GET_YOUNGEST_PRODUCTS_REQUEST,
   GET_YOUNGEST_PRODUCTS_SUCCESS,
   GET_YOUNGEST_PRODUCTS_FAIL,
-  GET_OLDEST_PRODUCTS_REQUEST,
-  GET_OLDEST_PRODUCTS_SUCCESS,
-  GET_OLDEST_PRODUCTS_FAIL
+  GET_CHEAPEST_PRODUCTS_REQUEST,
+  GET_CHEAPEST_PRODUCTS_SUCCESS,
+  GET_CHEAPEST_PRODUCTS_FAIL
 } from "../constants/gamesConstants";
 
 export const getTopRatedProductsReducer = (state = {}, action) => {
@@ -82,13 +82,13 @@ export const getYoungestProductsReducer = (state = {}, action) => {
   }
 };
 
-export const getOldestProductsReducer = (state = {}, action) => {
+export const getCheapestProductsReducer = (state = {}, action) => {
   switch (action.type) {
-    case GET_OLDEST_PRODUCTS_REQUEST:
+    case GET_CHEAPEST_PRODUCTS_REQUEST:
       return { loading: true, error: false };
-    case GET_OLDEST_PRODUCTS_SUCCESS:
+    case GET_CHEAPEST_PRODUCTS_SUCCESS:
       return { loading: false, error: false, games: action.payload };
-    case GET_OLDEST_PRODUCTS_FAIL:
+    case GET_CHEAPEST_PRODUCTS_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
