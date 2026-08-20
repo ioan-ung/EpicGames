@@ -29,7 +29,9 @@ const Store = () => {
     return state.topRatedGames;
   });
 
-  const { loading, error, games = [] } = getProducts;
+  const userDetails = useSelector(store=>store.currentUser.userDetails);
+  const { loading, error, games: allGames = [] } = getProducts;
+  const games = allGames.filter((game) => !userDetails?.bought_games?.includes(game.id));
   const [selectedGame, setSelectedGame] = useState(null);
 
   useEffect(() => {

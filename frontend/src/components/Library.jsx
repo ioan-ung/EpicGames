@@ -12,7 +12,7 @@ const Library = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const userCredentials = useSelector((state) => state.currentUser);
+  const userCredentials = useSelector(state => state.currentUser);
   const { loading, error, userDetails } = userCredentials;
   const gameIds = userDetails?.bought_games ?? [];
 

@@ -21,6 +21,7 @@ const GamesPage = () => {
   const getMostDownloaded = useSelector((state) => state.mostDownloadedGames);
   const getYoungest = useSelector((state) => state.newestGames);
   const getOldest = useSelector((state) => state.oldestGames);
+  const userDetails = useSelector((state) => state.currentUser.userDetails);
 
   const urlParams = new URLSearchParams(window.location.search);
   const keyword = urlParams.get("keyword") ?? "";
@@ -32,7 +33,10 @@ const GamesPage = () => {
   const { error: errorYoungest, games: youngestProducts = [] } = getYoungest;
   const { error: errorOldest, games: oldestProducts = [] } = getOldest;
 
-  const browseGames = products?.products ?? products ?? games?.products ?? games ?? [];
+  const excludeOwned = (list) =>
+    list.filter((game) => !userDetails?.bought_games?.includes(game?.id));
+
+  const browseGames = excludeOwned(products?.products ?? products ?? games?.products ?? games ?? []);
 
   const carouselMap = {
     TopRated: topRatedProducts,
@@ -41,7 +45,7 @@ const GamesPage = () => {
     Oldest: oldestProducts,
   };
 
-  const carouselProducts = carouselMap[carouselFilter] ?? topRatedProducts;
+  const carouselProducts = excludeOwned(carouselMap[carouselFilter] ?? topRatedProducts);
 
   useEffect(() => {
     dispatch(getSearchedProduct(keyword, page));
@@ -62,7 +66,9 @@ const GamesPage = () => {
       {loading ? (
         <Loader />
       ) : error || errorTopRated || errorMostDownloaded || errorYoungest || errorOldest ? (
-        Alert("Unexpected error! Come back later! ")
+        <Alert variant="danger" className="browse-error">
+          Unexpected error! Come back later!
+        </Alert>
       ) : (
         <>
           <div className="browse-hero">
