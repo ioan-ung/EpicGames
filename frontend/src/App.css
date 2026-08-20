@@ -236,6 +236,40 @@ input::placeholder {
 .PaymentCardHover:hover {
   transform:scale(1.01);
 }
+
+.admin-action-btn {
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  background: transparent;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-action-btn-primary {
+  border: 1px solid rgba(138, 173, 255, 0.55);
+  color: #8aadff;
+}
+
+.admin-action-btn-primary:hover {
+  background: rgba(84, 120, 255, 0.16);
+  border-color: rgba(138, 173, 255, 0.85);
+  color: #fff;
+}
+
+.admin-action-btn-danger {
+  border: 1px solid rgba(255, 107, 107, 0.55);
+  color: #ff8a8a;
+}
+
+.admin-action-btn-danger:hover {
+  background: rgba(255, 107, 107, 0.16);
+  border-color: rgba(255, 107, 107, 0.85);
+  color: #fff;
+}
+
 #braintree-paypal-loggedout:nth-child(n+2) {
   display: none;
 }
@@ -1104,8 +1138,6 @@ input::placeholder {
   border-radius: 24px !important;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(14px);
-  width: auto;
-  height: auto;
   max-height: 82vh;
   display: flex;
   flex-direction: column;

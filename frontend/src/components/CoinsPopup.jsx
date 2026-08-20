@@ -1,6 +1,5 @@
 import * as React from "react";
 import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
 import { Container, Row } from "react-bootstrap";
 import PaymentCard from "./PaymentCard";
 import { useSelector, useDispatch } from "react-redux";
@@ -67,36 +66,28 @@ export default function CoinsPopup({ open, setOpen }) {
           )}
 
           {userDetails?.is_superuser && (
-            <Row className="d-flex justify-content-center">
+            <div className="d-flex justify-content-center gap-3">
               <button
-                type="submit"
-                class="btn btn-outline-primary btn-lg btn-block"
+                type="button"
+                className="admin-action-btn admin-action-btn-primary"
                 onClick={(e) => {
                   e.stopPropagation();
                   setOpen2(true);
                 }}
-                style={{
-                  border: "1px solid blue",
-                  width: "auto",
-                  textTransform: "none",
-                }}
               >
                 Add Price
               </button>
+
               <CreatePricePopup setOpen2={setOpen2} open2={open2} />
 
-              <Button
-                class="btn btn-danger"
-                style={{
-                  color: "red",
-                  backgroundColor: "transparent",
-                  width: "auto",
-                }}
+              <button
+                type="button"
+                className="admin-action-btn admin-action-btn-danger"
                 onClick={() => dispatch(deletePriceWithoutId())}
               >
                 Delete Prices
-              </Button>
-            </Row>
+              </button>
+            </div>
           )}
 
           {data &&
