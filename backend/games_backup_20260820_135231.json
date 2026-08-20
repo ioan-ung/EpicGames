@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Cyberpunk 2077",
+    "company": "CD Projekt Red",
+    "description": "An open-world, action-adventure story set in Night City, a megalopolis obsessed with power, glamour and body modification. Play as V, a mercenary outlaw chasing a one-of-a-kind implant that holds the key to immortality.",
+    "price": 59.99,
+    "rating": 4.2,
+    "downloads": 5200000,
+    "age": 18,
+    "memory": 70.0,
+    "multiplayer": false,
+    "tags": [
+      "RPG",
+      "Open World",
+      "Sci-Fi"
+    ],
+    "images": [
+      "games/1.jpeg",
+      "games/2.jpeg",
+      "games/3.jpeg",
+      "games/4.jpeg",
+      "games/5.jpeg"
+    ]
+  },
+  {
+    "name": "Red Dead Redemption 2",
+    "company": "Rockstar Games",
+    "description": "America, 1899. Arthur Morgan and the Van der Linde gang are outlaws on the run. With federal agents and the best bounty hunters in the nation massing on their heels, the gang must rob, steal and fight their way across the rugged heartland.",
+    "price": 59.99,
+    "rating": 4.8,
+    "downloads": 8100000,
+    "age": 18,
+    "memory": 150.0,
+    "multiplayer": true,
+    "tags": [
+      "Action",
+      "Adventure",
+      "Open World"
+    ],
+    "images": [
+      "games/1_9toB05V.jpeg",
+      "games/2_tP7iWfg.jpeg",
+      "games/3_HLeFU4z.jpeg",
+      "games/4_BcKDJnT.jpeg",
+      "games/5_wTMWFBL.jpeg"
+    ]
+  },
+  {
+    "name": "The Witcher 3: Wild Hunt",
+    "company": "CD Projekt Red",
+    "description": "As war rages on throughout the Northern Realms, you take on the greatest contract of your life -- tracking down the Child of Prophecy, a living weapon that can alter the shape of the world.",
+    "price": 39.99,
+    "rating": 4.9,
+    "downloads": 6500000,
+    "age": 18,
+    "memory": 50.0,
+    "multiplayer": false,
+    "tags": [
+      "RPG",
+      "Open World",
+      "Fantasy"
+    ],
+    "images": [
+      "games/1_5Wpx194.jpeg",
+      "games/2_JTwALeg.jpeg",
+      "games/3_TV2hK4Y.jpeg",
+      "games/4_MzZ7P17.jpeg",
+      "games/5_rKU23f6.jpeg",
+      "games/6.jpeg"
+    ]
+  }
+]

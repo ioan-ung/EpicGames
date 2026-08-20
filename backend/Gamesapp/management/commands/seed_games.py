@@ -55,6 +55,9 @@ SAMPLE_VIDEO_URL = "https://download.samplelib.com/mp4/sample-5s.mp4"
 
 # Image files considered valid.
 IMAGE_EXTS = (".jpg", ".jpeg", ".png", ".webp")
+# Video files considered valid -- if a game's own folder has one, it's used
+# instead of the shared sample video.
+VIDEO_EXTS = (".mp4", ".mov", ".webm")
 
 # One entry per game. `folder` must match a subfolder under --images.
 # Everything else is metadata that gets written to the Game row.
@@ -113,6 +116,197 @@ SEED_GAMES = [
         "multiplayer": False,
         "tags": ["RPG", "Fantasy", "Open World"],
     },
+    {
+        "folder": "Baldurs Gate 3",
+        "name": "Baldur's Gate 3",
+        "company": "Larian Studios",
+        "description": (
+            "Gather your party and return to the Forgotten Realms in a "
+            "tale of fellowship and betrayal, sacrifice and survival, and "
+            "the lure of absolute power. Mysterious abilities are awakening "
+            "inside you, drawn from a mind flayer parasite planted in your brain."
+        ),
+        "price": 59.99,
+        "rating": 4.9,
+        "downloads": 4300000,
+        "age": 18,
+        "memory": 150,
+        "multiplayer": True,
+        "tags": ["RPG", "Fantasy", "Turn-Based"],
+    },
+    {
+        "folder": "Dark Souls III",
+        "name": "Dark Souls III",
+        "company": "FromSoftware",
+        "description": (
+            "As fires fade and the world falls into ruin, journey to find "
+            "answers in a dark, apocalyptic fantasy world where death is "
+            "but a way of life. Confront enemies and hazards with a wide "
+            "range of weapons, armor and magic."
+        ),
+        "price": 39.99,
+        "rating": 4.6,
+        "downloads": 3100000,
+        "age": 16,
+        "memory": 25,
+        "multiplayer": True,
+        "tags": ["RPG", "Soulslike", "Fantasy"],
+    },
+    {
+        "folder": "Dota 2",
+        "name": "Dota 2",
+        "company": "Valve",
+        "description": (
+            "Every day, millions of players worldwide enter battle as one "
+            "of over a hundred Dota heroes, in a five-on-five battle to "
+            "destroy the opponent's ancient. Free to play, endlessly deep "
+            "strategy."
+        ),
+        "price": 0,
+        "rating": 4.3,
+        "downloads": 9600000,
+        "age": 12,
+        "memory": 20,
+        "multiplayer": True,
+        "tags": ["Strategy", "Multiplayer", "Free to Play"],
+    },
+    {
+        "folder": "Elden Ring",
+        "name": "Elden Ring",
+        "company": "FromSoftware",
+        "description": (
+            "Rise, Tarnished, and be guided by grace to brandish the power "
+            "of the Elden Ring and become an Elden Lord in the Lands Between, "
+            "a new fantasy world created by Hidetaka Miyazaki and George R.R. Martin."
+        ),
+        "price": 59.99,
+        "rating": 4.9,
+        "downloads": 5100000,
+        "age": 18,
+        "memory": 60,
+        "multiplayer": True,
+        "tags": ["RPG", "Soulslike", "Open World"],
+    },
+    {
+        "folder": "Fallout 4",
+        "name": "Fallout 4",
+        "company": "Bethesda Game Studios",
+        "description": (
+            "The Wasteland awaits. As the sole survivor of Vault 111, you "
+            "enter a world destroyed by nuclear war. Every second is a "
+            "fight for survival, and every choice is yours."
+        ),
+        "price": 19.99,
+        "rating": 4.1,
+        "downloads": 3800000,
+        "age": 18,
+        "memory": 30,
+        "multiplayer": False,
+        "tags": ["RPG", "Open World", "Survival"],
+    },
+    {
+        "folder": "GTA VI",
+        "name": "Grand Theft Auto VI",
+        "company": "Rockstar Games",
+        "description": (
+            "Welcome to Leonida, home to the neon-soaked streets of Vice "
+            "City and beyond in the biggest, most immersive evolution of "
+            "the Grand Theft Auto series yet."
+        ),
+        "price": 69.99,
+        "rating": 0,
+        "downloads": 0,
+        "age": 18,
+        "memory": 150,
+        "multiplayer": True,
+        "tags": ["Action", "Adventure", "Open World"],
+    },
+    {
+        "folder": "Hades",
+        "name": "Hades",
+        "company": "Supergiant Games",
+        "description": (
+            "Defy the god of the dead as you hack and slash out of the "
+            "Underworld in this rogue-like dungeon crawler from the creators "
+            "of Bastion, Transistor and Pyre."
+        ),
+        "price": 24.99,
+        "rating": 4.8,
+        "downloads": 2600000,
+        "age": 12,
+        "memory": 15,
+        "multiplayer": False,
+        "tags": ["Action", "Indie", "Roguelike"],
+    },
+    {
+        "folder": "Minecraft",
+        "name": "Minecraft",
+        "company": "Mojang Studios",
+        "description": (
+            "Explore your own unique world, survive the night, and create "
+            "anything you can imagine. Build, mine, battle mobs and "
+            "explore the vast blocky landscape, alone or with friends."
+        ),
+        "price": 26.95,
+        "rating": 4.7,
+        "downloads": 12000000,
+        "age": 7,
+        "memory": 4,
+        "multiplayer": True,
+        "tags": ["Sandbox", "Survival", "Multiplayer"],
+    },
+    {
+        "folder": "Rocket League",
+        "name": "Rocket League",
+        "company": "Psyonix",
+        "description": (
+            "Rocket-powered vehicles battle it out on the pitch in this "
+            "high-octane hybrid of arcade soccer and vehicular mayhem. "
+            "Simple to learn, difficult to master."
+        ),
+        "price": 0,
+        "rating": 4.4,
+        "downloads": 7200000,
+        "age": 3,
+        "memory": 20,
+        "multiplayer": True,
+        "tags": ["Sports", "Racing", "Free to Play"],
+    },
+    {
+        "folder": "Sekiro Shadows Die Twice",
+        "name": "Sekiro: Shadows Die Twice",
+        "company": "FromSoftware",
+        "description": (
+            "Carve your own path to vengeance in the award-winning action "
+            "adventure set in a reimagined late 1500s Sengoku Japan. Take "
+            "the role of the 'one-armed wolf', a disgraced and disfigured "
+            "shinobi."
+        ),
+        "price": 59.99,
+        "rating": 4.7,
+        "downloads": 2900000,
+        "age": 18,
+        "memory": 25,
+        "multiplayer": False,
+        "tags": ["Action", "Soulslike", "Fantasy"],
+    },
+    {
+        "folder": "The Elder Scrolls V Skyrim",
+        "name": "The Elder Scrolls V: Skyrim",
+        "company": "Bethesda Game Studios",
+        "description": (
+            "Winner of over 200 Game of the Year Awards, Skyrim reimagines "
+            "the open-world fantasy epic, pushing the gameplay and visuals "
+            "of a virtual world further than you thought possible."
+        ),
+        "price": 39.99,
+        "rating": 4.8,
+        "downloads": 6900000,
+        "age": 18,
+        "memory": 15,
+        "multiplayer": False,
+        "tags": ["RPG", "Open World", "Fantasy"],
+    },
 ]
 
 
@@ -162,13 +356,13 @@ class Command(BaseCommand):
                 raise CommandError(
                     f"Missing folder for '{game['name']}': {folder}"
                 )
-            files = sorted(
-                f for f in os.listdir(folder)
-                if f.lower().endswith(IMAGE_EXTS)
-            )
+            entries = os.listdir(folder)
+            files = sorted(f for f in entries if f.lower().endswith(IMAGE_EXTS))
             if not files:
                 raise CommandError(f"No images found in {folder}")
-            plan.append((game, folder, files))
+            own_videos = sorted(f for f in entries if f.lower().endswith(VIDEO_EXTS))
+            own_video = os.path.join(folder, own_videos[0]) if own_videos else None
+            plan.append((game, folder, files, own_video))
 
         existing_games = list(Game.objects.all())
         existing_count = len(existing_games)
@@ -180,8 +374,9 @@ class Command(BaseCommand):
             f"{existing_image_count} image file(s) and {existing_video_count} "
             f"video file(s) from storage (S3) -- and create {len(plan)} new one(s):"
         ))
-        for game, _, files in plan:
-            self.stdout.write(f"  - {game['name']}  ({len(files)} image(s))")
+        for game, _, files, own_video in plan:
+            video_note = " + own video" if own_video else ""
+            self.stdout.write(f"  - {game['name']}  ({len(files)} image(s){video_note})")
 
         if dry_run:
             self.stdout.write(self.style.NOTICE("\n[dry-run] Nothing written. No storage files touched."))
@@ -229,7 +424,7 @@ class Command(BaseCommand):
             deleted, _ = Game.objects.all().delete()
             self.stdout.write(f"Deleted {existing_count} game row(s).")
 
-            for game, folder, files in plan:
+            for game, folder, files, own_video in plan:
                 obj = Game.objects.create(
                     name=game["name"],
                     company=game["company"],
@@ -253,7 +448,11 @@ class Command(BaseCommand):
                         # (local media or S3) and stores the resulting path.
                         gi.image.save(filename, File(fh), save=True)
 
-                if video_bytes:
+                if own_video:
+                    with open(own_video, "rb") as fh:
+                        gv = GameVideo(game=obj)
+                        gv.video.save(os.path.basename(own_video), File(fh), save=True)
+                elif video_bytes:
                     gv = GameVideo(game=obj)
                     gv.video.save(f"{obj.pk}.mp4", ContentFile(video_bytes), save=True)
 
