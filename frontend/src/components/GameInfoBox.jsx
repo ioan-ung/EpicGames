@@ -10,13 +10,38 @@ import Memory from "../svg/memory.svg?react";
 import Baby from "../svg/baby.svg?react";
 import Pricing from "../svg/price.svg?react";
 
+const downloadGameFile = (game) => {
+  const content = `Mulțumim că ai descărcat ${game.name}!
+
+Companie: ${game.company}
+Mărime: ${game.memory} GB
+Preț: ${game.price} coins
+
+--- Acesta este un fișier demo, nu un joc real ---`;
+
+  const blob = new Blob([content], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${game.name.replace(/\s+/g, "_")}.txt`;
+  document.body.appendChild(a);
+  a.click();
+
+  a.remove();
+  URL.revokeObjectURL(url);
+};
+
 const GameInfoBox = ({ game, isOwned, buyNow, setBuyNow, wishlist, setWishList, userDetails, id }) => {
     const dispatch = useDispatch();
 
     return (
     <aside className="game-buy-box">
             {isOwned ? (
-            <Button className="feature-primary-btn game-download-btn">
+            <Button
+                className="feature-primary-btn game-download-btn"
+                onClick={() => downloadGameFile(game)}
+            >
                 <Download style={{ width: "1.1rem", height: "1.1rem" }} />
                 <strong>Download</strong>
             </Button>
