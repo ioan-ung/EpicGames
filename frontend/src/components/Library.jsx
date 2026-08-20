@@ -1,10 +1,9 @@
 import React, { useEffect, useMemo } from "react";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Alert } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Product from "./Product";
 import Loader from "./Loader";
-import Error from "./Error";
 import { getSearchedProduct } from "../actions/productActions";
 import LibraryIcon from "../svg/library.svg?react";
 
@@ -34,7 +33,9 @@ const Library = () => {
       {loading ? (
         <Loader />
       ) : error ? (
-        <Error />
+        <Alert variant="danger">
+          Unexpected error! Come back later!
+        </Alert>
       ) : (
         <div className="discover-shell">
           <div className="discover-toolbar">

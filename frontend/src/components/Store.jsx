@@ -10,7 +10,6 @@ import {
   getOldestProductsAction,
 } from "../actions/productActions";
 import "./style/popup.css";
-import Error from "./Error";
 import "./style/Store2.css";
 import Download from "../svg/downloads.svg?react";
 import Star from "../svg/star.svg?react";
@@ -54,8 +53,8 @@ const Store = () => {
       {loading || !selectedGame ? (
         <Loader />
       ) : error ? (
-        <Alert variant={"danger"}>
-          <Error />
+        <Alert variant="danger">
+          Unexpected error! Come back later!
         </Alert>
       ) : (
         <Container fluid className="discover-shell">

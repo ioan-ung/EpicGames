@@ -10,7 +10,6 @@ import Loader from "./Loader";
 import CreatePricePopup from "./CreatePricePopup";
 import { useState } from "react";
 import { useContext } from "react";
-import Error from "./Error";
 import StripePayment from "../pages/StripePayment";
 import { AuthContext } from "../context/AuthContext";
 
