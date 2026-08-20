@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Button } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import Pricing from "../svg/price.svg?react";
 import VideoCarousel from "../components/VideoCarousel";
-import { addToWishList, deleteFromWishList } from "../actions/productActions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import Loader from "../components/Loader";
 import { getProductById } from "../actions/productActions";
-import BuyGame from "../components/BuyGame";
-import Money from "../svg/money.svg?react";
-import Company from "../svg/company.svg?react";
-import Download from "../svg/downloads.svg?react";
-import Memory from "../svg/memory.svg?react";
-import Baby from "../svg/baby.svg?react";
-import Star from "../svg/star.svg?react";
 import GameInfoBox from "../components/GameInfoBox";
+import GameGallery from "../components/GameGallery";
 
 const GamePopup = () => {
   const { id } = useParams();
@@ -54,58 +46,7 @@ const GamePopup = () => {
         </Alert>
       ) : (
         <div className="game-page-inner">
-          <div className="game-hero">
-            <img
-              className="game-hero-bg"
-              src={game?.images?.[activeImage]?.image}
-              alt=""
-              aria-hidden="true"
-            />
-            <img
-              className="game-hero-image"
-              src={game?.images?.[activeImage]?.image}
-              alt={game?.name || "Game cover"}
-            />
-            <div className="game-hero-overlay" />
-            <div className="game-hero-content">
-              <h1>{game?.name}</h1>
-              <div className="game-hero-meta">
-                {game?.rating && (
-                  <span>
-                    <Star />
-                    {game.rating}
-                  </span>
-                )}
-                {game?.company && (
-                  <span>
-                    <Company />
-                    {game.company}
-                  </span>
-                )}
-                {game?.downloads !== undefined && (
-                  <span>
-                    <Download />
-                    {game.downloads}M downloads
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {game?.images?.length > 1 && (
-            <div className="game-gallery-thumbs">
-              {game.images.map((image, index) => (
-                <button
-                  key={image.id}
-                  type="button"
-                  className={`game-gallery-thumb ${activeImage === index ? "active" : ""}`}
-                  onClick={() => setActiveImage(index)}
-                >
-                  <img src={image.image} alt={`${game.name} screenshot ${index + 1}`} />
-                </button>
-              ))}
-            </div>
-          )}
+          <GameGallery game={game} activeImage={activeImage} setActiveImage={setActiveImage} />
 
           <div className="game-page-body">
             <div className="game-page-main">
