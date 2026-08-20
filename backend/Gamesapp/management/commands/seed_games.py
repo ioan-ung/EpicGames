@@ -11,6 +11,8 @@ WHAT IT DOES
        Because GameImage.image is an ImageField, Django hands each file to the
        configured storage backend automatically -- local media OR AWS S3 --
        so this command works the same regardless of where files actually live.
+    5. Downloads one shared sample video and attaches it to every game as a
+       GameVideo, just so it isn't empty. Skipped silently if the download fails.
 
 HOW TO USE
     1. Lives at: Gamesapp/management/commands/seed_games.py
@@ -39,12 +41,17 @@ import os
 import json
 from datetime import datetime
 
+import requests
 from django.apps import apps
 from django.core.files import File
+from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
 APP_LABEL = "Gamesapp"
+
+# One sample video reused for every seeded game, just so GameVideo isn't empty.
+SAMPLE_VIDEO_URL = "https://download.samplelib.com/mp4/sample-5s.mp4"
 
 # Image files considered valid.
 IMAGE_EXTS = (".jpg", ".jpeg", ".png", ".webp")
@@ -193,6 +200,17 @@ class Command(BaseCommand):
         if not opts["no_backup"] and existing_count:
             self._backup(Game)
 
+        # Download the shared sample video once and reuse it for every game.
+        video_bytes = None
+        try:
+            resp = requests.get(SAMPLE_VIDEO_URL, timeout=20)
+            resp.raise_for_status()
+            video_bytes = resp.content
+        except requests.RequestException as e:
+            self.stdout.write(self.style.WARNING(
+                f"Couldn't download sample video ({e}); continuing without one."
+            ))
+
         # 2. Delete old files from storage (S3) BEFORE removing DB rows --
         #    deleting a Game row only cascades in the database, it does not
         #    remove the associated files from the storage backend.
@@ -234,6 +252,10 @@ class Command(BaseCommand):
                         # .save() routes the file to the configured storage
                         # (local media or S3) and stores the resulting path.
                         gi.image.save(filename, File(fh), save=True)
+
+                if video_bytes:
+                    gv = GameVideo(game=obj)
+                    gv.video.save(f"{obj.pk}.mp4", ContentFile(video_bytes), save=True)
 
                 self.stdout.write(self.style.SUCCESS(
                     f"  + {obj.name}  ({len(files)} image(s))"
