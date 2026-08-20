@@ -1,168 +1,264 @@
 """
-Populeaza baza de date cu jocuri de test: nume, pret, descriere si celelalte
-campuri generate automat, plus imagini descarcate de la picsum.photos si urcate
-automat in S3 (prin GameImage). Optional descarca si un video sample (GameVideo).
+Seed the game catalogue from local image folders.
 
-Rulare:
-    python manage.py seed_games                 # 30 jocuri, 2 imagini/joc, cu video
-    python manage.py seed_games --count 10      # 10 jocuri
-    python manage.py seed_games --images 1       # 1 imagine / joc
-    python manage.py seed_games --no-videos      # fara video (mai rapid)
-    python manage.py seed_games --clear          # sterge toate jocurile existente intai
+WHAT IT DOES
+    1. Backs up the current games to a timestamped JSON file (unless --no-backup).
+    2. Deletes every existing game's image/video files from S3 (or whatever
+       storage backend is configured), then deletes the Game rows themselves
+       (cascades to GameImage/GameVideo rows in the DB).
+    3. Creates the games defined in SEED_GAMES below, with their tags.
+    4. Uploads every image found in each game's folder as a GameImage.
+       Because GameImage.image is an ImageField, Django hands each file to the
+       configured storage backend automatically -- local media OR AWS S3 --
+       so this command works the same regardless of where files actually live.
+
+HOW TO USE
+    1. Lives at: Gamesapp/management/commands/seed_games.py
+    2. Lay out your images, one folder per game, under --images:
+
+           seed_images/
+               Cyberpunk 2077/
+                   1.jpeg
+                   2.jpeg
+               Red Dead Redemption 2/
+                   ...
+               witcher3/
+                   ...
+
+       The folder name links a set of images to a game via SEED_GAMES[].folder.
+    3. Dry run first (touches nothing, including S3):
+           python manage.py seed_games --images ./seed_images --dry-run
+    4. For real:
+           python manage.py seed_games --images ./seed_images
+
+NOTES
+    - The FIRST image in each folder (alphabetically) is treated as the cover.
 """
-import random
-import time
 
-import requests
-from django.core.files.base import ContentFile
-from django.core.management.base import BaseCommand
+import os
+import json
+from datetime import datetime
 
-from Gamesapp.models import Game, GameImage, GameVideo, GameSale, Tag
+from django.apps import apps
+from django.core.files import File
+from django.core.management.base import BaseCommand, CommandError
+from django.db import transaction
 
-# --- Bucati din care compunem nume de jocuri fictive (unice) ---
-PREFIXES = [
-    "Shadow", "Crimson", "Eternal", "Neon", "Frost", "Iron", "Silent", "Savage",
-    "Cosmic", "Broken", "Rogue", "Dark", "Golden", "Hollow", "Rising", "Last",
-    "Astral", "Phantom", "Steel", "Ember", "Void", "Storm", "Crystal", "Ancient",
-    "Wild", "Solar", "Lunar", "Feral", "Grim", "Radiant",
-]
-NOUNS = [
-    "Legends", "Empire", "Odyssey", "Frontier", "Protocol", "Dynasty", "Realms",
-    "Conquest", "Horizon", "Uprising", "Vanguard", "Exodus", "Requiem", "Genesis",
-    "Legacy", "Nexus", "Saga", "Descent", "Ascension", "Warfront", "Chronicles",
-    "Reckoning", "Covenant", "Paradox", "Dominion", "Awakening", "Inferno", "Eclipse",
-]
-COMPANIES = [
-    "Nova Interactive", "Ironclad Studios", "Pixel Forge", "Vortex Games",
-    "Northlight Entertainment", "Blackbox Studio", "Hyperion Works", "Redshift Games",
-    "Moonrise Interactive", "Aether Studios", "Titan Digital", "Echo Chamber Games",
-]
-TAG_NAMES = [
-    "Action", "Adventure", "RPG", "Shooter", "Strategy", "Horror", "Racing",
-    "Puzzle", "Open World", "Multiplayer", "Indie", "Sci-Fi", "Fantasy", "Survival",
-]
-DESC_TEMPLATES = [
-    "Explore a vast {adj} world where every choice shapes the fate of {noun}. "
-    "Battle relentless enemies, uncover hidden secrets, and forge your own legend.",
-    "A {adj} {genre} experience that pushes the limits of what a game can be. "
-    "Team up with friends or go solo across dozens of handcrafted missions.",
-    "Dive into {noun}, a {adj} saga of war, betrayal and redemption. "
-    "Master deep combat systems and build the ultimate arsenal.",
-    "Survive the {adj} frontier in this immersive {genre} title. "
-    "Craft, explore and conquer in a living, breathing open world.",
-]
-ADJECTIVES = ["breathtaking", "brutal", "mysterious", "relentless", "epic",
-              "haunting", "chaotic", "immersive", "vast", "unforgiving"]
+APP_LABEL = "Gamesapp"
 
-SAMPLE_VIDEO_URL = "https://download.samplelib.com/mp4/sample-5s.mp4"
+# Image files considered valid.
+IMAGE_EXTS = (".jpg", ".jpeg", ".png", ".webp")
+
+# One entry per game. `folder` must match a subfolder under --images.
+# Everything else is metadata that gets written to the Game row.
+SEED_GAMES = [
+    {
+        "folder": "Cyberpunk 2077",
+        "name": "Cyberpunk 2077",
+        "company": "CD Projekt Red",
+        "description": (
+            "An open-world, action-adventure story set in Night City, a "
+            "megalopolis obsessed with power, glamour and body modification. "
+            "Play as V, a mercenary outlaw chasing a one-of-a-kind implant "
+            "that holds the key to immortality."
+        ),
+        "price": 59.99,
+        "rating": 4.2,
+        "downloads": 5200000,
+        "age": 18,
+        "memory": 70,
+        "multiplayer": False,
+        "tags": ["RPG", "Sci-Fi", "Open World"],
+    },
+    {
+        "folder": "Red Dead Redemption 2",
+        "name": "Red Dead Redemption 2",
+        "company": "Rockstar Games",
+        "description": (
+            "America, 1899. Arthur Morgan and the Van der Linde gang are "
+            "outlaws on the run. With federal agents and the best bounty "
+            "hunters in the nation massing on their heels, the gang must "
+            "rob, steal and fight their way across the rugged heartland."
+        ),
+        "price": 59.99,
+        "rating": 4.8,
+        "downloads": 8100000,
+        "age": 18,
+        "memory": 150,
+        "multiplayer": True,
+        "tags": ["Action", "Adventure", "Open World"],
+    },
+    {
+        "folder": "witcher3",
+        "name": "The Witcher 3: Wild Hunt",
+        "company": "CD Projekt Red",
+        "description": (
+            "As war rages on throughout the Northern Realms, you take on "
+            "the greatest contract of your life -- tracking down the Child "
+            "of Prophecy, a living weapon that can alter the shape of the "
+            "world."
+        ),
+        "price": 39.99,
+        "rating": 4.9,
+        "downloads": 6500000,
+        "age": 18,
+        "memory": 50,
+        "multiplayer": False,
+        "tags": ["RPG", "Fantasy", "Open World"],
+    },
+]
 
 
 class Command(BaseCommand):
-    help = "Populeaza baza de date cu jocuri de test (date + imagini/video pe S3)."
+    help = "Wipe existing games (DB rows + S3 files) and seed new ones from local image folders."
 
     def add_arguments(self, parser):
-        parser.add_argument("--count", type=int, default=30, help="Cate jocuri (default 30)")
-        parser.add_argument("--images", type=int, default=2, help="Cate imagini / joc (default 2)")
-        parser.add_argument("--no-videos", action="store_true", help="Nu adauga video-uri")
-        parser.add_argument("--clear", action="store_true", help="Sterge toate jocurile existente intai")
+        parser.add_argument(
+            "--images",
+            required=True,
+            help="Path to the folder that holds one subfolder per game.",
+        )
+        parser.add_argument(
+            "--dry-run",
+            action="store_true",
+            help="Show what would happen without writing anything (no S3 deletes, no DB writes).",
+        )
+        parser.add_argument(
+            "--no-backup",
+            action="store_true",
+            help="Skip exporting existing games before deletion.",
+        )
+        parser.add_argument(
+            "--yes",
+            action="store_true",
+            help="Skip the interactive confirmation prompt.",
+        )
 
-    # ------------------------------------------------------------------ #
     def handle(self, *args, **opts):
-        count = opts["count"]
-        images_per_game = opts["images"]
-        with_videos = not opts["no_videos"]
+        Game = apps.get_model(APP_LABEL, "Game")
+        Tag = apps.get_model(APP_LABEL, "Tag")
+        GameImage = apps.get_model(APP_LABEL, "GameImage")
+        GameVideo = apps.get_model(APP_LABEL, "GameVideo")
 
-        if opts["clear"]:
-            deleted, _ = Game.objects.all().delete()
-            self.stdout.write(self.style.WARNING(f"Sterse {deleted} obiecte legate de jocuri."))
+        images_root = opts["images"]
+        dry_run = opts["dry_run"]
 
-        tags = self._ensure_tags()
-        sale = self._ensure_sale()
+        if not os.path.isdir(images_root):
+            raise CommandError(f"Images folder not found: {images_root}")
 
-        # descarcam video-ul sample o singura data si il refolosim
-        video_bytes = None
-        if with_videos:
-            video_bytes = self._download(SAMPLE_VIDEO_URL, label="video sample")
-            if video_bytes is None:
-                self.stdout.write(self.style.WARNING("Nu am putut descarca video-ul; continui fara video."))
-                with_videos = False
-
-        used_names = set(Game.objects.values_list("name", flat=True))
-        created = 0
-
-        for i in range(count):
-            name = self._unique_name(used_names)
-            if name is None:
-                self.stdout.write(self.style.WARNING("Am ramas fara nume unice; ma opresc."))
-                break
-            used_names.add(name)
-
-            game = Game.objects.create(
-                name=name,
-                price=round(random.uniform(4.99, 69.99), 2),
-                age=random.choice([0, 3, 7, 12, 16, 18]),
-                company=random.choice(COMPANIES),
-                description=self._description(name),
-                rating=round(random.uniform(2.5, 5.0), 1),
-                downloads=random.randint(500, 5_000_000),
-                memory=round(random.uniform(2, 120), 1),
-                multiplayer=random.choice([True, False]),
-                sale=sale if random.random() < 0.3 else None,
+        # Validate every game's folder and collect its image files up front,
+        # so we never delete existing data only to fail halfway through.
+        plan = []
+        for game in SEED_GAMES:
+            folder = os.path.join(images_root, game["folder"])
+            if not os.path.isdir(folder):
+                raise CommandError(
+                    f"Missing folder for '{game['name']}': {folder}"
+                )
+            files = sorted(
+                f for f in os.listdir(folder)
+                if f.lower().endswith(IMAGE_EXTS)
             )
-            game.tags.set(random.sample(tags, k=random.randint(1, 3)))
+            if not files:
+                raise CommandError(f"No images found in {folder}")
+            plan.append((game, folder, files))
 
-            # imagini de la picsum -> urcate in S3 prin GameImage
-            for n in range(images_per_game):
-                url = f"https://picsum.photos/seed/{game.pk}-{n}/600/900"
-                data = self._download(url, label=f"img {game.name}")
-                if data:
-                    gi = GameImage(game=game)
-                    gi.image.save(f"{game.pk}-{n}.jpg", ContentFile(data), save=True)
+        existing_games = list(Game.objects.all())
+        existing_count = len(existing_games)
+        existing_image_count = GameImage.objects.count()
+        existing_video_count = GameVideo.objects.count()
 
-            # video (acelasi sample pentru toate)
-            if with_videos and video_bytes:
-                gv = GameVideo(game=game)
-                gv.video.save(f"{game.pk}.mp4", ContentFile(video_bytes), save=True)
+        self.stdout.write(self.style.WARNING(
+            f"\nAbout to DELETE {existing_count} existing game(s) -- including "
+            f"{existing_image_count} image file(s) and {existing_video_count} "
+            f"video file(s) from storage (S3) -- and create {len(plan)} new one(s):"
+        ))
+        for game, _, files in plan:
+            self.stdout.write(f"  - {game['name']}  ({len(files)} image(s))")
 
-            created += 1
-            self.stdout.write(self.style.SUCCESS(f"[{created}/{count}] {game.name}"))
+        if dry_run:
+            self.stdout.write(self.style.NOTICE("\n[dry-run] Nothing written. No storage files touched."))
+            return
 
-        self.stdout.write(self.style.SUCCESS(f"\nGata! Am creat {created} jocuri."))
+        if not opts["yes"]:
+            confirm = input(
+                "\nThis is IRREVERSIBLE and deletes files from storage (S3). "
+                "Type 'yes' to continue: "
+            ).strip().lower()
+            if confirm != "yes":
+                self.stdout.write(self.style.ERROR("Aborted."))
+                return
 
-    # ------------------------------------------------------------------ #
-    def _ensure_tags(self):
-        tags = []
-        for name in TAG_NAMES:
-            tag, _ = Tag.objects.get_or_create(name=name)
-            tags.append(tag)
-        return tags
+        # 1. Backup existing games.
+        if not opts["no_backup"] and existing_count:
+            self._backup(Game)
 
-    def _ensure_sale(self):
-        sale, _ = GameSale.objects.get_or_create(percentage=25.0)
-        return sale
+        # 2. Delete old files from storage (S3) BEFORE removing DB rows --
+        #    deleting a Game row only cascades in the database, it does not
+        #    remove the associated files from the storage backend.
+        for image in GameImage.objects.all():
+            image.image.delete(save=False)
+        for video in GameVideo.objects.all():
+            video.video.delete(save=False)
+        self.stdout.write(
+            f"Deleted {existing_image_count} image(s) and {existing_video_count} "
+            f"video(s) from storage."
+        )
 
-    def _unique_name(self, used):
-        for _ in range(50):
-            name = f"{random.choice(PREFIXES)} {random.choice(NOUNS)}"
-            if len(name) <= 50 and name not in used:
-                return name
-        return None
+        # 3 + 4 + 5 wrapped in a transaction (DB rows are all-or-nothing;
+        # note that files newly pushed to storage below are not rolled back).
+        with transaction.atomic():
+            deleted, _ = Game.objects.all().delete()
+            self.stdout.write(f"Deleted {existing_count} game row(s).")
 
-    def _description(self, name):
-        tpl = random.choice(DESC_TEMPLATES)
-        return tpl.format(adj=random.choice(ADJECTIVES),
-                          noun=name,
-                          genre=random.choice(["action", "RPG", "survival", "strategy"]))
+            for game, folder, files in plan:
+                obj = Game.objects.create(
+                    name=game["name"],
+                    company=game["company"],
+                    description=game["description"],
+                    price=game["price"],
+                    rating=game["rating"],
+                    downloads=game["downloads"],
+                    age=game["age"],
+                    memory=game["memory"],
+                    multiplayer=game["multiplayer"],
+                )
+                for tag_name in game.get("tags", []):
+                    tag, _ = Tag.objects.get_or_create(name=tag_name)
+                    obj.tags.add(tag)
 
-    def _download(self, url, label="", retries=2):
-        for attempt in range(retries + 1):
-            try:
-                resp = requests.get(url, timeout=20)
-                resp.raise_for_status()
-                return resp.content
-            except requests.RequestException as e:
-                if attempt < retries:
-                    time.sleep(1)
-                    continue
-                self.stdout.write(self.style.WARNING(f"  ! esec descarcare {label}: {e}"))
-                return None
+                for filename in files:
+                    path = os.path.join(folder, filename)
+                    with open(path, "rb") as fh:
+                        gi = GameImage(game=obj)
+                        # .save() routes the file to the configured storage
+                        # (local media or S3) and stores the resulting path.
+                        gi.image.save(filename, File(fh), save=True)
+
+                self.stdout.write(self.style.SUCCESS(
+                    f"  + {obj.name}  ({len(files)} image(s))"
+                ))
+
+        self.stdout.write(self.style.SUCCESS("\nDone. Catalogue reseeded."))
+
+    def _backup(self, Game):
+        stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        out = f"games_backup_{stamp}.json"
+        data = []
+        for g in Game.objects.all().prefetch_related("tags", "images"):
+            data.append({
+                "name": g.name,
+                "company": g.company,
+                "description": g.description,
+                "price": g.price,
+                "rating": g.rating,
+                "downloads": g.downloads,
+                "age": g.age,
+                "memory": g.memory,
+                "multiplayer": g.multiplayer,
+                "tags": [t.name for t in g.tags.all()],
+                "images": [i.image.name for i in g.images.all()],
+            })
+        with open(out, "w", encoding="utf-8") as fh:
+            json.dump(data, fh, indent=2, ensure_ascii=False)
+        self.stdout.write(self.style.SUCCESS(f"Backed up {len(data)} game(s) -> {out}"))

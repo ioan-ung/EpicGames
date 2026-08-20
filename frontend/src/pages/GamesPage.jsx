@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CarouselComponent from "../components/Carousel";
-import { Alert, Col, Row, Button } from "react-bootstrap";
+import { Alert, Col, Row, Dropdown } from "react-bootstrap";
 import Product from "../components/Product";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,6 +11,13 @@ import {
   getCheapestProductsAction,
 } from "../actions/productActions";
 import Loader from "../components/Loader";
+
+const filterLabels = {
+  TopRated: 'Top',
+  MostDownloaded: 'Popular',
+  Newest: 'New',
+  Cheap: 'Cheap',
+};
 
 const GamesPage = () => {
   const dispatch = useDispatch();
@@ -77,27 +84,27 @@ const GamesPage = () => {
               <h1>Find your next obsession</h1>
               <p>Discover top-rated games, trending favorites, and hidden gems across every genre.</p>
             </div>
-            <div className="browse-hero-actions">
-              {[
-                { label: "Top rated", value: "TopRated" },
-                { label: "Most downloaded", value: "MostDownloaded" },
-                { label: "Newest", value: "Newest" },
-                { label: "Cheap", value: "Cheap" },
-              ].map((filter) => (
-                <Button
-                  key={filter.value}
-                  className={carouselFilter === filter.value ? "browse-primary" : "browse-secondary"}
-                  onClick={() => setCarouselFilter(filter.value)}
-                >
-                  {filter.label}
-                </Button>
-              ))}
-            </div>
+            <Dropdown className="browse-hero-actions">
+              <Dropdown.Toggle className="browse-primary" id="browse-filter-dropdown">
+                {filterLabels[carouselFilter]}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {['TopRated', 'MostDownloaded', 'Newest', 'Cheap'].map((filter) => (
+                  <Dropdown.Item
+                    key={filter}
+                    active={carouselFilter === filter}
+                    onClick={() => setCarouselFilter(filter)}
+                  >
+                    {filterLabels[filter]}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
 
           <div className="carousel-section">
             <div className="section-heading">
-              <h2>{carouselFilter === "TopRated" ? "Top rated" : carouselFilter === "MostDownloaded" ? "Most downloaded" : carouselFilter === "Newest" ? "Newest" : "Cheap"}</h2>
+              <h2>{filterLabels[carouselFilter]}</h2>
               <span>Trending now</span>
             </div>
             <CarouselComponent topRatedProducts={carouselProducts.slice(0, 5)} />

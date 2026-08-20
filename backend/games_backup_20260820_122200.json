@@ -1,0 +1,572 @@
+[
+  {
+    "name": "Hollow Genesis",
+    "company": "Moonrise Interactive",
+    "description": "Dive into Hollow Genesis, a unforgiving saga of war, betrayal and redemption. Master deep combat systems and build the ultimate arsenal.",
+    "price": 7.38,
+    "rating": 4.7,
+    "downloads": 1313289,
+    "age": 18,
+    "memory": 62.5,
+    "multiplayer": false,
+    "tags": [
+      "RPG",
+      "Sci-Fi",
+      "Fantasy"
+    ],
+    "images": [
+      "games/44-0.jpg",
+      "games/44-1.jpg"
+    ]
+  },
+  {
+    "name": "Hollow Descent",
+    "company": "Hyperion Works",
+    "description": "A relentless survival experience that pushes the limits of what a game can be. Team up with friends or go solo across dozens of handcrafted missions.",
+    "price": 12.48,
+    "rating": 3.9,
+    "downloads": 3825938,
+    "age": 12,
+    "memory": 17.6,
+    "multiplayer": false,
+    "tags": [
+      "Open World",
+      "Shooter",
+      "Sci-Fi"
+    ],
+    "images": [
+      "games/45-0.jpg",
+      "games/45-1.jpg"
+    ]
+  },
+  {
+    "name": "Void Descent",
+    "company": "Echo Chamber Games",
+    "description": "Explore a vast brutal world where every choice shapes the fate of Void Descent. Battle relentless enemies, uncover hidden secrets, and forge your own legend.",
+    "price": 53.57,
+    "rating": 3.3,
+    "downloads": 760445,
+    "age": 7,
+    "memory": 94.1,
+    "multiplayer": true,
+    "tags": [
+      "Multiplayer"
+    ],
+    "images": [
+      "games/46-0.jpg",
+      "games/46-1.jpg"
+    ]
+  },
+  {
+    "name": "Phantom Horizon",
+    "company": "Moonrise Interactive",
+    "description": "Dive into Phantom Horizon, a relentless saga of war, betrayal and redemption. Master deep combat systems and build the ultimate arsenal.",
+    "price": 33.79,
+    "rating": 3.1,
+    "downloads": 652033,
+    "age": 18,
+    "memory": 95.3,
+    "multiplayer": true,
+    "tags": [
+      "Strategy",
+      "Horror"
+    ],
+    "images": [
+      "games/47-0.jpg",
+      "games/47-1.jpg"
+    ]
+  },
+  {
+    "name": "Last Inferno",
+    "company": "Titan Digital",
+    "description": "Dive into Last Inferno, a unforgiving saga of war, betrayal and redemption. Master deep combat systems and build the ultimate arsenal.",
+    "price": 32.3,
+    "rating": 4.4,
+    "downloads": 375171,
+    "age": 16,
+    "memory": 51.7,
+    "multiplayer": true,
+    "tags": [
+      "Multiplayer",
+      "Puzzle",
+      "Sci-Fi"
+    ],
+    "images": [
+      "games/48-0.jpg",
+      "games/48-1.jpg"
+    ]
+  },
+  {
+    "name": "Eternal Realms",
+    "company": "Blackbox Studio",
+    "description": "Dive into Eternal Realms, a epic saga of war, betrayal and redemption. Master deep combat systems and build the ultimate arsenal.",
+    "price": 5.39,
+    "rating": 4.5,
+    "downloads": 774637,
+    "age": 12,
+    "memory": 33.8,
+    "multiplayer": false,
+    "tags": [
+      "Multiplayer",
+      "Puzzle",
+      "Indie"
+    ],
+    "images": [
+      "games/49-0.jpg",
+      "games/49-1.jpg"
+    ]
+  },
+  {
+    "name": "Crystal Paradox",
+    "company": "Aether Studios",
+    "description": "Dive into Crystal Paradox, a relentless saga of war, betrayal and redemption. Master deep combat systems and build the ultimate arsenal.",
+    "price": 52.04,
+    "rating": 3.5,
+    "downloads": 2757722,
+    "age": 0,
+    "memory": 23.7,
+    "multiplayer": true,
+    "tags": [
+      "RPG"
+    ],
+    "images": [
+      "games/50-0.jpg",
+      "games/50-1.jpg"
+    ]
+  },
+  {
+    "name": "Wild Paradox",
+    "company": "Vortex Games",
+    "description": "A relentless RPG experience that pushes the limits of what a game can be. Team up with friends or go solo across dozens of handcrafted missions.",
+    "price": 53.03,
+    "rating": 5.0,
+    "downloads": 2178586,
+    "age": 16,
+    "memory": 26.1,
+    "multiplayer": false,
+    "tags": [
+      "Racing",
+      "Horror",
+      "Sci-Fi"
+    ],
+    "images": [
+      "games/51-0.jpg",
+      "games/51-1.jpg"
+    ]
+  },
+  {
+    "name": "Astral Awakening",
+    "company": "Pixel Forge",
+    "description": "Survive the vast frontier in this immersive RPG title. Craft, explore and conquer in a living, breathing open world.",
+    "price": 42.68,
+    "rating": 4.3,
+    "downloads": 32672,
+    "age": 7,
+    "memory": 17.1,
+    "multiplayer": false,
+    "tags": [
+      "Multiplayer",
+      "Open World"
+    ],
+    "images": [
+      "games/52-0.jpg",
+      "games/52-1.jpg"
+    ]
+  },
+  {
+    "name": "Broken Empire",
+    "company": "Redshift Games",
+    "description": "A breathtaking strategy experience that pushes the limits of what a game can be. Team up with friends or go solo across dozens of handcrafted missions.",
+    "price": 48.26,
+    "rating": 3.4,
+    "downloads": 1736318,
+    "age": 12,
+    "memory": 46.9,
+    "multiplayer": true,
+    "tags": [
+      "RPG",
+      "Puzzle"
+    ],
+    "images": [
+      "games/53-0.jpg",
+      "games/53-1.jpg"
+    ]
+  },
+  {
+    "name": "Storm Eclipse",
+    "company": "Pixel Forge",
+    "description": "Survive the chaotic frontier in this immersive survival title. Craft, explore and conquer in a living, breathing open world.",
+    "price": 52.85,
+    "rating": 3.1,
+    "downloads": 334693,
+    "age": 16,
+    "memory": 77.9,
+    "multiplayer": true,
+    "tags": [
+      "Racing",
+      "Shooter",
+      "Sci-Fi"
+    ],
+    "images": [
+      "games/54-0.jpg",
+      "games/54-1.jpg"
+    ]
+  },
+  {
+    "name": "Golden Requiem",
+    "company": "Echo Chamber Games",
+    "description": "A brutal action experience that pushes the limits of what a game can be. Team up with friends or go solo across dozens of handcrafted missions.",
+    "price": 55.91,
+    "rating": 3.0,
+    "downloads": 4726043,
+    "age": 12,
+    "memory": 18.9,
+    "multiplayer": false,
+    "tags": [
+      "Action",
+      "RPG",
+      "Racing"
+    ],
+    "images": [
+      "games/55-0.jpg",
+      "games/55-1.jpg"
+    ]
+  },
+  {
+    "name": "Astral Warfront",
+    "company": "Hyperion Works",
+    "description": "Explore a vast relentless world where every choice shapes the fate of Astral Warfront. Battle relentless enemies, uncover hidden secrets, and forge your own legend.",
+    "price": 61.9,
+    "rating": 3.6,
+    "downloads": 2852464,
+    "age": 3,
+    "memory": 34.2,
+    "multiplayer": true,
+    "tags": [
+      "Open World",
+      "Racing",
+      "Shooter"
+    ],
+    "images": [
+      "games/56-0.jpg",
+      "games/56-1.jpg"
+    ]
+  },
+  {
+    "name": "Lunar Vanguard",
+    "company": "Aether Studios",
+    "description": "Survive the unforgiving frontier in this immersive strategy title. Craft, explore and conquer in a living, breathing open world.",
+    "price": 62.74,
+    "rating": 3.6,
+    "downloads": 2743320,
+    "age": 0,
+    "memory": 44.1,
+    "multiplayer": true,
+    "tags": [
+      "Fantasy"
+    ],
+    "images": [
+      "games/57-0.jpg",
+      "games/57-1.jpg"
+    ]
+  },
+  {
+    "name": "Broken Saga",
+    "company": "Aether Studios",
+    "description": "Survive the mysterious frontier in this immersive action title. Craft, explore and conquer in a living, breathing open world.",
+    "price": 19.47,
+    "rating": 3.5,
+    "downloads": 4401581,
+    "age": 3,
+    "memory": 97.7,
+    "multiplayer": true,
+    "tags": [
+      "Fantasy"
+    ],
+    "images": [
+      "games/58-0.jpg",
+      "games/58-1.jpg"
+    ]
+  },
+  {
+    "name": "Grim Paradox",
+    "company": "Vortex Games",
+    "description": "Survive the mysterious frontier in this immersive RPG title. Craft, explore and conquer in a living, breathing open world.",
+    "price": 69.48,
+    "rating": 4.1,
+    "downloads": 693556,
+    "age": 12,
+    "memory": 62.8,
+    "multiplayer": true,
+    "tags": [
+      "Multiplayer",
+      "Horror"
+    ],
+    "images": [
+      "games/59-0.jpg",
+      "games/59-1.jpg"
+    ]
+  },
+  {
+    "name": "Frost Legacy",
+    "company": "Blackbox Studio",
+    "description": "Explore a vast chaotic world where every choice shapes the fate of Frost Legacy. Battle relentless enemies, uncover hidden secrets, and forge your own legend.",
+    "price": 25.49,
+    "rating": 4.2,
+    "downloads": 2394071,
+    "age": 3,
+    "memory": 24.3,
+    "multiplayer": false,
+    "tags": [
+      "Shooter"
+    ],
+    "images": [
+      "games/60-0.jpg",
+      "games/60-1.jpg"
+    ]
+  },
+  {
+    "name": "Hollow Dynasty",
+    "company": "Echo Chamber Games",
+    "description": "Survive the breathtaking frontier in this immersive RPG title. Craft, explore and conquer in a living, breathing open world.",
+    "price": 39.22,
+    "rating": 3.1,
+    "downloads": 1047864,
+    "age": 16,
+    "memory": 15.7,
+    "multiplayer": false,
+    "tags": [
+      "Action",
+      "Adventure",
+      "Racing"
+    ],
+    "images": [
+      "games/61-0.jpg",
+      "games/61-1.jpg"
+    ]
+  },
+  {
+    "name": "Silent Nexus",
+    "company": "Blackbox Studio",
+    "description": "Survive the unforgiving frontier in this immersive survival title. Craft, explore and conquer in a living, breathing open world.",
+    "price": 40.16,
+    "rating": 3.2,
+    "downloads": 3296185,
+    "age": 3,
+    "memory": 90.6,
+    "multiplayer": true,
+    "tags": [
+      "Horror"
+    ],
+    "images": [
+      "games/62-0.jpg",
+      "games/62-1.jpg"
+    ]
+  },
+  {
+    "name": "Grim Inferno",
+    "company": "Northlight Entertainment",
+    "description": "Dive into Grim Inferno, a mysterious saga of war, betrayal and redemption. Master deep combat systems and build the ultimate arsenal.",
+    "price": 58.89,
+    "rating": 3.4,
+    "downloads": 1164223,
+    "age": 12,
+    "memory": 78.1,
+    "multiplayer": false,
+    "tags": [
+      "Puzzle"
+    ],
+    "images": [
+      "games/63-0.jpg",
+      "games/63-1.jpg"
+    ]
+  },
+  {
+    "name": "Solar Uprising",
+    "company": "Ironclad Studios",
+    "description": "Dive into Solar Uprising, a epic saga of war, betrayal and redemption. Master deep combat systems and build the ultimate arsenal.",
+    "price": 14.11,
+    "rating": 2.6,
+    "downloads": 1401768,
+    "age": 3,
+    "memory": 69.6,
+    "multiplayer": true,
+    "tags": [
+      "Puzzle"
+    ],
+    "images": [
+      "games/64-0.jpg",
+      "games/64-1.jpg"
+    ]
+  },
+  {
+    "name": "Wild Nexus",
+    "company": "Nova Interactive",
+    "description": "Survive the immersive frontier in this immersive strategy title. Craft, explore and conquer in a living, breathing open world.",
+    "price": 27.44,
+    "rating": 3.7,
+    "downloads": 4389896,
+    "age": 16,
+    "memory": 104.9,
+    "multiplayer": false,
+    "tags": [
+      "Horror"
+    ],
+    "images": [
+      "games/65-0.jpg",
+      "games/65-1.jpg"
+    ]
+  },
+  {
+    "name": "Grim Frontier",
+    "company": "Titan Digital",
+    "description": "Survive the relentless frontier in this immersive action title. Craft, explore and conquer in a living, breathing open world.",
+    "price": 65.54,
+    "rating": 3.7,
+    "downloads": 1461594,
+    "age": 0,
+    "memory": 119.9,
+    "multiplayer": true,
+    "tags": [
+      "Action"
+    ],
+    "images": [
+      "games/66-0.jpg",
+      "games/66-1.jpg"
+    ]
+  },
+  {
+    "name": "Silent Vanguard",
+    "company": "Redshift Games",
+    "description": "Dive into Silent Vanguard, a relentless saga of war, betrayal and redemption. Master deep combat systems and build the ultimate arsenal.",
+    "price": 68.48,
+    "rating": 3.0,
+    "downloads": 425396,
+    "age": 12,
+    "memory": 85.0,
+    "multiplayer": false,
+    "tags": [
+      "Adventure",
+      "Multiplayer",
+      "Puzzle"
+    ],
+    "images": [
+      "games/67-0.jpg",
+      "games/67-1.jpg"
+    ]
+  },
+  {
+    "name": "Wild Uprising",
+    "company": "Hyperion Works",
+    "description": "Survive the immersive frontier in this immersive survival title. Craft, explore and conquer in a living, breathing open world.",
+    "price": 24.78,
+    "rating": 4.1,
+    "downloads": 4621967,
+    "age": 16,
+    "memory": 56.9,
+    "multiplayer": false,
+    "tags": [
+      "Action",
+      "Strategy"
+    ],
+    "images": [
+      "games/68-0.jpg",
+      "games/68-1.jpg"
+    ]
+  },
+  {
+    "name": "Rogue Exodus",
+    "company": "Redshift Games",
+    "description": "A haunting RPG experience that pushes the limits of what a game can be. Team up with friends or go solo across dozens of handcrafted missions.",
+    "price": 38.93,
+    "rating": 3.0,
+    "downloads": 3871969,
+    "age": 12,
+    "memory": 71.1,
+    "multiplayer": false,
+    "tags": [
+      "Strategy",
+      "Indie",
+      "Fantasy"
+    ],
+    "images": [
+      "games/69-0.jpg",
+      "games/69-1.jpg"
+    ]
+  },
+  {
+    "name": "Wild Odyssey",
+    "company": "Nova Interactive",
+    "description": "A epic RPG experience that pushes the limits of what a game can be. Team up with friends or go solo across dozens of handcrafted missions.",
+    "price": 53.5,
+    "rating": 3.6,
+    "downloads": 183272,
+    "age": 0,
+    "memory": 110.2,
+    "multiplayer": true,
+    "tags": [
+      "Horror",
+      "Sci-Fi"
+    ],
+    "images": [
+      "games/70-0.jpg",
+      "games/70-1.jpg"
+    ]
+  },
+  {
+    "name": "Savage Dominion",
+    "company": "Pixel Forge",
+    "description": "Explore a vast unforgiving world where every choice shapes the fate of Savage Dominion. Battle relentless enemies, uncover hidden secrets, and forge your own legend.",
+    "price": 47.35,
+    "rating": 3.9,
+    "downloads": 4286972,
+    "age": 12,
+    "memory": 31.5,
+    "multiplayer": false,
+    "tags": [
+      "Multiplayer"
+    ],
+    "images": [
+      "games/71-0.jpg",
+      "games/71-1.jpg"
+    ]
+  },
+  {
+    "name": "Last Reckoning",
+    "company": "Moonrise Interactive",
+    "description": "Explore a vast vast world where every choice shapes the fate of Last Reckoning. Battle relentless enemies, uncover hidden secrets, and forge your own legend.",
+    "price": 10.29,
+    "rating": 4.4,
+    "downloads": 2145160,
+    "age": 0,
+    "memory": 91.2,
+    "multiplayer": false,
+    "tags": [
+      "Adventure",
+      "Sci-Fi"
+    ],
+    "images": [
+      "games/72-0.jpg",
+      "games/72-1.jpg"
+    ]
+  },
+  {
+    "name": "Dark Eclipse",
+    "company": "Redshift Games",
+    "description": "Survive the unforgiving frontier in this immersive action title. Craft, explore and conquer in a living, breathing open world.",
+    "price": 6.57,
+    "rating": 3.3,
+    "downloads": 1701434,
+    "age": 16,
+    "memory": 30.3,
+    "multiplayer": false,
+    "tags": [
+      "Adventure",
+      "Indie"
+    ],
+    "images": [
+      "games/73-0.jpg",
+      "games/73-1.jpg"
+    ]
+  }
+]
